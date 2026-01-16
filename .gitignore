@@ -1,11 +1,48 @@
-*.class
-*.log
+.DS_Store
 
 # Package Files #
 *.jar
-*.war
-*.nar
-*.ear
 *.zip
 *.tar.gz
 *.rar
+
+# JetBrains (IntelliJ, WebStorm, etc.)
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# VS Code
+.vscode/
+!.vscode/settings.json  # Optional: keep if you want shared team settings
+!.vscode/extensions.json
+.history/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Java/Maven/Gradle
+target/
+build/
+.gradle/
+bin/
+*.class
+
+# Secrets & Credentials
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+*.p12
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
