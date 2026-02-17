@@ -1,6 +1,6 @@
 # ChopChop
 
-The Digital Cookbook
+The Digital Cookbook (Adolfo was here)
 
 ## Getting Started
 
