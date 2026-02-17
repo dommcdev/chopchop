@@ -2,6 +2,8 @@
 
 The Digital Cookbook
 
+Katie was here
+
 ## Getting Started
 
 ### Prerequisites
