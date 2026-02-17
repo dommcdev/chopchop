@@ -60,3 +60,6 @@ next-env.d.ts
 
 # next-agents-md
 .next-docs/
+
+# Windows stuff
+~$*
