@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { analyzeRecipe } from "@/actions/gemini"; // Import your backend function
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   // 1. State to hold the data we get back
@@ -34,6 +35,10 @@ export default function Home() {
           {loading ? "Analyzing..." : "Upload & Analyze"}
         </button>
       </form>
+
+      <div>
+        <Button>Click me</Button>
+      </div>
 
       {/* The Results Display */}
       {data && (
