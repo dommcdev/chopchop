@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.21",
+    "@clerk/nextjs": "^6.37.5",
     "@libsql/client": "^0.17.0",
     "ai": "^6.0.70",
     "drizzle-orm": "^0.45.1",
