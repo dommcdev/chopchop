@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import {
@@ -38,7 +39,7 @@ export default function RootLayout({
         >
           <nav className="flex items-center justify-between p-4">
             <div>ChopChop nav</div>
-            <div className="flex gap-4">
+            <Suspense fallback={<div className="h-8 w-32" />}>
               <SignedOut>
                 <SignInButton />
                 <SignUpButton />
@@ -46,7 +47,7 @@ export default function RootLayout({
               <SignedIn>
                 <UserButton />
               </SignedIn>
-            </div>
+            </Suspense>
           </nav>
           {children}
         </body>
