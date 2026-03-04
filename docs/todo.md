@@ -32,5 +32,6 @@
 - [ ] Final presentation
 
 ### Misc
+
 - Fallback spinner
 - Logo
