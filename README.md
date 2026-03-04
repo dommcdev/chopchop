@@ -1,3 +1,4 @@
+
 # ChopChop
 
 The Digital Cookbook
@@ -34,7 +35,7 @@ bun run db:push
 4. Start the development server:
 
 ```bash
-bun run dev
+bun dev
 ```
 
 The app will be available at [http://localhost:3000](http://localhost:3000)
@@ -43,9 +44,10 @@ The app will be available at [http://localhost:3000](http://localhost:3000)
 
 | Command               | Description                          |
 | --------------------- | ------------------------------------ |
-| `bun run dev`         | Start the development server         |
+| `bun dev`             | Start the development server         |
 | `bun run lint`        | Run linter                           |
 | `bun run format`      | Format code with Prettier            |
+| `bun run test`        | Run tests with Vitest                |
 | `bun run db:generate` | Generate database migrations         |
 | `bun run db:migrate`  | Apply database migrations            |
 | `bun run db:push`     | Sync schema directly to the database |
