@@ -14,7 +14,7 @@ The Digital Cookbook
 
 ```bash
 bun install
-bun run docs:agents #installs next.js docs for ai agents
+bun run docs:agents #install next.js docs for ai agents
 ```
 
 2. Set up .env:
