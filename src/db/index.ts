@@ -1,10 +1,10 @@
 import { drizzle } from "drizzle-orm/libsql";
-import { createClient } from "@libsql/client";
+import { createClient, type Client } from "@libsql/client";
 import * as schema from "./schema";
 
 // We create a "global" variable to hold our client
 // This is a common pattern to persist the connection across hot-reloads
-const globalForDb = global as unknown as { client: any };
+const globalForDb = globalThis as typeof globalThis & { client?: Client };
 
 // Check if TURSO_DATABASE_URL is present in .env; throw an error if it isn't
 const url = process.env.TURSO_DATABASE_URL;

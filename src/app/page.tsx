@@ -6,7 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 
 export default function Home() {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<Awaited<
+    ReturnType<typeof analyzeRecipe>
+  > | null>(null);
   // 2. Replace manual loading state with startTransition
   const [isPending, startTransition] = useTransition();
 
