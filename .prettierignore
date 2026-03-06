@@ -16,3 +16,6 @@ node_modules
 
 # System files
 .DS_Store
+
+# Don't care about markdown file formatting
+.md
