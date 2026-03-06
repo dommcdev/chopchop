@@ -9,7 +9,7 @@ export function DashboardUploadButton() {
       nativeButton={false}
       size="lg"
       className="px-6 text-sm"
-      render={<Link href="/dashboard/upload" />}
+      render={<Link href="/dashboard/uploader" />}
     >
       Go to upload page
     </Button>

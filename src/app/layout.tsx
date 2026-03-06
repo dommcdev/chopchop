@@ -6,7 +6,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ClerkProvider, SignedIn, UserButton } from "@clerk/nextjs";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
-import { ourFileRouter } from "@/api/uploadthing/core";
+import { ourFileRouter } from "@/app/api/uploadthing/core";
 import "./globals.css";
 
 const geistSans = Geist({
