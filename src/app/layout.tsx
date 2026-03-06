@@ -1,12 +1,8 @@
 import { Suspense } from "react";
-import { connection } from "next/server";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ClerkProvider, SignedIn, UserButton } from "@clerk/nextjs";
-import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
-import { extractRouterConfig } from "uploadthing/server";
-import { ourFileRouter } from "@/app/api/uploadthing/core";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -23,12 +19,6 @@ export const metadata: Metadata = {
   title: "ChopChop!",
   description: "The Digital Cookbook",
 };
-
-async function UTSSR() {
-  await connection();
-
-  return <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />;
-}
 
 export default function RootLayout({
   children,
@@ -52,9 +42,6 @@ export default function RootLayout({
             </Suspense>
           </nav>
           {children}
-          <Suspense fallback={null}>
-            <UTSSR />
-          </Suspense>
         </body>
       </html>
     </ClerkProvider>
