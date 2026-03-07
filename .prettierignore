@@ -19,3 +19,6 @@ node_modules
 
 # Don't care about markdown file formatting
 *.md
+
+# Don't even think about going in here
+.agents/

@@ -58,11 +58,12 @@ next-env.d.ts
 *.db-shm
 *.db-wal
 
-# next-agents-md
-.next-docs/
-
 # Windows stuff
 ~$*
 
 # clerk configuration (can include secrets)
 /.clerk/
+
+# skills
+.next-docs/
+.agents/
