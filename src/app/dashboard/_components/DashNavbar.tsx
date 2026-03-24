@@ -8,7 +8,7 @@ import SearchBar from "@/app/dashboard/_components/SearchBar";
 export function DashNavbar() {
   return (
     <nav className="border-b-[3px] border-foreground relative z-50 flex items-center justify-between bg-background px-4 py-3 dark:bg-[oklch(0.18_0_0)] sm:px-6 lg:px-8">
-      <Link href="/" className="flex items-center gap-3 group">
+      <Link href="/dashboard" className="flex items-center gap-3 group">
         <Image
           src="/logo.svg"
           alt="ChopChop Logo"

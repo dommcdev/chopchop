@@ -13,7 +13,11 @@ export default async function BrowseCategories() {
   }
 
   const allCategories = await db
-    .select()
+    .select({
+      id: categories.id,
+      name: categories.name,
+      slug: categories.slug,
+    })
     .from(categories)
     .where(eq(categories.userId, userId));
 
@@ -21,7 +25,7 @@ export default async function BrowseCategories() {
     <div className="m-4 flex flex-col gap-2 md:m-6">
       <div className="flex flex-row justify-between items-center">
         <h2 className="text-xl font-bold">Browse Categories</h2>
-        <Link href="/dashboard/categories" className="underline">
+        <Link href="/dashboard/c" className="underline">
           View all categories
         </Link>
       </div>
@@ -32,7 +36,7 @@ export default async function BrowseCategories() {
             <CategoryCard
               key={category.id}
               label={category.name}
-              id={category.id}
+              slug={category.slug}
             />
           ))
         ) : (
