@@ -2,13 +2,30 @@
 
 import { auth } from "@clerk/nextjs/server";
 import { db } from "@/db";
-import { recipes, ingredients, instructions, categories } from "@/db/schema";
+import { recipes } from "@/db/schema";
 import { and, eq, or } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
-import { PrintableRecipeCard } from "@/app/dashboard/_components/PrintableRecipeCard";
+import {
+  PrintableRecipeCard,
+  type PrintableRecipeCardRecipe,
+  type PrintableScaledIngredient,
+} from "@/app/dashboard/_components/PrintableRecipeCard";
 import { PrintRecipeButton } from "@/app/dashboard/_components/PrintRecipeButton";
+
+function resolveTargetServings(baseServings: number, targetServings?: number) {
+  if (targetServings == null || targetServings <= 0) {
+    return baseServings;
+  }
+
+  return targetServings;
+}
+
+function getScaleFactor(baseServings: number, targetServings: number) {
+  if (baseServings <= 0) return 1;
+  return targetServings / baseServings;
+}
 
 export default async function RecipePage({
   params,
@@ -32,79 +49,47 @@ export default async function RecipePage({
   }
 
   // Fetch the recipe by URL segment (human slug or stable public id)
-  const recipe = await db
-    .select()
-    .from(recipes)
-    .where(
-      and(
-        eq(recipes.userId, userId),
-        or(eq(recipes.slug, slug), eq(recipes.publicId, slug)),
-      ),
-    )
-    .limit(1)
-    .then((rows) => rows[0]);
+  const recipe = await db.query.recipes.findFirst({
+    where: and(
+      eq(recipes.userId, userId),
+      or(eq(recipes.slug, slug), eq(recipes.publicId, slug)),
+    ),
+    with: {
+      category: true,
+      ingredients: {
+        orderBy: (ingredients, { asc }) => [asc(ingredients.id)],
+      },
+      instructions: {
+        orderBy: (instructions, { asc }) => [asc(instructions.stepNumber)],
+      },
+    },
+  });
 
   if (!recipe) {
     notFound();
   }
 
-  const recipeId = recipe.id;
+  const targetServings = resolveTargetServings(recipe.servings);
+  const scaleFactor = getScaleFactor(recipe.servings, targetServings);
 
-  // Fetch ingredients
-  const recipeIngredients = await db
-    .select()
-    .from(ingredients)
-    .where(eq(ingredients.recipeId, recipeId));
+  const scaledIngredients: PrintableScaledIngredient[] = recipe.ingredients.map(
+    (ingredient) => ({
+      id: ingredient.id,
+      name: ingredient.name,
+      unit: ingredient.unit,
+      scaledAmount:
+        ingredient.quantity == null ? null : ingredient.quantity * scaleFactor,
+    }),
+  );
 
-  // Fetch instructions
-  const recipeInstructions = await db
-    .select()
-    .from(instructions)
-    .where(eq(instructions.recipeId, recipeId))
-    .orderBy(instructions.stepNumber);
-
-  // Fetch category if exists
-  let category:
-    | {
-        id: number;
-        userId: string;
-        name: string;
-        createdAt: string;
-        updatedAt: string;
-      }
-    | undefined = undefined;
-  if (recipe.categoryId) {
-    category = await db
-      .select()
-      .from(categories)
-      .where(eq(categories.id, recipe.categoryId))
-      .limit(1)
-      .then((rows) => rows[0]);
-  }
-
-  const scaleFactor = 1;
-  const targetServings = recipe.servings;
-  const scaledIngredients = recipeIngredients.map((ing) => {
-    const amount = ing.quantity ?? 0;
-    return {
-      id: ing.id,
-      name: ing.name,
-      amount,
-      unit: ing.unit ?? "",
-      scaledAmount: amount * scaleFactor,
-    };
-  });
-  const printableRecipe = {
-    title: recipe.name,
+  const printableRecipe: PrintableRecipeCardRecipe = {
+    name: recipe.name,
     description: recipe.description ?? "",
     servings: recipe.servings,
-    ingredients: scaledIngredients.map(({ id, name, amount, unit }) => ({
-      id,
-      name,
-      amount,
-      unit,
+    instructions: recipe.instructions.map((instruction) => ({
+      id: instruction.id,
+      text: instruction.text,
     })),
-    instructions: recipeInstructions.map((i) => i.text),
   };
 
   return (
@@ -135,9 +120,9 @@ export default async function RecipePage({
                   </p>
                 )}
               </div>
-              {category && (
+              {recipe.category && (
                 <span className="text-xs border-[2px] border-foreground px-2 py-1 rounded-none bg-primary/10 font-bold uppercase tracking-wider">
-                  {category.name}
+                  {recipe.category.name}
                 </span>
               )}
             </div>
@@ -169,7 +154,7 @@ export default async function RecipePage({
                 Ingredients
               </h2>
               <ul className="space-y-2">
-                {recipeIngredients.map((ingredient) => (
+                {recipe.ingredients.map((ingredient) => (
                   <li key={ingredient.id} className="text-sm flex gap-2">
                     <span className="text-primary font-bold">•</span>
                     <span>
@@ -191,7 +176,7 @@ export default async function RecipePage({
                 Instructions
               </h2>
               <ol className="space-y-4">
-                {recipeInstructions.map((instruction) => (
+                {recipe.instructions.map((instruction) => (
                   <li key={instruction.id} className="flex gap-3">
                     <span className="flex-shrink-0 flex items-center justify-center h-7 w-7 rounded-none border-[2px] border-foreground bg-primary font-bold text-xs text-primary-foreground">
                       {instruction.stepNumber}

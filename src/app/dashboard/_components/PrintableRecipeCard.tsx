@@ -1,31 +1,29 @@
-/**
- * You can keep these types here, or export them from a shared types file
- * and import them into both your main viewer and this component.
- */
-type Ingredient = {
-  id: number;
-  name: string;
-  amount: number;
-  unit: string;
-};
+import type { InferSelectModel } from "drizzle-orm";
+import { ingredients, recipes } from "@/db/schema";
 
-type ScaledIngredient = Ingredient & {
-  scaledAmount: number;
-};
+type RecipeRow = InferSelectModel<typeof recipes>;
+type IngredientRow = InferSelectModel<typeof ingredients>;
 
-type Recipe = {
-  title: string;
+export type PrintableRecipeCardRecipe = Pick<RecipeRow, "name" | "servings"> & {
   description: string;
-  servings: number;
-  ingredients: Ingredient[];
-  instructions: string[];
+  instructions: Array<{
+    id: number;
+    text: string;
+  }>;
+};
+
+export type PrintableScaledIngredient = Pick<
+  IngredientRow,
+  "id" | "name" | "unit"
+> & {
+  scaledAmount: number | null;
 };
 
 type PrintableRecipeCardProps = {
-  recipe: Recipe;
+  recipe: PrintableRecipeCardRecipe;
   targetServings: number;
   scaleFactor: number;
-  scaledIngredients: ScaledIngredient[];
+  scaledIngredients: PrintableScaledIngredient[];
 };
 
 /**
@@ -49,8 +47,10 @@ export function PrintableRecipeCard({
     <section className="bg-white text-black">
       {/* Recipe title, description, and serving summary */}
       <div className="mb-6 border-b border-neutral-200 pb-6">
-        <h2 className="text-3xl font-bold text-neutral-900">{recipe.title}</h2>
-        <p className="mt-2 text-neutral-600">{recipe.description}</p>
+        <h2 className="text-3xl font-bold text-neutral-900">{recipe.name}</h2>
+        {recipe.description && (
+          <p className="mt-2 text-neutral-600">{recipe.description}</p>
+        )}
 
         <div className="mt-4 text-sm text-neutral-700">
           Base servings:{" "}
@@ -81,9 +81,11 @@ export function PrintableRecipeCard({
               className="flex items-center gap-2 border-b border-neutral-100 py-2 text-sm text-neutral-800 break-inside-avoid"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-neutral-400" />
-              <span className="font-medium">
-                {formatNumber(ingredient.scaledAmount)}
-              </span>
+              {ingredient.scaledAmount != null && (
+                <span className="font-medium">
+                  {formatNumber(ingredient.scaledAmount)}
+                </span>
+              )}
               {ingredient.unit && (
                 <span className="text-neutral-500">{ingredient.unit}</span>
               )}
@@ -101,13 +103,13 @@ export function PrintableRecipeCard({
         <ol className="space-y-4">
           {recipe.instructions.map((step, index) => (
             <li
-              key={index}
+              key={step.id}
               className="flex gap-3 text-sm text-neutral-800 break-inside-avoid"
             >
               <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-neutral-900 text-xs font-bold text-white">
                 {index + 1}
               </span>
-              <span className="pt-0.5">{step}</span>
+              <span className="pt-0.5">{step.text}</span>
             </li>
           ))}
         </ol>
