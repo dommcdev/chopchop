@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 " use client"; 
+=======
+"use client"; 
+>>>>>>> 2b3bdc2 (added pdf viewer)
 
 // React hooks for state and memoized calculations
 
@@ -192,6 +196,10 @@ export default function RecipePrintPage() {
  
   return (
 
+<<<<<<< HEAD
+=======
+<>
+>>>>>>> 2b3bdc2 (added pdf viewer)
 
       {/*
 
@@ -202,6 +210,7 @@ export default function RecipePrintPage() {
         so the button and inputs don't show up on the printed page.
 
       */}
+
 
       <style>{`
 
@@ -223,6 +232,19 @@ export default function RecipePrintPage() {
 
       `}</style>
 
+=======
+     <style>{`
+  @media print {
+    .no-print {
+      display: none !important;
+    }
+
+    body {
+      background: white;
+    }
+  }
+`}</style>
+ (added pdf viewer)
  
 
       <main className="min-h-screen bg-neutral-50 p-6">
@@ -444,4 +466,8 @@ export default function RecipePrintPage() {
 
   );
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 2b3bdc2 (added pdf viewer)
