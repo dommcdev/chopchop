@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-" use client"; 
-=======
-"use client"; 
->>>>>>> 2b3bdc2 (added pdf viewer)
+"use client";
 
 // React hooks for state and memoized calculations
 
@@ -15,17 +11,14 @@ import { useMemo, useState } from "react";
 */
 
 type Ingredient = {
+  id: number; // unique id for React key prop
 
-  id: number;       // unique id for React key prop
+  name: string; // ingredient name
 
-  name: string;     // ingredient name
+  amount: number; // base amount before scaling
 
-  amount: number;   // base amount before scaling
-
-  unit: string;     // measurement unit like oz, tsp, lb
-
+  unit: string; // measurement unit like oz, tsp, lb
 };
-
 
 /**
 
@@ -34,7 +27,6 @@ type Ingredient = {
 */
 
 type Recipe = {
-
   title: string;
 
   description: string;
@@ -44,9 +36,7 @@ type Recipe = {
   ingredients: Ingredient[];
 
   instructions: string[];
-
 };
-
 
 /**
 
@@ -56,58 +46,47 @@ type Recipe = {
 
 */
 
-const initialRecipe: Recipe = { title: "Mac and Cheese", description: "An easy classic that comes together in under 30 minutes.", 
-                               
-servings: 4, ingredients: 
-                                 
-  [ 
-    
-  { id: 1, name: "Elbow macaroni", amount: 2, unit: "cup" }, 
-                                  
-  { id: 2, name: "Butter", amount: 3, unit: "tbsp" }, 
-                                  
-  { id: 3, name: "All-purpose flour", amount: 3, unit: "tbsp" }, 
-                                  
-  { id: 4, name: "Milk", amount: 2, unit: "cup" }, 
-                                  
-  { id: 5, name: "Shredded cheddar cheese", amount: 2, unit: "cup" }, 
-                                  
-  { id: 6, name: "Salt", amount: 0.5, unit: "tsp" }, 
-                                  
-  { id: 7, name: "Black pepper", amount: 0.25, unit: "tsp" }, 
-                                  
-  { id: 8, name: "Garlic powder", amount: 0.25, unit: "tsp" },
-                                 
-                                
-  ], 
-                               
-                               
-instructions: 
-  
-  [ 
-    
-  "Boil a large pot of salted water and cook the macaroni until al dente. Drain and set aside.",
-                                                                          
-  "In the same pot, melt butter over medium heat.",
-                                              
-  "Whisk in the flour and cook for about 1 minute until it smells nutty.", 
-                                              
-  "Slowly pour in the milk while whisking constantly so no lumps form.",
-                                              
-  "Stir until the sauce thickens, about 3 to 4 minutes.", 
-                                              
-  "Remove from heat and stir in the shredded cheddar until fully melted.", 
-                                              
-  "Add salt, pepper, and garlic powder. Taste and adjust seasoning.", 
-                                              
-  "Toss the drained macaroni into the cheese sauce and stir to coat.", 
-                                             
-              
-  ], 
-                              
-    };
+const initialRecipe: Recipe = {
+  title: "Mac and Cheese",
+  description: "An easy classic that comes together in under 30 minutes.",
 
- 
+  servings: 4,
+  ingredients: [
+    { id: 1, name: "Elbow macaroni", amount: 2, unit: "cup" },
+
+    { id: 2, name: "Butter", amount: 3, unit: "tbsp" },
+
+    { id: 3, name: "All-purpose flour", amount: 3, unit: "tbsp" },
+
+    { id: 4, name: "Milk", amount: 2, unit: "cup" },
+
+    { id: 5, name: "Shredded cheddar cheese", amount: 2, unit: "cup" },
+
+    { id: 6, name: "Salt", amount: 0.5, unit: "tsp" },
+
+    { id: 7, name: "Black pepper", amount: 0.25, unit: "tsp" },
+
+    { id: 8, name: "Garlic powder", amount: 0.25, unit: "tsp" },
+  ],
+
+  instructions: [
+    "Boil a large pot of salted water and cook the macaroni until al dente. Drain and set aside.",
+
+    "In the same pot, melt butter over medium heat.",
+
+    "Whisk in the flour and cook for about 1 minute until it smells nutty.",
+
+    "Slowly pour in the milk while whisking constantly so no lumps form.",
+
+    "Stir until the sauce thickens, about 3 to 4 minutes.",
+
+    "Remove from heat and stir in the shredded cheddar until fully melted.",
+
+    "Add salt, pepper, and garlic powder. Taste and adjust seasoning.",
+
+    "Toss the drained macaroni into the cheese sauce and stir to coat.",
+  ],
+};
 
 /**
 
@@ -122,17 +101,15 @@ instructions:
 */
 
 function formatNumber(value: number) {
-
   if (Number.isInteger(value)) return value.toString();
 
-  return value.toFixed(2).replace(/\.00$/, "").replace(/(\.\d)0$/, "$1");
-
+  return value
+    .toFixed(2)
+    .replace(/\.00$/, "")
+    .replace(/(\.\d)0$/, "$1");
 }
 
- 
-
 export default function RecipePrintPage() {
-
   /**
 
    * recipe = the recipe being displayed on this page
@@ -153,7 +130,9 @@ export default function RecipePrintPage() {
 
    */
 
-  const [targetServings, setTargetServings] = useState<number>(initialRecipe.servings);
+  const [targetServings, setTargetServings] = useState<number>(
+    initialRecipe.servings,
+  );
 
   /**
 
@@ -164,14 +143,10 @@ export default function RecipePrintPage() {
    */
 
   const scaleFactor = useMemo(() => {
-
     if (!recipe.servings || targetServings <= 0) return 1;
 
     return targetServings / recipe.servings;
-
   }, [recipe.servings, targetServings]);
-
- 
 
   /**
 
@@ -182,25 +157,15 @@ export default function RecipePrintPage() {
    */
 
   const scaledIngredients = useMemo(() => {
-
     return recipe.ingredients.map((ingredient) => ({
-
       ...ingredient,
 
       scaledAmount: ingredient.amount * scaleFactor,
-
     }));
-
   }, [recipe.ingredients, scaleFactor]);
 
- 
   return (
-
-<<<<<<< HEAD
-=======
-<>
->>>>>>> 2b3bdc2 (added pdf viewer)
-
+    <>
       {/*
 
         These styles only appear when the user prints.
@@ -210,8 +175,6 @@ export default function RecipePrintPage() {
         so the button and inputs don't show up on the printed page.
 
       */}
-
-
       <style>{`
 
         @media print {
@@ -231,9 +194,7 @@ export default function RecipePrintPage() {
         }
 
       `}</style>
-
-=======
-     <style>{`
+      <style>{`
   @media print {
     .no-print {
       display: none !important;
@@ -244,15 +205,8 @@ export default function RecipePrintPage() {
     }
   }
 `}</style>
- (added pdf viewer)
- 
-
       <main className="min-h-screen bg-neutral-50 p-6">
-
         <div className="mx-auto max-w-2xl">
-
- 
-
           {/*
 
             Print controls bar that disappears when printing.
@@ -262,52 +216,32 @@ export default function RecipePrintPage() {
           */}
 
           <div className="no-print mb-6 flex items-center justify-between">
-
-            <h1 className="text-3xl font-bold text-neutral-900">Print Preview</h1>
-
- 
+            <h1 className="text-3xl font-bold text-neutral-900">
+              Print Preview
+            </h1>
 
             <div className="flex items-center gap-3">
-
               <label className="text-sm font-medium text-neutral-700">
-
                 Servings:
-
               </label>
 
               <input
-
                 type="number"
-
                 min={1}
-
                 value={targetServings}
-
                 onChange={(e) => setTargetServings(Number(e.target.value) || 1)}
-
                 className="w-20 rounded-lg border border-neutral-300 px-3 py-2 text-center outline-none focus:border-neutral-500"
-
               />
 
               <button
-
                 type="button"
-
                 onClick={() => window.print()}
-
                 className="rounded-lg bg-black px-5 py-2 text-sm font-medium text-white hover:opacity-90"
-
               >
-
                 Print / Save PDF
-
               </button>
-
             </div>
-
           </div>
-
- 
 
           {/*
 
@@ -318,128 +252,86 @@ export default function RecipePrintPage() {
           */}
 
           <section className="rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
-
- 
-
             {/* Recipe title, description, and serving summary */}
 
             <div className="mb-6 border-b border-neutral-200 pb-6">
-
-              <h2 className="text-3xl font-bold text-neutral-900">{recipe.title}</h2>
+              <h2 className="text-3xl font-bold text-neutral-900">
+                {recipe.title}
+              </h2>
 
               <p className="mt-2 text-neutral-600">{recipe.description}</p>
 
- 
-
               <div className="mt-4 rounded-xl bg-neutral-100 p-3 text-sm text-neutral-700">
-
-                Base servings: <span className="font-semibold">{recipe.servings}</span>
-
+                Base servings:{" "}
+                <span className="font-semibold">{recipe.servings}</span>
                 {"  ·  "}
-
-                Scaled to: <span className="font-semibold">{targetServings}</span>
-
+                Scaled to:{" "}
+                <span className="font-semibold">{targetServings}</span>
                 {scaleFactor !== 1 && (
-
                   <>
-
                     {"  ·  "}
-
                     Scale factor:{" "}
-
-                    <span className="font-semibold">{formatNumber(scaleFactor)}x</span>
-
+                    <span className="font-semibold">
+                      {formatNumber(scaleFactor)}x
+                    </span>
                   </>
-
                 )}
-
               </div>
-
             </div>
-
- 
 
             {/* Ingredients list */}
 
             <div className="mb-6">
-
               <h3 className="mb-3 text-lg font-semibold text-neutral-900">
-
                 Ingredients
-
               </h3>
 
               <ul className="space-y-2">
-
                 {scaledIngredients.map((ingredient) => (
-
                   <li
-
                     key={ingredient.id}
-
                     className="flex items-center gap-2 border-b border-neutral-100 py-2 text-sm text-neutral-800"
-
                   >
-
                     <span className="h-1.5 w-1.5 rounded-full bg-neutral-400" />
 
                     <span className="font-medium">
-
                       {formatNumber(ingredient.scaledAmount)}
-
                     </span>
 
                     {ingredient.unit && (
-
-                      <span className="text-neutral-500">{ingredient.unit}</span>
-
+                      <span className="text-neutral-500">
+                        {ingredient.unit}
+                      </span>
                     )}
 
                     <span>{ingredient.name}</span>
-
                   </li>
-
                 ))}
-
               </ul>
-
             </div>
-
- 
 
             {/* Instructions list */}
 
             <div className="mb-6">
-
               <h3 className="mb-3 text-lg font-semibold text-neutral-900">
-
                 Instructions
-
               </h3>
 
               <ol className="space-y-4">
-
                 {recipe.instructions.map((step, index) => (
-
-                  <li key={index} className="flex gap-3 text-sm text-neutral-800">
-
+                  <li
+                    key={index}
+                    className="flex gap-3 text-sm text-neutral-800"
+                  >
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-neutral-900 text-xs font-bold text-white">
-
                       {index + 1}
-
                     </span>
 
                     <span className="pt-0.5">{step}</span>
-
                   </li>
-
                 ))}
-
               </ol>
-
             </div>
-
- 
 
             {/*
 
@@ -449,25 +341,11 @@ export default function RecipePrintPage() {
             */}
 
             <div className="border-t border-neutral-200 pt-4 text-center text-xs text-neutral-400">
-
               Generated by ChopChop!
-
             </div>
-
- 
-
           </section>
-
         </div>
-
       </main>
-
     </>
-
   );
-
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 2b3bdc2 (added pdf viewer)
