@@ -1,9 +1,10 @@
 import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core";
-import { sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 
 // ── Categories ──────────────────────────────────────────────────────────────
 export const categories = sqliteTable("categories", {
   id: integer("id").primaryKey({ autoIncrement: true }),
+  slug: text("slug").notNull(),
   userId: text("user_id").notNull(), // Logical foreign key to Clerk
   name: text("name").notNull(),
   createdAt: text("created_at")
@@ -16,16 +17,18 @@ export const categories = sqliteTable("categories", {
 
 // ── Recipes ─────────────────────────────────────────────────────────────────
 export const recipes = sqliteTable("recipes", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  publicId: text("public_id").notNull().unique(), // Public identifier for URLs
+  slug: text("slug").notNull(),
   userId: text("user_id").notNull(), // Logical foreign key to Clerk
-  title: text("title").notNull(),
+  name: text("name").notNull(),
   description: text("description"),
   servings: integer("servings").notNull().default(1),
-  prepTimeMin: integer("prep_time_min"),
-  cookTimeMin: integer("cook_time_min"),
+  prepTime: integer("prep_time"),
+  cookTime: integer("cook_time"),
   categoryId: integer("category_id").references(() => categories.id),
+  imageUrl: text("image_url"),
+  imageKey: text("image_key"),
   createdAt: text("created_at")
     .notNull()
     .default(sql`(current_timestamp)`),
@@ -37,9 +40,9 @@ export const recipes = sqliteTable("recipes", {
 // ── Ingredients ─────────────────────────────────────────────────────────────
 export const ingredients = sqliteTable("ingredients", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  recipeId: text("recipe_id")
+  recipeId: integer("recipe_id")
     .notNull()
-    .references(() => recipes.id),
+    .references(() => recipes.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
   quantity: real("quantity"),
   unit: text("unit"),
@@ -48,9 +51,38 @@ export const ingredients = sqliteTable("ingredients", {
 // ── Instructions ────────────────────────────────────────────────────────────
 export const instructions = sqliteTable("instructions", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  recipeId: text("recipe_id")
+  recipeId: integer("recipe_id")
     .notNull()
-    .references(() => recipes.id),
+    .references(() => recipes.id, { onDelete: "cascade" }),
   stepNumber: integer("step_number").notNull(),
   text: text("text").notNull(),
 });
+
+// ** Relations **
+
+export const categoriesRelations = relations(categories, ({ many }) => ({
+  recipes: many(recipes),
+}));
+
+export const recipesRelations = relations(recipes, ({ one, many }) => ({
+  category: one(categories, {
+    fields: [recipes.categoryId],
+    references: [categories.id],
+  }),
+  ingredients: many(ingredients),
+  instructions: many(instructions),
+}));
+
+export const ingredientsRelations = relations(ingredients, ({ one }) => ({
+  recipe: one(recipes, {
+    fields: [ingredients.recipeId],
+    references: [recipes.id],
+  }),
+}));
+
+export const instructionsRelations = relations(instructions, ({ one }) => ({
+  recipe: one(recipes, {
+    fields: [instructions.recipeId],
+    references: [recipes.id],
+  }),
+}));

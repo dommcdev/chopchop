@@ -20,6 +20,14 @@ export default function UploadPage() {
     return String(value);
   };
 
+  const formatMinutes = (value: number | null | undefined) => {
+    if (value === null || value === undefined) {
+      return "-";
+    }
+
+    return `${value} min`;
+  };
+
   // This handles both the click and the drop
   const processUpload = (file: File) => {
     // 5MB Limit
@@ -77,9 +85,9 @@ export default function UploadPage() {
         {data && !isPending && (
           <div className="mt-8 space-y-6 rounded-xl border border-zinc-700 bg-black p-6 text-left text-white">
             <div>
-              <h2 className="text-xl font-bold">{data.recipeTitle}</h2>
+              <h2 className="text-xl font-bold">{data.name}</h2>
               <p className="mt-2 text-sm text-zinc-300">
-                {formatValue(data.recipeDescription)}
+                {formatValue(data.description)}
               </p>
             </div>
 
@@ -94,13 +102,13 @@ export default function UploadPage() {
                 <p className="text-xs uppercase tracking-wide text-zinc-500">
                   Prep Time
                 </p>
-                <p className="mt-1 text-sm">{formatValue(data.prepTime)}</p>
+                <p className="mt-1 text-sm">{formatMinutes(data.prepTime)}</p>
               </div>
               <div className="rounded-lg border border-zinc-800 p-3">
                 <p className="text-xs uppercase tracking-wide text-zinc-500">
                   Cook Time
                 </p>
-                <p className="mt-1 text-sm">{formatValue(data.cookTime)}</p>
+                <p className="mt-1 text-sm">{formatMinutes(data.cookTime)}</p>
               </div>
             </div>
 

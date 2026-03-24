@@ -42,6 +42,7 @@
 - Add rest of env vars (incl turso db) to github actions env
 - Add hat to homepage logo
 - Landing nav should show sign in vs view dashboard based on auth state
+- We should be redirecting to login on auth fail, not erroring
 
 ### Notes
 - Does our DB need a users table?

@@ -37,14 +37,14 @@ const UnitEnum = z.enum([
 ]);
 
 export const RecipeSchema = z.object({
-  recipeTitle: z.string().describe("The name of the dish"),
-  recipeDescription: z
-    .string()
-    .optional()
-    .describe("The description of the dish"),
+  name: z.string().describe("The name of the dish"),
+  description: z.string().optional().describe("The description of the dish"),
   servings: z.number().nullable(),
-  prepTime: z.string().optional().describe("e.g. 15 mins"),
-  cookTime: z.string().optional(),
+  prepTime: z
+    .number()
+    .nullable()
+    .describe("Preparation time in minutes, e.g. 15"),
+  cookTime: z.number().nullable().describe("Cooking time in minutes, e.g. 30"),
   ingredients: z.array(
     z.object({
       name: z

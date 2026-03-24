@@ -2,12 +2,12 @@ import Link from "next/link";
 
 interface CategoryCardProps {
   label: string; //name of category from db
-  id: number; //id of category from db
+  slug: string; //slug of category from db
 }
 
-export default function CategoryCard({ id, label }: CategoryCardProps) {
+export default function CategoryCard({ slug, label }: CategoryCardProps) {
   return (
-    <Link href={`/dashboard/categories/${id}`}>
+    <Link href={`/dashboard/c/${slug}`}>
       <div className="category-card border-2 border-foreground rounded-none p-4">
         <h3>{label}</h3>
       </div>
@@ -15,4 +15,4 @@ export default function CategoryCard({ id, label }: CategoryCardProps) {
   );
 }
 
-//Right now we're using the category id in the url. We could alternatively do id-slug
+//TODO edit and delete functionality
