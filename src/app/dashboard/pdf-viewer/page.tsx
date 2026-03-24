@@ -166,56 +166,14 @@ export default function RecipePrintPage() {
 
   return (
     <>
-      {/*
-
-        These styles only appear when the user prints.
-
-        The .no-print class makes the controls disappear from the printed page
-
-        so the button and inputs don't show up on the printed page.
-
-      */}
-      <style>{`
-
-        @media print {
-
-          .no-print {
-
-            display: none !important;
-
-          }
-
-          body {
-
-            background: white;
-
-          }
-
-        }
-
-      `}</style>
-      <style>{`
-  @media print {
-    .no-print {
-      display: none !important;
-    }
-
-    body {
-      background: white;
-    }
-  }
-`}</style>
-      <main className="min-h-screen bg-neutral-50 p-6">
+      <main className="min-h-screen bg-neutral-50 p-6 print:bg-white">
         <div className="mx-auto max-w-2xl">
           {/*
-
             Print controls bar that disappears when printing.
-
             Lets you change the servings and print it out as a PDF.
-
           */}
 
-          <div className="no-print mb-6 flex items-center justify-between">
+          <div className="mb-6 flex items-center justify-between print:hidden">
             <h1 className="text-3xl font-bold text-neutral-900">
               Print Preview
             </h1>
@@ -244,11 +202,8 @@ export default function RecipePrintPage() {
           </div>
 
           {/*
-
             The actual printable recipe card.
-
             This is the only thing that shows up on the printed page.
-
           */}
 
           <section className="rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
@@ -334,10 +289,7 @@ export default function RecipePrintPage() {
             </div>
 
             {/*
-
               Footer is only visible on the printed page.
-
-
             */}
 
             <div className="border-t border-neutral-200 pt-4 text-center text-xs text-neutral-400">
