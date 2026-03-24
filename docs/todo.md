@@ -40,17 +40,17 @@
 - Native image selector popup should be in "all files" mode, not just "images" mode
 - Add image upload to recipe editor (also need to adjust recipe/db schema)
 - Add rest of env vars (incl turso db) to github actions env
-- Add hat to homepage logo
+- Add hat to homepage logo??
 - Landing nav should show sign in vs view dashboard based on auth state
 - We should be redirecting to login on auth fail, not erroring
+- Better logo
+- Add "chef [name]" thing
 
 ### Notes
-- Does our DB need a users table?
 - Print page should include QR code linking back to original
 
 ### Bugs
 
-
 ### Polish
-- Logo + favicon
+- Favicon
 - More stuff on landing page
