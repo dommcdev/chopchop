@@ -45,6 +45,7 @@
 - We should be redirecting to login on auth fail, not erroring
 - Better logo
 - Add "chef [name]" thing
+- Rate limiting????
 
 ### Notes
 - Print page should include QR code linking back to original

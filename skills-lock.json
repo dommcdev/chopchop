@@ -9,22 +9,22 @@
     "clerk-backend-api": {
       "source": "clerk/skills",
       "sourceType": "github",
-      "computedHash": "4f51a8aac3bb33c5dd6ec06740e13db9c45ad40bb372c918155ea8076f80367b"
+      "computedHash": "cbaf8d4cdff65a03c49e2b7358be37d0b0a69893688d2099df77cc9c0a6e773d"
     },
     "clerk-custom-ui": {
       "source": "clerk/skills",
       "sourceType": "github",
-      "computedHash": "bf28bf1908604c50876a302c8bebd90cf31b04fcf0482ccfc542b22778677bcb"
+      "computedHash": "9b968af359a75292dc8987f7b12cca0e97c1b66f6d674dab1c6a269b93887a4d"
     },
     "clerk-nextjs-patterns": {
       "source": "clerk/skills",
       "sourceType": "github",
-      "computedHash": "c55aeca9c8ca0602af4a2bdc0370e3c349e53752177cb1187edf213f51d34636"
+      "computedHash": "57b557ba9ee0578b4b8f9aa3ee07459e211422cb0abe53d9bfb97a27cf9b6d9c"
     },
     "clerk-webhooks": {
       "source": "clerk/skills",
       "sourceType": "github",
-      "computedHash": "6a13eea450dda0b57edc358970f53c55ad7a2eb237d31decbc38e312555ddac5"
+      "computedHash": "4abf889859805f49af3bff8ccfb3a5d195453a5ee0315365821468c74c62d96a"
     },
     "deploy-to-vercel": {
       "source": "vercel-labs/agent-skills",
@@ -39,7 +39,7 @@
     "shadcn": {
       "source": "shadcn/ui",
       "sourceType": "github",
-      "computedHash": "91c02eb706f046fb9d6a061efbb96496e4be751b5b14c283cf82baaa50f3a985"
+      "computedHash": "507f011a70e8b3ae242bdc0bb5b39fd91a1d4049a0f3c281991ccf84973d591c"
     },
     "vercel-composition-patterns": {
       "source": "vercel-labs/agent-skills",
@@ -49,7 +49,7 @@
     "vercel-react-best-practices": {
       "source": "vercel-labs/agent-skills",
       "sourceType": "github",
-      "computedHash": "3462ec83f862abb2d532953df33a4dbf87f4616849da5d4b5cc7c13601aaf997"
+      "computedHash": "bbc31a48537b473ff4feea6360ef0de3bfdcbef26c14f4967a5deefe8ca801d3"
     },
     "web-design-guidelines": {
       "source": "vercel-labs/agent-skills",
