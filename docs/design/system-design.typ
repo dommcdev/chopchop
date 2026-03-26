@@ -1,5 +1,5 @@
 // --- Color Definitions ---
-#let ccgreen = rgb("2E5F46")
+#let ccgreen = rgb("006047")
 #let ccink = rgb("2D2D2D")
 #let cclink = rgb("1B5C8D")
 
@@ -8,7 +8,6 @@
 #set page(
   paper: "us-letter",
   margin: 1in,
-  // Modern Typst uses 'context' to check the current page number
   header: context {
     if counter(page).get().first() > 1 {
       grid(
@@ -58,14 +57,14 @@
   #text(18pt, weight: "bold")[Prepared By:] \
   #v(1em)
   #text(14pt)[
-    Adolfo Duran \
     Dominic McDevitt \
+    Shane Misley \
+    Adolfo Duran \
     Katie Cerda \
     Kobie Henson \
-    Shane Misley
   ] \
   #v(2em)
-  #text(14pt)[February 10, 2026] \
+  #text(14pt)[April 7, 2026] \
 
   #v(4em)
   #box(width: 85%)[
