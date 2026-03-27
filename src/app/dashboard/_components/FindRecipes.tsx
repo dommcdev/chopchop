@@ -9,6 +9,7 @@
 import { useState, useEffect } from "react";
 import { BellIcon } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 import {
   Command,
   CommandDialog,
@@ -26,6 +27,7 @@ export default function FindRecipes() {
   const [open, setValue] = useState(false);
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -67,12 +69,19 @@ export default function FindRecipes() {
           <CommandInput placeholder="Type a command or search..." />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
-            <CommandGroup heading="Navigation">
-              <CommandItem>
-                <BellIcon />
-                <span>Home</span>
-                <CommandShortcut>⌘H</CommandShortcut>
-              </CommandItem>
+            <CommandGroup heading="Recipes">
+              {recipes.map((recipe: any) => (
+                <CommandItem
+                  key={recipe.id}
+                  value={recipe.searchValue}
+                  onSelect={() => {
+                    router.push(`/dashboard/r/${recipe.slug}`);
+                    setValue(false);
+                  }}
+                >
+                  {recipe.name}
+                </CommandItem>
+              ))}
             </CommandGroup>
           </CommandList>
         </Command>
