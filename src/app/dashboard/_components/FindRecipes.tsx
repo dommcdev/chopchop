@@ -3,6 +3,7 @@
 //Actually get recipe data
 //Add hints - esc for close, #, @
 //Add ui for current ingredient/category filters
+//BUG when searching sometimes the current name doesn't show as top search result even though hitting enter selects it
 
 "use client";
 
@@ -66,10 +67,10 @@ export default function FindRecipes() {
       </Button>
       <CommandDialog open={open} onOpenChange={setValue}>
         <Command>
-          <CommandInput placeholder="Type a command or search..." />
+          <CommandInput placeholder="Find a recipe..." />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
-            <CommandGroup heading="Recipes">
+            <CommandGroup>
               {recipes.map((recipe: any) => (
                 <CommandItem
                   key={recipe.id}
