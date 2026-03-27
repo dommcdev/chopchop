@@ -1,8 +1,13 @@
+//TODO
+//Need it to be bigger overall
+//Actually get recipe data
+//Add hints - esc for close, #, @
+//Add ui for current ingredient/category filters
+
 "use client";
 
 import { useState, useEffect } from "react";
 import { BellIcon } from "@phosphor-icons/react";
-
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -15,9 +20,12 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "@/components/ui/command";
+import { fetchRecipes } from "@/data/fetchRecipes";
 
-export default function RecipeSearch() {
+export default function FindRecipes() {
   const [open, setValue] = useState(false);
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -31,6 +39,20 @@ export default function RecipeSearch() {
     return () => document.removeEventListener("keydown", down);
   }, []);
 
+  useEffect(() => {
+    async function load() {
+      try {
+        const data = await fetchRecipes(); //call our server action
+        setRecipes(data);
+      } catch (error) {
+        console.error("Failed to load recipes:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, []);
+
   return (
     <div className="flex flex-col gap-4">
       <Button
@@ -38,7 +60,7 @@ export default function RecipeSearch() {
         variant="outline"
         className="w-fit"
       >
-        Open Menu
+        Find Recipes <span className="ml-2 text-xs">⌘K</span>
       </Button>
       <CommandDialog open={open} onOpenChange={setValue}>
         <Command>

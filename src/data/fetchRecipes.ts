@@ -24,7 +24,7 @@ export type RecipeWithDetails = {
   updatedAt: string;
 };
 
-export async function getAllUserRecipes(): Promise<RecipeWithDetails[]> {
+export async function fetchRecipes(): Promise<RecipeWithDetails[]> {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
 
@@ -36,8 +36,23 @@ export async function getAllUserRecipes(): Promise<RecipeWithDetails[]> {
     },
   });
 
-  return results.map((recipe) => ({
-    ...recipe,
-    categoryName: recipe.category?.name ?? null,
-  }));
+  return results.map((recipe) => {
+    const ingredientNames = recipe.ingredients.map((i) => i.name).join(" ");
+
+    const searchValue = [
+      recipe.name,
+      recipe.category?.name,
+      recipe.description,
+      ...recipe.ingredients.map((i) => i.name),
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+    return {
+      ...recipe,
+      categoryName: recipe.category?.name ?? null,
+      searchValue,
+    };
+  });
 }
