@@ -45,7 +45,6 @@
 - We should be redirecting to login on auth fail, not erroring
 - Better logo
 - Add "chef [name]" thing
-- Add nutrition facts
 
 ### Bugs
 
@@ -55,7 +54,8 @@
 - PDF printing (add QR code)
 
 
-### Future features
+### Future features (?)
 - [ ] Advanced search page
 - [ ] Settings/preferences
 - [ ] Rate limiting, private links
+- [ ] Nutritional info
