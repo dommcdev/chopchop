@@ -45,6 +45,7 @@
 - We should be redirecting to login on auth fail, not erroring
 - Better logo
 - Add "chef [name]" thing
+- Add nutrition facts
 
 ### Bugs
 
