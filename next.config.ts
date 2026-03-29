@@ -12,9 +12,7 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "i3ae2rmmav.ufs.sh",
-        port: "",
-        pathname: "/f/**",
-        search: "",
+        pathname: "/f/*",
       },
     ],
   },
