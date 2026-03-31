@@ -1,14 +1,11 @@
 //TODO
 //Need it to be bigger overall
-//Add types to recipe data fetching
 //Add hints - esc for close, #, @
 //Add ui for current ingredient/category filters
-//BUG when searching sometimes the current name doesn't show as top search result even though hitting enter selects it
 
 "use client";
 
-import { useState, useEffect } from "react";
-import { BellIcon } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import {
@@ -19,15 +16,12 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command";
-import { fetchRecipes } from "@/data/fetchRecipes";
+import { fetchRecipes, type RecipeWithDetails } from "@/data/fetchRecipes";
 
 export default function FindRecipes() {
   const [open, setValue] = useState(false);
-  const [recipes, setRecipes] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [recipes, setRecipes] = useState<RecipeWithDetails[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -45,12 +39,10 @@ export default function FindRecipes() {
   useEffect(() => {
     async function load() {
       try {
-        const data = await fetchRecipes(); //call our server action
+        const data = await fetchRecipes();
         setRecipes(data);
       } catch (error) {
         console.error("Failed to load recipes:", error);
-      } finally {
-        setLoading(false);
       }
     }
     load();
@@ -71,18 +63,28 @@ export default function FindRecipes() {
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
-              {recipes.map((recipe: any) => (
-                <CommandItem
-                  key={recipe.id}
-                  value={recipe.searchValue}
-                  onSelect={() => {
-                    router.push(`/dashboard/r/${recipe.slug}`);
-                    setValue(false);
-                  }}
-                >
-                  {recipe.name}
-                </CommandItem>
-              ))}
+              {recipes.map((recipe) => {
+                const keywords = [
+                  recipe.name,
+                  recipe.categoryName,
+                  recipe.description,
+                  ...recipe.ingredients.map((ingredient) => ingredient.name),
+                ].filter((keyword): keyword is string => Boolean(keyword));
+
+                return (
+                  <CommandItem
+                    key={recipe.id}
+                    value={recipe.slug}
+                    keywords={keywords}
+                    onSelect={() => {
+                      router.push(`/dashboard/r/${recipe.slug}`);
+                      setValue(false);
+                    }}
+                  >
+                    {recipe.name}
+                  </CommandItem>
+                );
+              })}
             </CommandGroup>
           </CommandList>
         </Command>

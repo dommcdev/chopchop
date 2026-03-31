@@ -7,6 +7,7 @@ import { auth } from "@clerk/nextjs/server";
 
 export type RecipeWithDetails = {
   id: number;
+  slug: string;
   name: string;
   description: string | null;
   servings: number;
@@ -36,23 +37,8 @@ export async function fetchRecipes(): Promise<RecipeWithDetails[]> {
     },
   });
 
-  return results.map((recipe) => {
-    const ingredientNames = recipe.ingredients.map((i) => i.name).join(" ");
-
-    const searchValue = [
-      recipe.name,
-      recipe.category?.name,
-      recipe.description,
-      ...recipe.ingredients.map((i) => i.name),
-    ]
-      .filter(Boolean)
-      .join(" ")
-      .toLowerCase();
-
-    return {
-      ...recipe,
-      categoryName: recipe.category?.name ?? null,
-      searchValue,
-    };
-  });
+  return results.map((recipe) => ({
+    ...recipe,
+    categoryName: recipe.category?.name ?? null,
+  }));
 }
