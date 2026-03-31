@@ -2,8 +2,6 @@
 ---
 config:
   layout: elk
-  look: neo
-  theme: base
 ---
 graph TD
     User((User))
