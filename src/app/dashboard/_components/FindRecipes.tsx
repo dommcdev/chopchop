@@ -1,6 +1,6 @@
 //TODO
 //Need it to be bigger overall
-//Actually get recipe data
+//Add types to recipe data fetching
 //Add hints - esc for close, #, @
 //Add ui for current ingredient/category filters
 //BUG when searching sometimes the current name doesn't show as top search result even though hitting enter selects it

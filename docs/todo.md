@@ -35,6 +35,7 @@
 
 ### Misc
 - More fallback spinners/ui
+- Lots of caching
 - Server action to take (tweaked) recipe json from client and update db accordingly
 - TOS/Privacy policy?
 - Native image selector popup should be in "all files" mode, not just "images" mode

@@ -97,11 +97,11 @@ export default async function RecipePage({
       <div className="print:hidden">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <Link
-            href="/dashboard/search"
+            href="/dashboard"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft weight="bold" className="h-4 w-4" />
-            Back to search
+            Back to Dashboard
           </Link>
           <PrintRecipeButton />
         </div>
