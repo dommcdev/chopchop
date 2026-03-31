@@ -2,6 +2,8 @@
 ---
 config:
   layout: elk
+  look: neo
+  theme: redux
 ---
 graph TD
     User((User))
@@ -41,3 +43,5 @@ graph TD
     DB --> Viewer
     DB --> Search
 ```
+
+Paste into mermaid.live for better rendering.
