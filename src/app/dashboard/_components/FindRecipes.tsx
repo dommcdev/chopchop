@@ -2,6 +2,7 @@
 //Need it to be bigger overall
 //Add hints - esc for close, #, @
 //Add ui for current ingredient/category filters
+//Bug still present
 
 "use client";
 
