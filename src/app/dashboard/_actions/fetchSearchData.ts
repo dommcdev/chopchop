@@ -25,7 +25,7 @@ export type RecipeWithDetails = {
   updatedAt: string;
 };
 
-export async function fetchRecipes(): Promise<RecipeWithDetails[]> {
+export async function fetchSearchData(): Promise<RecipeWithDetails[]> {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
 

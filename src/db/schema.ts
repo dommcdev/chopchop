@@ -1,5 +1,6 @@
 import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core";
 import { relations, sql } from "drizzle-orm";
+import { InferSelectModel, InferInsertModel } from "drizzle-orm";
 
 // ── Categories ──────────────────────────────────────────────────────────────
 export const categories = sqliteTable("categories", {
@@ -86,3 +87,10 @@ export const instructionsRelations = relations(instructions, ({ one }) => ({
     references: [recipes.id],
   }),
 }));
+
+// Export the types so other files can use them
+export type Category = InferSelectModel<typeof categories>;
+export type NewCategory = InferInsertModel<typeof categories>;
+
+export type Recipe = InferSelectModel<typeof recipes>;
+export type NewRecipe = InferInsertModel<typeof recipes>;

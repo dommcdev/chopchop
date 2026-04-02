@@ -18,7 +18,10 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { fetchRecipes, type RecipeWithDetails } from "@/data/fetchRecipes";
+import {
+  fetchSearchData,
+  type RecipeWithDetails,
+} from "@/app/dashboard/_actions/fetchSearchData";
 
 export default function FindRecipes() {
   const [open, setValue] = useState(false);
@@ -40,7 +43,7 @@ export default function FindRecipes() {
   useEffect(() => {
     async function load() {
       try {
-        const data = await fetchRecipes();
+        const data = await fetchSearchData();
         setRecipes(data);
       } catch (error) {
         console.error("Failed to load recipes:", error);
