@@ -33,11 +33,7 @@ export default async function BrowseCategories() {
       <div className="flex flex-row flex-wrap gap-4">
         {allCategories.length > 0 ? (
           allCategories.map((category) => (
-            <CategoryCard
-              key={category.id}
-              label={category.name}
-              slug={category.slug}
-            />
+            <CategoryCard key={category.id} category={category} />
           ))
         ) : (
           <p>No categories found. Create one to get started!</p>
@@ -46,3 +42,5 @@ export default async function BrowseCategories() {
     </div>
   );
 }
+
+//TODO - add edit/delete functionality

@@ -1,18 +1,17 @@
 import Link from "next/link";
+import { Category } from "@/db/schema";
 
 interface CategoryCardProps {
-  label: string; //name of category from db
-  slug: string; //slug of category from db
+  // Use Pick to grab only what the UI needs from the DB type
+  category: Pick<Category, "name" | "slug">;
 }
 
-export default function CategoryCard({ slug, label }: CategoryCardProps) {
+export default function CategoryCard({ category }: CategoryCardProps) {
   return (
-    <Link href={`/dashboard/c/${slug}`}>
+    <Link href={`/dashboard/c/${category.slug}`}>
       <div className="category-card border-2 border-foreground rounded-none p-4">
-        <h3>{label}</h3>
+        <h3>{category.name}</h3>
       </div>
     </Link>
   );
 }
-
-//TODO edit and delete functionality
