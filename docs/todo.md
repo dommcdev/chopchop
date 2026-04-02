@@ -7,9 +7,8 @@
 - [ ] Search (Shane)
 - [ ] Recipe viewer (Kobie)
 - [ ] Recipe editor (Adolfo)
-- [ ] PDF preview/printing page (Katie)
+- [x] ~~PDF printing~~
 - [x] ~~Landing page~~
-- [ ] Settings page
 - [ ] Fullscreen categories/recipes page
 
 ### Backend
@@ -20,12 +19,14 @@
 - [x] ~~Auth~~
 - [x] ~~S3 storage bucket~~
 - [x] ~~Deploy to Vercel~~
-- [ ] Read-only links
+- [x] ~~Read-only links~~
 
 ### Documentation
 
 - [x] ~~Requirements doc~~
 - [x] ~~Design doc~~
+- [ ] Poster
+- [ ] Abstract
 - [ ] Programmer's manual
 - [ ] User manual
 - [ ] Integration task
@@ -33,12 +34,12 @@
 - [ ] Final presentation
 
 ### Misc
-
 - More fallback spinners/ui
+- Lots of caching
 - Server action to take (tweaked) recipe json from client and update db accordingly
 - TOS/Privacy policy?
 - Native image selector popup should be in "all files" mode, not just "images" mode
-- Add image upload to recipe editor (also need to adjust recipe/db schema)
+- Add image upload to recipe editor (shadcn component?)
 - Add rest of env vars (incl turso db) to github actions env
 - Add hat to homepage logo??
 - Landing nav should show sign in vs view dashboard based on auth state
@@ -46,11 +47,16 @@
 - Better logo
 - Add "chef [name]" thing
 
-### Notes
-- Print page should include QR code linking back to original
-
 ### Bugs
 
 ### Polish
 - Favicon
 - More stuff on landing page
+- PDF printing (add QR code)
+
+
+### Future features (?)
+- [ ] Advanced search page
+- [ ] Settings/preferences
+- [ ] Rate limiting, private links
+- [ ] Nutritional info

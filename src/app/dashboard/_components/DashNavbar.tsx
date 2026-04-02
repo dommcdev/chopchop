@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Show, UserButton } from "@clerk/nextjs";
 import { ThemeToggleButton } from "@/app/(landing)/_components/ThemeToggleButton";
-import SearchBar from "@/app/dashboard/_components/SearchBar";
+import FindRecipes from "@/app/dashboard/_components/FindRecipes";
 
 export function DashNavbar() {
   return (
@@ -20,7 +20,7 @@ export function DashNavbar() {
         <span className="text-2xl font-black uppercase tracking-tighter text-foreground drop-shadow-[2px_2px_0px_var(--primary)] hidden sm:block mt-1"></span>
       </Link>
       <div className="flex items-center gap-4 sm:gap-6">
-        <SearchBar />
+        <FindRecipes />
         <ThemeToggleButton />
         <Suspense>
           <Show when="signed-in">

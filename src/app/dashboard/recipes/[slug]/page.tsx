@@ -11,8 +11,8 @@ import {
   PrintableRecipeCard,
   type PrintableRecipeCardRecipe,
   type PrintableScaledIngredient,
-} from "@/app/dashboard/_components/PrintableRecipeCard";
-import { PrintRecipeButton } from "@/app/dashboard/_components/PrintRecipeButton";
+} from "@/app/dashboard/recipes/[slug]/_components/PrintableRecipeCard";
+import { PrintRecipeButton } from "@/app/dashboard/recipes/[slug]/_components/PrintRecipeButton";
 
 function resolveTargetServings(baseServings: number, targetServings?: number) {
   if (targetServings == null || targetServings <= 0) {
@@ -97,11 +97,11 @@ export default async function RecipePage({
       <div className="print:hidden">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <Link
-            href="/dashboard/search"
+            href="/dashboard"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft weight="bold" className="h-4 w-4" />
-            Back to search
+            Back to Dashboard
           </Link>
           <PrintRecipeButton />
         </div>

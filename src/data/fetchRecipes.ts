@@ -7,6 +7,7 @@ import { auth } from "@clerk/nextjs/server";
 
 export type RecipeWithDetails = {
   id: number;
+  slug: string;
   name: string;
   description: string | null;
   servings: number;
@@ -24,7 +25,7 @@ export type RecipeWithDetails = {
   updatedAt: string;
 };
 
-export async function getAllUserRecipes(): Promise<RecipeWithDetails[]> {
+export async function fetchRecipes(): Promise<RecipeWithDetails[]> {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
 
