@@ -11,8 +11,8 @@ import {
   PrintableRecipeCard,
   type PrintableRecipeCardRecipe,
   type PrintableScaledIngredient,
-} from "@/app/dashboard/_components/PrintableRecipeCard";
-import { PrintRecipeButton } from "@/app/dashboard/_components/PrintRecipeButton";
+} from "@/app/dashboard/recipes/[slug]/_components/PrintableRecipeCard";
+import { PrintRecipeButton } from "@/app/dashboard/recipes/[slug]/_components/PrintRecipeButton";
 
 function resolveTargetServings(baseServings: number, targetServings?: number) {
   if (targetServings == null || targetServings <= 0) {
