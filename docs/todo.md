@@ -4,7 +4,7 @@
 
 - [x] ~~Login page~~
 - [ ] Home page (Dominic)
-- [ ] Search (Shane)
+- [ ] Search
 - [ ] Recipe viewer (Kobie)
 - [ ] Recipe editor (Adolfo)
 - [x] ~~PDF printing~~
@@ -34,23 +34,20 @@
 - [ ] Final presentation
 
 ### Misc
+- Logo + favicon (chefs hat?)
 - More fallback spinners/ui
 - Lots of caching
 - Server action to take (tweaked) recipe json from client and update db accordingly
 - TOS/Privacy policy?
 - Native image selector popup should be in "all files" mode, not just "images" mode
 - Add image upload to recipe editor (shadcn component?)
-- Add rest of env vars (incl turso db) to github actions env
-- Add hat to homepage logo??
 - Landing nav should show sign in vs view dashboard based on auth state
 - We should be redirecting to login on auth fail, not erroring
-- Better logo
 - Add "chef [name]" thing
 
 ### Bugs
 
 ### Polish
-- Favicon
 - More stuff on landing page
 - PDF printing (add QR code)
 

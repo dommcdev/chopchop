@@ -1,3 +1,4 @@
+
 name: CI
 
 on:
@@ -9,6 +10,16 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    env:
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+      CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+      TURSO_DATABASE_URL: "file:sqlite.db"
+      UPLOADTHING_TOKEN: ${{ secrets.UPLOADTHING_TOKEN }}
+      GOOGLE_GENERATIVE_AI_API_KEY: ${{ secrets.GOOGLE_GENERATIVE_AI_API_KEY }}
+      NEXT_PUBLIC_CLERK_SIGN_IN_URL: "/login"
+      NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL: "/dashboard"
+      NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL: "/dashboard"
 
     steps:
       - name: Checkout Repo
@@ -44,7 +55,3 @@ jobs:
 
       - name: Build Project
         run: bun run build
-        env:
-          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
-          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
-          TURSO_DATABASE_URL: "file:sqlite.db"
