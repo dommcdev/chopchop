@@ -21,7 +21,7 @@ import {
 import {
   fetchSearchData,
   type RecipeWithDetails,
-} from "@/app/dashboard/_actions/fetchSearchData";
+} from "@/data/fetchSearchData";
 
 export default function FindRecipes() {
   const [open, setValue] = useState(false);

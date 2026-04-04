@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition, useRef } from "react";
-import { analyzeRecipe } from "@/data/gemini";
+import { analyzeRecipe } from "./_actions/gemini";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 

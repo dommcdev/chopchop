@@ -21,11 +21,15 @@ export function Navbar() {
       </Link>
       <div className="flex items-center gap-4 sm:gap-6">
         <ThemeToggleButton />
-        <HomeDashboardButton />
-        <Suspense>
+        <Suspense fallback={null}>
           <Show when="signed-in">
-            <div className="border-[3px] border-foreground rounded-full h-8 w-8 flex items-center justify-center bg-card">
-              <UserButton />
+            <HomeDashboardButton />
+            <div className="border-[3px] border-foreground rounded-full h-8 w-8 flex items-center justify-center bg-primary">
+              <UserButton
+                fallback={
+                  <div className="size-full rounded-full bg-card/80 animate-pulse" />
+                }
+              />
             </div>
           </Show>
         </Suspense>
