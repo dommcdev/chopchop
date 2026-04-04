@@ -22,17 +22,13 @@ export function DashNavbar() {
       <div className="flex items-center gap-4 sm:gap-6">
         <FindRecipes />
         <ThemeToggleButton />
-        <Suspense fallback={null}>
-          <Show when="signed-in">
-            <div className="border-[3px] border-foreground rounded-full h-8 w-8 flex items-center justify-center bg-card">
-              <UserButton
-                fallback={
-                  <div className="size-full rounded-full bg-card/80 animate-pulse" />
-                }
-              />
-            </div>
-          </Show>
-        </Suspense>
+        <div className="border-[3px] border-foreground rounded-full h-8 w-8 flex items-center justify-center bg-card">
+          <UserButton
+            fallback={
+              <div className="size-full rounded-full bg-card/80 animate-pulse" />
+            }
+          />
+        </div>
       </div>
     </nav>
   );

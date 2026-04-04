@@ -41,7 +41,6 @@
 - TOS/Privacy policy?
 - Native image selector popup should be in "all files" mode, not just "images" mode
 - Add image upload to recipe editor (shadcn component?)
-- Landing nav should show sign in vs view dashboard based on auth state
 - We should be redirecting to login on auth fail, not erroring
 - Add "chef [name]" thing
 
