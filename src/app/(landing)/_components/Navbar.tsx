@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Show, UserButton } from "@clerk/nextjs";
-import { HomeDashboardButton } from "@/app/(landing)/_components/HomeDashboardButton";
+import { LinkButton } from "@/app/(landing)/_components/LinkButton";
 import { ThemeToggleButton } from "@/app/(landing)/_components/ThemeToggleButton";
 
 export function Navbar() {
@@ -22,8 +22,13 @@ export function Navbar() {
       <div className="flex items-center gap-4 sm:gap-6">
         <ThemeToggleButton />
         <Suspense fallback={null}>
+          <Show when="signed-out">
+            <LinkButton href="/login" text="Sign In" />
+          </Show>
+        </Suspense>
+        <Suspense fallback={null}>
           <Show when="signed-in">
-            <HomeDashboardButton />
+            <LinkButton href="/dashboard" text="Dashboard" />
             <div className="border-[3px] border-foreground rounded-full h-8 w-8 flex items-center justify-center bg-primary">
               <UserButton
                 fallback={
