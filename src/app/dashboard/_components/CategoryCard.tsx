@@ -9,7 +9,7 @@ interface CategoryCardProps {
 export default function CategoryCard({ category }: CategoryCardProps) {
   return (
     <Link href={`/dashboard/c/${category.slug}`}>
-      <div className="category-card border-2 border-foreground rounded-none p-4">
+      <div className="category-card border-[2px] border-foreground rounded-none p-3">
         <h3>{category.name}</h3>
       </div>
     </Link>

@@ -1,9 +1,10 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Show, UserButton } from "@clerk/nextjs";
+import { Show } from "@clerk/nextjs";
 import { LinkButton } from "@/app/(landing)/_components/LinkButton";
 import { ThemeToggleButton } from "@/app/(landing)/_components/ThemeToggleButton";
+import CustomUserButton from "@/app/_components/CustomUserButton";
 
 export function Navbar() {
   return (
@@ -29,13 +30,7 @@ export function Navbar() {
         <Suspense fallback={null}>
           <Show when="signed-in">
             <LinkButton href="/dashboard" text="Dashboard" />
-            <div className="border-[3px] border-foreground rounded-full h-8 w-8 flex items-center justify-center bg-primary">
-              <UserButton
-                fallback={
-                  <div className="size-full rounded-full bg-card/80 animate-pulse" />
-                }
-              />
-            </div>
+            <CustomUserButton />
           </Show>
         </Suspense>
       </div>

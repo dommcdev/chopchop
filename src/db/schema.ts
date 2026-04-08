@@ -8,6 +8,8 @@ export const categories = sqliteTable("categories", {
   slug: text("slug").notNull(),
   userId: text("user_id").notNull(), // Logical foreign key to Clerk
   name: text("name").notNull(),
+  imageUrl: text("image_url"),
+  imageKey: text("image_key"),
   createdAt: text("created_at")
     .notNull()
     .default(sql`(current_timestamp)`),
