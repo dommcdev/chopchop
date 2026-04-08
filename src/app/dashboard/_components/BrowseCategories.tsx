@@ -30,10 +30,15 @@ export default async function BrowseCategories() {
         </Link>
       </div>
 
-      <div className="flex flex-row flex-wrap gap-4">
+      <div className="flex w-full flex-nowrap gap-4 overflow-x-auto pb-1 [scrollbar-gutter:stable]">
         {allCategories.length > 0 ? (
           allCategories.map((category) => (
-            <CategoryCard key={category.id} category={category} />
+            <div
+              key={category.id}
+              className="w-[min(100%,calc(100vw-2rem))] shrink-0 sm:w-[calc((100%-1rem)/2)] md:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-3rem)/4)] xl:w-[calc((100%-4rem)/5)]"
+            >
+              <CategoryCard category={category} />
+            </div>
           ))
         ) : (
           <p>No categories found. Create one to get started!</p>
