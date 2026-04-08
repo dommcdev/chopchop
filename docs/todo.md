@@ -1,58 +1,71 @@
 ## Project Tasks
 
-### Frontend
+### Todo
+- Search dialog
+  * Styling (make it bigger)
+  * Fix weird bug
+  * Support category & incredient filters
+  * Category/ingredient filter ui bubbles
+  * UI hints
+  * (Display more data in results??)
 
-- [x] ~~Login page~~
-- [ ] Home page (Dominic)
-- [ ] Search
-- [ ] Recipe viewer (Kobie)
-- [ ] Recipe editor (Adolfo)
-- [x] ~~PDF printing~~
-- [x] ~~Landing page~~
-- [ ] Fullscreen categories/recipes page
+- Recipe editor
+  * General layout (editable fields, draggable steps, etc)
+  * Styling
+  * Image selector for recipe image (reuse from recipe upload)
+  * Create server action to take json input and update db
+  * Call said server action (& refresh cache/ui/state/etc?)
 
-### Backend
+- Home page
+  * Styling
+  * Finalize infinite scrolling
+  * Move theme toggle to lower right
+  * Add delete button on recipe cards (+ confirmation + actual deletion logic)
 
-- [x] ~~Gemini API~~
-- [x] ~~Define SQL schemas~~
-- [ ] DB to JSON converter
-- [x] ~~Auth~~
-- [x] ~~S3 storage bucket~~
-- [x] ~~Deploy to Vercel~~
-- [x] ~~Read-only links~~
+- Recipe viewer
+  * Styling
+  * Ingredient scaling
 
-### Documentation
+- `Add recipe` button
+  * Add ui to navbar
+  * Add file upload dialog (shadcn? uploadthing's?) with user hints (make sure native selector is in all files mode)
+  * `Processing` ui while Gemini is working
 
-- [x] ~~Requirements doc~~
-- [x] ~~Design doc~~
-- [ ] Poster
-- [ ] Abstract
-- [ ] Programmer's manual
-- [ ] User manual
-- [ ] Integration task
-- [ ] Final testing
-- [ ] Final presentation
+- PDF printing
+  * Add QR code/short link
+  * Finalize layout/styling
 
-### Misc
-- Logo + favicon (chefs hat?)
-- More fallback spinners/ui
-- Lots of caching
-- Server action to take (tweaked) recipe json from client and update db accordingly
-- TOS/Privacy policy?
-- Native image selector popup should be in "all files" mode, not just "images" mode
-- Add image upload to recipe editor (shadcn component?)
-- We should be redirecting to login on auth fail, not erroring
-- Add "chef [name]" thing
+- Optimizations & Tweaks
+  * Cache categories, etc.
+  * Make sure suspense boundaries etc are placed correctly
+  * Loading spinners when needed
+
+- Errors
+  * Return error message objects on auth check failures (backend)
+  * Make error toast message for ui
+
+- Categories
+  * Add delete/rename ui to cards
+  * Confirmation dialog if category contains recipes
+  * Logic to edit those recipes to change category to `uncategorized`
+
+- TOS/Privacy Policy pages
+- Simple footer
+- Better logo, favicon (chefs hat)
+- Full recipes page (alphabetical order by default or allow to change?)
+- Full categories page (simple)
+
+
+### Low Priority
+- Bulk recipe json exporter
+- More stuff on landing page
 
 ### Bugs
 
-### Polish
-- More stuff on landing page
-- PDF printing (add QR code)
-
-
 ### Future features (?)
+- [ ] Bulk recipe ingest/queuing
+- [ ] Rate limiting, private links
 - [ ] Advanced search page
 - [ ] Settings/preferences
-- [ ] Rate limiting, private links
 - [ ] Nutritional info
+- [ ] Welcome popup with "chef" title?
