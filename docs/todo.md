@@ -51,7 +51,7 @@
   * Add create category ui
 
 - TOS/Privacy Policy pages
-- Better logo, favicon (chefs hat)
+- Better logo
 - Full recipes page (alphabetical order by default or allow to change?)
 - Full categories page (simple)
 
