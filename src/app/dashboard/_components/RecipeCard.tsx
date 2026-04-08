@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Recipe } from "@/db/schema";
 
@@ -22,10 +23,12 @@ export default function RecipeCard({ recipe }: { recipe: Recipe }) {
     >
       <div className="relative aspect-[4/3] border-b-[3px] border-foreground overflow-hidden bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:1.2rem_1.2rem] bg-muted">
         {recipe.imageUrl ? (
-          <img
+          <Image
             src={recipe.imageUrl}
             alt={recipe.name}
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full items-end justify-between bg-[radial-gradient(circle_at_top_left,var(--primary)_0%,transparent_45%)] p-4">

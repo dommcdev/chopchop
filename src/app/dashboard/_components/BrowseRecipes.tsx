@@ -79,7 +79,7 @@ export default function BrowseRecipes({
         )}
         {!hasMore && items.length > 0 && (
           <p className="text-sm text-muted-foreground">
-            You've reached the end!
+            You&apos;ve reached the end!
           </p>
         )}
       </div>

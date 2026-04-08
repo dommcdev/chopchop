@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import FindRecipes from "@/app/dashboard/_components/FindRecipes";
 import CustomUserButton from "@/app/_components/CustomUserButton";
+import SearchBox from "@/app/dashboard/_components/SearchBox";
 
 export function DashNavbar() {
   return (
@@ -18,7 +18,7 @@ export function DashNavbar() {
         <span className="text-2xl font-black uppercase tracking-tighter text-foreground drop-shadow-[2px_2px_0px_var(--primary)] hidden sm:block mt-1"></span>
       </Link>
       <div className="flex items-center gap-4 sm:gap-6">
-        <FindRecipes />
+        <SearchBox />
         <CustomUserButton />
       </div>
     </nav>
