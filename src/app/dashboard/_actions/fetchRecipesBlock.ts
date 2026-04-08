@@ -1,12 +1,14 @@
+// This file allows the BrowseRecipes component to fetch more recipes as necessary.
+
 "use server";
 
-import { getRecipes } from "@/data/recipes";
+import { fetchRecipesBlock as fetchRecipesFromDAL } from "@/data/recipes";
 
 export async function fetchRecipesBlock(page: number) {
-  const limit = 12; // Match the DAL default
+  const limit = 12;
   const offset = page * limit;
 
-  const data = await getRecipes(limit, offset);
+  const data = await fetchRecipesFromDAL(limit, offset);
 
   if (data.length === 0) return null;
 
