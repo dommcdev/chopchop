@@ -1,8 +1,6 @@
 import BrowseCategories from "@/app/dashboard/_components/BrowseCategories";
-import { FillDatabaseButton } from "@/app/dashboard/_components/FillDatabaseButton";
-import RecipeCard from "@/app/dashboard/_components/RecipeCard";
-import { fetchRecipesBlock } from "@/data/recipes";
 import BrowseRecipes from "@/app/dashboard/_components/BrowseRecipes";
+import { fetchRecipesBlock } from "@/data/recipes";
 
 export default async function DashboardPage() {
   const initialRecipes = await fetchRecipesBlock(12, 0);
@@ -13,12 +11,7 @@ export default async function DashboardPage() {
         <BrowseCategories />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {initialRecipes.map((recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
-        ))}
-        <BrowseRecipes />
-      </div>
+      <BrowseRecipes initialItems={initialRecipes} />
     </main>
   );
 }

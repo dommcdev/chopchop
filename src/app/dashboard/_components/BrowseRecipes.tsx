@@ -1,45 +1,64 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import RecipeCard from "@/app/dashboard/_components/RecipeCard";
 import { Recipe } from "@/db/schema";
-import { fetchRecipesBlock } from "../_actions/fetchRecipesBlock";
+import { fetchRecipesBlock } from "@/app/dashboard/_actions/fetchRecipesBlock";
 
-export default function BrowseCategories({
+const PAGE_SIZE = 12;
+
+function computeInitialHasMore(items: Recipe[]) {
+  return items.length === 0 || items.length === PAGE_SIZE;
+}
+
+export default function BrowseRecipes({
   initialItems = [],
 }: {
   initialItems?: Recipe[];
 }) {
   const [items, setItems] = useState<Recipe[]>(initialItems);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
+  const pageRef = useRef(initialItems.length > 0 ? 1 : 0);
+  const hasMoreRef = useRef(computeInitialHasMore(initialItems));
+  const [hasMore, setHasMore] = useState(() =>
+    computeInitialHasMore(initialItems),
+  );
+  const loadingRef = useRef(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { ref, inView } = useInView({
+  const { ref } = useInView({
     rootMargin: "200px",
-  });
+    onChange: (inView) => {
+      if (!inView || !hasMoreRef.current || loadingRef.current) return;
 
-  useEffect(() => {
-    async function loadMore() {
-      if (inView && hasMore && !isLoading) {
-        setIsLoading(true);
+      loadingRef.current = true;
+      setIsLoading(true);
 
-        // Call the SERVER ACTION, not the DAL
-        const newRecipes = await fetchRecipesBlock(page);
+      void fetchRecipesBlock(pageRef.current)
+        .then((newRecipes) => {
+          loadingRef.current = false;
+          setIsLoading(false);
 
-        if (newRecipes && newRecipes.length > 0) {
+          if (!newRecipes || newRecipes.length === 0) {
+            hasMoreRef.current = false;
+            setHasMore(false);
+            return;
+          }
+
           setItems((prev) => [...prev, ...newRecipes]);
-          setPage((prev) => prev + 1);
-        } else {
-          setHasMore(false);
-        }
-        setIsLoading(false);
-      }
-    }
+          pageRef.current += 1;
 
-    loadMore();
-  }, [inView, hasMore, page, isLoading]);
+          if (newRecipes.length < PAGE_SIZE) {
+            hasMoreRef.current = false;
+            setHasMore(false);
+          }
+        })
+        .catch(() => {
+          loadingRef.current = false;
+          setIsLoading(false);
+        });
+    },
+  });
 
   return (
     <>
@@ -49,7 +68,6 @@ export default function BrowseCategories({
         ))}
       </div>
 
-      {/* Trigger for Intersection Observer */}
       <div
         ref={ref}
         className="h-20 col-span-full flex justify-center items-center"
