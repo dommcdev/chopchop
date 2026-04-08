@@ -1,3 +1,4 @@
+import BrowseCategoriesCarousel from "./BrowseCategoriesCarousel";
 import CategoryCard from "./CategoryCard";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
@@ -30,20 +31,20 @@ export default async function BrowseCategories() {
         </Link>
       </div>
 
-      <div className="flex w-full flex-nowrap gap-4 overflow-x-auto pb-1 [scrollbar-gutter:stable]">
-        {allCategories.length > 0 ? (
-          allCategories.map((category) => (
+      {allCategories.length > 0 ? (
+        <BrowseCategoriesCarousel>
+          {allCategories.map((category) => (
             <div
               key={category.id}
-              className="w-[min(100%,calc(100vw-2rem))] shrink-0 sm:w-[calc((100%-1rem)/2)] md:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-3rem)/4)] xl:w-[calc((100%-4rem)/5)]"
+              className="w-[min(88vw,17.5rem)] shrink-0 snap-start md:w-56"
             >
               <CategoryCard category={category} />
             </div>
-          ))
-        ) : (
-          <p>No categories found. Create one to get started!</p>
-        )}
-      </div>
+          ))}
+        </BrowseCategoriesCarousel>
+      ) : (
+        <p>No categories found. Create one to get started!</p>
+      )}
     </div>
   );
 }
