@@ -78,11 +78,6 @@ export default function BrowseRecipes({
             Fetching more recipes...
           </p>
         )}
-        {!hasMore && items.length > 0 && (
-          <p className="text-sm text-muted-foreground">
-            You&apos;ve reached the end!
-          </p>
-        )}
       </div>
     </>
   );

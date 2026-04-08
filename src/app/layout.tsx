@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { shadcn } from "@clerk/ui/themes";
+import { SiteFooter } from "@/components/site-footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import "./globals.css";
+import { Suspense } from "react";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -37,7 +39,12 @@ export default function RootLayout({
       <body>
         <ThemeProvider>
           <ClerkProvider appearance={{ theme: shadcn }}>
-            {children}
+            <div className="flex min-h-screen flex-col">
+              <div className="flex-1">{children}</div>
+              <Suspense>
+                <SiteFooter />
+              </Suspense>
+            </div>
           </ClerkProvider>
         </ThemeProvider>
       </body>
