@@ -42,5 +42,3 @@ export default async function BrowseCategories() {
     </div>
   );
 }
-
-//TODO - add edit/delete functionality
