@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { MagnifyingGlassIcon } from "@phosphor-icons/react/dist/ssr";
 import { useRouter } from "next/navigation";
 import {
   Command,
@@ -51,9 +52,10 @@ export default function FindRecipes() {
       <Button
         onClick={() => setValue(true)}
         variant="outline"
-        className="w-fit"
+        className="w-fit border-2 p-3 border-foreground rounded-none font-bold"
       >
-        Find Recipes <span className="ml-2 text-xs">⌘K</span>
+        <MagnifyingGlassIcon className="h-6 w-6 shrink-0" weight="bold" />
+        Find Recipe <div className="border-1 p-0.5 ml-2 text-xs">Ctrl K</div>
       </Button>
       <CommandDialog open={open} onOpenChange={setValue}>
         <Command>

@@ -18,7 +18,7 @@ export default function RecipeCard({ recipe }: { recipe: Recipe }) {
   return (
     <Link
       href={`/dashboard/r/${recipe.slug}`}
-      className="group flex h-full flex-col overflow-hidden border-[3px] border-foreground bg-card shadow-[6px_6px_0px_0px_var(--foreground)] transition-all duration-200 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[10px_10px_0px_0px_var(--primary)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+      className="group flex h-full flex-col overflow-hidden border-[3px] border-foreground bg-card transition-all duration-200 hover:-translate-x-1 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
     >
       <div className="relative aspect-[4/3] border-b-[3px] border-foreground overflow-hidden bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:1.2rem_1.2rem] bg-muted">
         {recipe.imageUrl ? (

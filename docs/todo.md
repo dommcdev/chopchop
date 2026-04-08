@@ -48,6 +48,7 @@
   * Add delete/rename ui to cards
   * Confirmation dialog if category contains recipes
   * Logic to edit those recipes to change category to `uncategorized`
+  * Add create category ui
 
 - TOS/Privacy Policy pages
 - Simple footer

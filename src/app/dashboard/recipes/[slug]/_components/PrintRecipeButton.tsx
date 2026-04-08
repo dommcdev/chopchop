@@ -8,7 +8,7 @@ export function PrintRecipeButton() {
     <Button
       type="button"
       variant="outline"
-      className="inline-flex items-center gap-2 border-[2px] border-foreground rounded-none shadow-[4px_4px_0px_0px_var(--foreground)] font-bold"
+      className="inline-flex items-center gap-2 border-[2px] border-foreground rounded-none font-bold"
       onClick={() => window.print()}
     >
       <Printer size={20} weight="bold" />

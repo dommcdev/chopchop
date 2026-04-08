@@ -8,11 +8,8 @@ export default async function DashboardPage() {
   const initialRecipes = await getRecipes(12, 0);
 
   return (
-    <main className="p-8 max-w-6xl mx-auto">
+    <main className="p-3 max-w-6xl mx-auto">
       <div className="flex flex-col gap-6">
-        <div className="flex justify-end">
-          <FillDatabaseButton />
-        </div>
         <BrowseCategories />
       </div>
 

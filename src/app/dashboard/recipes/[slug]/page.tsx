@@ -12,7 +12,7 @@ import {
   type PrintableRecipeCardRecipe,
   type PrintableScaledIngredient,
 } from "@/app/dashboard/recipes/[slug]/_components/PrintableRecipeCard";
-import { PrintRecipeButton } from "@/app/dashboard/recipes/[slug]/_components/PrintRecipeButton";
+import { RecipeViewToolbar } from "@/app/dashboard/recipes/[slug]/_components/RecipeViewToolbar";
 
 function resolveTargetServings(baseServings: number, targetServings?: number) {
   if (targetServings == null || targetServings <= 0) {
@@ -93,7 +93,7 @@ export default async function RecipePage({
   };
 
   return (
-    <div className="mx-auto max-w-4xl p-4 sm:p-6 lg:p-8">
+    <div className="mx-auto max-w-4xl p-4 sm:p-6 lg:max-w-5xl lg:p-8 xl:max-w-6xl">
       <div className="print:hidden">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <Link
@@ -103,59 +103,88 @@ export default async function RecipePage({
             <ArrowLeft weight="bold" className="h-4 w-4" />
             Back to Dashboard
           </Link>
-          <PrintRecipeButton />
         </div>
 
-        <div className="border-[3px] border-foreground rounded-none shadow-[8px_8px_0px_0px_var(--foreground)] bg-card overflow-hidden">
-          {/* Header */}
-          <div className="border-b-[3px] border-foreground p-6">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1">
-                <h1 className="text-3xl font-black tracking-tighter mb-2">
-                  {recipe.name}
-                </h1>
-                {recipe.description && (
-                  <p className="text-sm text-muted-foreground">
-                    {recipe.description}
-                  </p>
-                )}
-              </div>
-              {recipe.category && (
-                <span className="text-xs border-[2px] border-foreground px-2 py-1 rounded-none bg-primary/10 font-bold uppercase tracking-wider">
-                  {recipe.category.name}
-                </span>
-              )}
-            </div>
-
-            <div className="mt-4 flex flex-wrap gap-4 text-xs">
-              <div className="flex items-center gap-1">
-                <span className="font-bold">Servings:</span>
-                <span>{recipe.servings}</span>
-              </div>
-              {recipe.prepTime && (
-                <div className="flex items-center gap-1">
-                  <span className="font-bold">Prep:</span>
-                  <span>{recipe.prepTime} min</span>
-                </div>
-              )}
-              {recipe.cookTime && (
-                <div className="flex items-center gap-1">
-                  <span className="font-bold">Cook:</span>
-                  <span>{recipe.cookTime} min</span>
-                </div>
-              )}
-            </div>
+        <div className="relative border-[3px] border-foreground rounded-none bg-card overflow-hidden">
+          <div className="absolute right-3 top-3 z-20 print:hidden">
+            <RecipeViewToolbar recipeSlug={recipe.slug} />
           </div>
 
-          <div className="grid md:grid-cols-[1fr_2fr]">
-            {/* Ingredients */}
-            <div className="p-6 border-b-[3px] md:border-b-0 md:border-r-[3px] border-foreground">
-              <h2 className="text-xl font-black tracking-tighter mb-4 uppercase">
+          {/*
+            < md: single column. md+: 2×2 — [ photo | title/meta ] / [ ingredients | instructions ].
+            (2×2 was lg-only before + md:col-span-2 on photo/header, so most “desktop” widths still looked stacked.)
+          */}
+          <div className="grid grid-cols-1 md:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] md:grid-rows-[auto_minmax(0,1fr)] lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)]">
+            {recipe.imageUrl ? (
+              <div className="relative col-span-1 aspect-[4/3] w-full overflow-hidden border-b-[3px] border-foreground bg-muted md:col-span-1 md:row-start-1 md:aspect-auto md:max-h-56 md:min-h-[10rem] md:border-b-[3px] md:border-r-[3px] lg:max-h-60 lg:min-h-[11rem]">
+                <img
+                  src={recipe.imageUrl}
+                  alt={recipe.name}
+                  className="h-full w-full object-cover md:absolute md:inset-0"
+                />
+              </div>
+            ) : (
+              <div className="relative col-span-1 aspect-[4/3] w-full overflow-hidden border-b-[3px] border-foreground bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:1.2rem_1.2rem] bg-muted md:col-span-1 md:row-start-1 md:aspect-auto md:min-h-[10rem] md:max-h-56 md:border-b-[3px] md:border-r-[3px] lg:min-h-[11rem] lg:max-h-60">
+                <div className="flex h-full min-h-[inherit] items-end justify-between bg-[radial-gradient(circle_at_top_left,var(--primary)_0%,transparent_45%)] p-4 md:absolute md:inset-0">
+                  <span className="border-[2px] border-foreground bg-background px-2 py-1 text-[10px] font-black uppercase tracking-[0.24em] text-foreground">
+                    No Photo
+                  </span>
+                  <span className="text-4xl font-black leading-none text-foreground/10">
+                    CC
+                  </span>
+                </div>
+              </div>
+            )}
+
+            <div className="col-span-1 flex min-w-0 flex-col justify-center border-b-[3px] border-foreground p-5 sm:p-6 md:col-span-1 md:col-start-2 md:row-start-1 md:border-b-[3px]">
+              <div className="flex items-start justify-between gap-4">
+                <div className="min-w-0 flex-1">
+                  <h1 className="mb-2 text-2xl font-black tracking-tighter sm:text-3xl md:text-4xl">
+                    {recipe.name}
+                  </h1>
+                  {recipe.description && (
+                    <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
+                      {recipe.description}
+                    </p>
+                  )}
+                </div>
+                {recipe.category && (
+                  <span className="shrink-0 text-xs border-[2px] border-foreground px-2 py-1 font-bold uppercase tracking-wider bg-primary/10">
+                    {recipe.category.name}
+                  </span>
+                )}
+              </div>
+
+              <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-xs">
+                <div className="flex items-center gap-1">
+                  <span className="font-bold">Servings:</span>
+                  <span>{recipe.servings}</span>
+                </div>
+                {recipe.prepTime && (
+                  <div className="flex items-center gap-1">
+                    <span className="font-bold">Prep:</span>
+                    <span>{recipe.prepTime} min</span>
+                  </div>
+                )}
+                {recipe.cookTime && (
+                  <div className="flex items-center gap-1">
+                    <span className="font-bold">Cook:</span>
+                    <span>{recipe.cookTime} min</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="col-span-1 border-b-[3px] border-foreground p-5 md:col-span-1 md:col-start-1 md:row-start-2 md:min-w-0 md:border-b-0 md:border-r-[3px] md:p-6">
+              <h2 className="mb-4 text-xl font-black uppercase tracking-tighter">
                 Ingredients
               </h2>
               <ul className="space-y-2">
                 {recipe.ingredients.map((ingredient) => (
-                  <li key={ingredient.id} className="text-sm flex gap-2">
+                  <li
+                    key={ingredient.id}
+                    className="flex gap-2 break-words text-sm"
+                  >
                     <span className="text-primary font-bold">•</span>
                     <span>
                       {ingredient.quantity && ingredient.unit && (
@@ -170,18 +199,17 @@ export default async function RecipePage({
               </ul>
             </div>
 
-            {/* Instructions */}
-            <div className="p-6">
-              <h2 className="text-xl font-black tracking-tighter mb-4 uppercase">
+            <div className="col-span-1 min-w-0 p-5 sm:p-6 md:col-span-1 md:col-start-2 md:row-start-2">
+              <h2 className="mb-4 text-xl font-black uppercase tracking-tighter">
                 Instructions
               </h2>
-              <ol className="space-y-4">
+              <ol className="list-none space-y-4">
                 {recipe.instructions.map((instruction) => (
                   <li key={instruction.id} className="flex gap-3">
-                    <span className="flex-shrink-0 flex items-center justify-center h-7 w-7 rounded-none border-[2px] border-foreground bg-primary font-bold text-xs text-primary-foreground">
-                      {instruction.stepNumber}
+                    <span className="w-6 flex-shrink-0 pt-0.5 text-right text-xs font-semibold tabular-nums text-muted-foreground">
+                      {instruction.stepNumber}.
                     </span>
-                    <p className="text-sm pt-1">{instruction.text}</p>
+                    <p className="pt-0.5 text-sm">{instruction.text}</p>
                   </li>
                 ))}
               </ol>
