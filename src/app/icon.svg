@@ -2,12 +2,7 @@
   <defs>
     <style>
       .hat {
-        fill: #006047;
-      }
-      @media (prefers-color-scheme: dark) {
-        .hat {
-          fill: #4fd4a8;
-        }
+        fill: #228d75;
       }
     </style>
   </defs>
