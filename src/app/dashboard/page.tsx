@@ -6,7 +6,7 @@ export default async function DashboardPage() {
   const initialRecipes = await fetchRecipesBlock(12, 0);
 
   return (
-    <main className="p-3 max-w-6xl mx-auto">
+    <main className="mx-auto max-w-screen-2xl p-3">
       <div className="flex flex-col gap-6">
         <BrowseCategories />
       </div>

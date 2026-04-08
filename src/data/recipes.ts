@@ -15,13 +15,15 @@ async function checkAuth() {
 export async function fetchRecipesBlock(limit: number = 6, offset: number = 0) {
   const userId = await checkAuth();
 
-  return await db
-    .select()
-    .from(recipes)
-    .where(eq(recipes.userId, userId))
-    .orderBy(desc(recipes.createdAt))
-    .limit(limit)
-    .offset(offset);
+  return await db.query.recipes.findMany({
+    where: eq(recipes.userId, userId),
+    orderBy: (r, { desc: descCol }) => [descCol(r.createdAt)],
+    limit,
+    offset,
+    with: {
+      category: true,
+    },
+  });
 }
 
 // Fetch all recipes for a user, for use in search

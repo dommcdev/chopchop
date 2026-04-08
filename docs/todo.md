@@ -20,7 +20,7 @@
   * Styling
   * Finalize infinite scrolling
   * Move theme toggle to lower right
-  * Add delete button on recipe cards (+ confirmation + actual deletion logic)
+  * Add 3-dot dropdown on recipe cards with delete option (+ confirmation + actual deletion logic)
 
 - Recipe viewer
   * Styling

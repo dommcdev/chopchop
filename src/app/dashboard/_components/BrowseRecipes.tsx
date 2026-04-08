@@ -2,22 +2,23 @@
 
 import { useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import RecipeCard from "@/app/dashboard/_components/RecipeCard";
-import { Recipe } from "@/db/schema";
+import RecipeCard, {
+  type RecipeCardRecipe,
+} from "@/app/dashboard/_components/RecipeCard";
 import { fetchRecipesBlock } from "@/app/dashboard/_actions/fetchRecipesBlock";
 
 const PAGE_SIZE = 12;
 
-function computeInitialHasMore(items: Recipe[]) {
+function computeInitialHasMore(items: RecipeCardRecipe[]) {
   return items.length === 0 || items.length === PAGE_SIZE;
 }
 
 export default function BrowseRecipes({
   initialItems = [],
 }: {
-  initialItems?: Recipe[];
+  initialItems?: RecipeCardRecipe[];
 }) {
-  const [items, setItems] = useState<Recipe[]>(initialItems);
+  const [items, setItems] = useState<RecipeCardRecipe[]>(initialItems);
   const pageRef = useRef(initialItems.length > 0 ? 1 : 0);
   const hasMoreRef = useRef(computeInitialHasMore(initialItems));
   const [hasMore, setHasMore] = useState(() =>
@@ -62,7 +63,7 @@ export default function BrowseRecipes({
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
         {items.map((recipe) => (
           <RecipeCard key={recipe.id} recipe={recipe} />
         ))}
