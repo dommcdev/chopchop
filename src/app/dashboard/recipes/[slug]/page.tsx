@@ -5,6 +5,7 @@ import { db } from "@/db";
 import { recipes } from "@/db/schema";
 import { and, eq, or } from "drizzle-orm";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import {
@@ -110,17 +111,16 @@ export default async function RecipePage({
             <RecipeViewToolbar recipeSlug={recipe.slug} />
           </div>
 
-          {/*
-            < md: single column. md+: 2×2 — [ photo | title/meta ] / [ ingredients | instructions ].
-            (2×2 was lg-only before + md:col-span-2 on photo/header, so most “desktop” widths still looked stacked.)
-          */}
           <div className="grid grid-cols-1 md:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] md:grid-rows-[auto_minmax(0,1fr)] lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)]">
             {recipe.imageUrl ? (
               <div className="relative col-span-1 aspect-[4/3] w-full overflow-hidden border-b-[3px] border-foreground bg-muted md:col-span-1 md:row-start-1 md:aspect-auto md:max-h-56 md:min-h-[10rem] md:border-b-[3px] md:border-r-[3px] lg:max-h-60 lg:min-h-[11rem]">
-                <img
+                <Image
                   src={recipe.imageUrl}
                   alt={recipe.name}
-                  className="h-full w-full object-cover md:absolute md:inset-0"
+                  fill
+                  sizes="(min-width: 1024px) 17rem, (min-width: 768px) 14rem, 100vw"
+                  className="object-cover"
+                  priority
                 />
               </div>
             ) : (
@@ -136,26 +136,24 @@ export default async function RecipePage({
               </div>
             )}
 
-            <div className="col-span-1 flex min-w-0 flex-col justify-center border-b-[3px] border-foreground p-5 sm:p-6 md:col-span-1 md:col-start-2 md:row-start-1 md:border-b-[3px]">
-              <div className="flex items-start justify-between gap-4">
-                <div className="min-w-0 flex-1">
-                  <h1 className="mb-2 text-2xl font-black tracking-tighter sm:text-3xl md:text-4xl">
-                    {recipe.name}
-                  </h1>
-                  {recipe.description && (
-                    <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
-                      {recipe.description}
-                    </p>
-                  )}
-                </div>
-                {recipe.category && (
-                  <span className="shrink-0 text-xs border-[2px] border-foreground px-2 py-1 font-bold uppercase tracking-wider bg-primary/10">
-                    {recipe.category.name}
-                  </span>
+            <div className="col-span-1 flex min-w-0 flex-col justify-center border-b-[3px] border-foreground p-5 sm:p-6 md:col-span-1 md:col-start-2 md:row-start-1 md:border-b-[3px] md:pr-28">
+              <div className="min-w-0">
+                <h1 className="mb-2 text-2xl font-black tracking-tighter sm:text-3xl md:text-4xl">
+                  {recipe.name}
+                </h1>
+                {recipe.description && (
+                  <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
+                    {recipe.description}
+                  </p>
                 )}
               </div>
 
-              <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-xs">
+              <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs">
+                {recipe.category && (
+                  <span className="shrink-0 border-[2px] border-foreground bg-primary/10 px-2 py-1 font-bold uppercase tracking-wider">
+                    {recipe.category.name}
+                  </span>
+                )}
                 <div className="flex items-center gap-1">
                   <span className="font-bold">Servings:</span>
                   <span>{recipe.servings}</span>
