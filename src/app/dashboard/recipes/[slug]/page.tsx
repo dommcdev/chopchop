@@ -14,12 +14,12 @@ import {
 import { RecipeViewToolbar } from "@/app/dashboard/recipes/[slug]/_components/RecipeViewToolbar";
 import { cn } from "@/lib/utils";
 
-/** Left media column: compact beside ingredients on small screens; hero strip from md up. */
+/** Left column from md; on small screens the photo sits in the narrow column (here, end / right). */
 const recipeMediaShellClassName = cn(
   "relative h-full min-h-0 w-full overflow-hidden bg-muted",
-  // Mobile split row: keep the photo narrow + shorter than full-bleed 4:3
-  "aspect-[3/4] max-h-52 border-r-[3px] border-foreground",
-  "md:aspect-auto md:max-h-none md:min-h-[10rem] md:max-h-56 md:border-b-0",
+  // Mobile split row: photo on the right; divider on the inner edge of the image
+  "aspect-[3/4] max-h-52 border-l-[3px] border-foreground md:border-l-0",
+  "md:aspect-auto md:max-h-none md:min-h-[10rem] md:max-h-56 md:border-b-[3px] md:border-r-[3px]",
   "lg:min-h-[11rem] lg:max-h-60",
 );
 
@@ -99,7 +99,7 @@ export default async function RecipePage({
         src={recipe.imageUrl}
         alt={recipe.name}
         fill
-        sizes="(max-width: 767px) 42vw, (min-width: 1024px) 17rem, 14rem"
+        sizes="(max-width: 767px) 40vw, (min-width: 1024px) 17rem, 14rem"
         className="object-cover"
         priority
       />
@@ -181,11 +181,7 @@ export default async function RecipePage({
               </div>
             </div>
 
-            <div className="grid min-h-0 min-w-0 grid-cols-[minmax(0,40%)_minmax(0,1fr)] border-b-[3px] border-foreground md:contents md:min-h-0 md:border-b-0">
-              <div className="min-h-0 min-w-0 md:col-start-1 md:row-start-1 md:flex md:h-full md:flex-col">
-                {mediaBlock}
-              </div>
-
+            <div className="grid min-h-0 min-w-0 grid-cols-[minmax(0,1fr)_minmax(0,50%)] border-b-[3px] border-foreground md:contents md:min-h-0 md:border-b-0">
               <div className="min-w-0 p-4 sm:p-5 md:col-start-1 md:row-start-2 md:flex md:h-full md:flex-col md:border-r-[3px] md:border-foreground md:p-6">
                 <h2 className="mb-3 text-lg font-black uppercase tracking-tighter md:mb-4 md:text-xl">
                   Ingredients
@@ -208,6 +204,10 @@ export default async function RecipePage({
                     </li>
                   ))}
                 </ul>
+              </div>
+
+              <div className="min-h-0 min-w-0 md:col-start-1 md:row-start-1 md:flex md:h-full md:flex-col">
+                {mediaBlock}
               </div>
             </div>
 

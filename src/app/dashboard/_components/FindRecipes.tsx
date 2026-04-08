@@ -13,14 +13,15 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import {
-  fetchSearchData,
-  type RecipeWithDetails,
-} from "@/data/fetchSearchData";
+import { type RecipeWithDetails } from "@/types/recipes";
 
-export default function FindRecipes() {
+export default function FindRecipes({
+  initialRecipes = [],
+}: {
+  initialRecipes: RecipeWithDetails[];
+}) {
   const [open, setValue] = useState(false);
-  const [recipes, setRecipes] = useState<RecipeWithDetails[]>([]);
+  const [recipes] = useState(initialRecipes);
   const router = useRouter();
 
   useEffect(() => {
@@ -33,18 +34,6 @@ export default function FindRecipes() {
 
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
-  }, []);
-
-  useEffect(() => {
-    async function load() {
-      try {
-        const data = await fetchSearchData();
-        setRecipes(data);
-      } catch (error) {
-        console.error("Failed to load recipes:", error);
-      }
-    }
-    load();
   }, []);
 
   return (

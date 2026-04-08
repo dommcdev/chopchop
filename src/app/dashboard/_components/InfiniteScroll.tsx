@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { fetchRecipesBlock } from "../_actions/fetchRecipesBlock";
+import { fetchRecipesBlock } from "@/data/recipes";
 import RecipeCard from "@/app/dashboard/_components/RecipeCard";
 import { Recipe } from "@/db/schema";
 

@@ -2,10 +2,10 @@ import BrowseCategories from "@/app/dashboard/_components/BrowseCategories";
 import { FillDatabaseButton } from "@/app/dashboard/_components/FillDatabaseButton";
 import InfiniteScroll from "@/app/dashboard/_components/InfiniteScroll";
 import RecipeCard from "@/app/dashboard/_components/RecipeCard";
-import { getRecipes } from "@/data/recipes";
+import { fetchRecipesBlock } from "@/data/recipes";
 
 export default async function DashboardPage() {
-  const initialRecipes = await getRecipes(12, 0);
+  const initialRecipes = await fetchRecipesBlock(12, 0);
 
   return (
     <main className="p-3 max-w-6xl mx-auto">
