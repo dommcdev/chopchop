@@ -12,7 +12,7 @@ async function checkAuth() {
 }
 
 // Fetch block of recipes for homepage infinite scroll
-export async function fetchRecipesBlock(limit: number = 6, offset: number = 0) {
+export async function fetchRecipesBlock(limit: number, offset: number) {
   const userId = await checkAuth();
 
   return await db.query.recipes.findMany({

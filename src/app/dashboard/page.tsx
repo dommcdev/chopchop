@@ -3,7 +3,7 @@ import BrowseRecipes from "@/app/dashboard/_components/BrowseRecipes";
 import { fetchRecipesBlock } from "@/data/recipes";
 
 export default async function DashboardPage() {
-  const initialRecipes = await fetchRecipesBlock(12, 0);
+  const initialRecipes = await fetchRecipesBlock(15, 0);
 
   return (
     <main className="mx-auto max-w-screen-2xl p-3">

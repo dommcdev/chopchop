@@ -8,7 +8,8 @@ import RecipeCard, {
 import { fetchRecipesBlock } from "@/app/dashboard/_actions/fetchRecipesBlock";
 import Link from "next/link";
 
-const PAGE_SIZE = 12;
+// How many recipes to fetch at a time
+const PAGE_SIZE = 15;
 
 function computeInitialHasMore(items: RecipeCardRecipe[]) {
   return items.length === 0 || items.length === PAGE_SIZE;
@@ -36,7 +37,7 @@ export default function BrowseRecipes({
       loadingRef.current = true;
       setIsLoading(true);
 
-      void fetchRecipesBlock(pageRef.current)
+      void fetchRecipesBlock(PAGE_SIZE, pageRef.current)
         .then((newRecipes) => {
           loadingRef.current = false;
           setIsLoading(false);
