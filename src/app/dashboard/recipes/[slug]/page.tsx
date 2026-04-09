@@ -138,7 +138,10 @@ export default async function RecipePage({
         <div className="relative overflow-hidden rounded-none border-[3px] border-foreground bg-card">
           <div className="pointer-events-none absolute right-3 top-3 z-30 print:hidden">
             <div className="pointer-events-auto">
-              <RecipeViewToolbar recipeSlug={recipe.slug} />
+              <RecipeViewToolbar
+                recipeSlug={recipe.slug}
+                recipePublicId={recipe.publicId}
+              />
             </div>
           </div>
 

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { shadcn } from "@clerk/ui/themes";
 import { SiteFooter } from "@/components/site-footer";
+import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import "./globals.css";
@@ -45,6 +46,7 @@ export default function RootLayout({
                 <SiteFooter />
               </Suspense>
             </div>
+            <Toaster richColors />
           </ClerkProvider>
         </ThemeProvider>
       </body>

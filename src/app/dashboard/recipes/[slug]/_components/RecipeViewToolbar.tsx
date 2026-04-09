@@ -1,8 +1,14 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { PencilSimple, Printer, ShareNetwork } from "@phosphor-icons/react";
+import {
+  CopySimple,
+  PencilSimple,
+  Printer,
+  ShareNetwork,
+} from "@phosphor-icons/react";
+import { toast } from "sonner";
+
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -13,19 +19,26 @@ const iconClassName = cn(
 
 type RecipeViewToolbarProps = {
   recipeSlug: string;
+  recipePublicId: string;
 };
 
-export function RecipeViewToolbar({ recipeSlug }: RecipeViewToolbarProps) {
-  const [shareLabel, setShareLabel] = useState<"Share" | "Copied">("Share");
-
+export function RecipeViewToolbar({
+  recipeSlug,
+  recipePublicId,
+}: RecipeViewToolbarProps) {
   const handleShare = async () => {
-    const url = `${window.location.origin}/dashboard/r/${recipeSlug}`;
+    const url = new URL(
+      `/dashboard/s/${recipePublicId}`,
+      window.location.origin,
+    ).toString();
+
     try {
       await navigator.clipboard.writeText(url);
-      setShareLabel("Copied");
-      window.setTimeout(() => setShareLabel("Share"), 2000);
+      toast.success("Link copied to clipboard", {
+        icon: <CopySimple weight="fill" className="text-emerald-600" />,
+      });
     } catch {
-      setShareLabel("Share");
+      toast.error("Could not copy share link");
     }
   };
 
@@ -48,10 +61,8 @@ export function RecipeViewToolbar({ recipeSlug }: RecipeViewToolbarProps) {
         variant="ghost"
         size="icon-sm"
         className="text-muted-foreground hover:text-foreground"
-        aria-label={
-          shareLabel === "Copied" ? "Link copied" : "Copy link to recipe"
-        }
-        title={shareLabel === "Copied" ? "Copied" : "Copy link"}
+        aria-label="Copy share link"
+        title="Copy share link"
         onClick={handleShare}
       >
         <ShareNetwork className="h-4 w-4" weight="bold" />

@@ -1,8 +1,26 @@
-// This page is for our sharable recipe links. All it will do is redirect to the normal (slug) recipe url.
-export default function ShareRecipePage() {
-  return (
-    <div className="flex items-center justify-center h-screen">
-      <p className="text-2xl font-semibold">Redirecting...</p>
-    </div>
-  );
+import { eq } from "drizzle-orm";
+import { notFound, redirect } from "next/navigation";
+
+import { db } from "@/db";
+import { recipes } from "@/db/schema";
+
+export default async function ShareRecipePage({
+  params,
+}: {
+  params: Promise<{ publicId: string }>;
+}) {
+  const { publicId } = await params;
+
+  const recipe = await db.query.recipes.findFirst({
+    columns: {
+      slug: true,
+    },
+    where: eq(recipes.publicId, publicId),
+  });
+
+  if (!recipe) {
+    notFound();
+  }
+
+  redirect(`/dashboard/r/${recipe.slug}`);
 }

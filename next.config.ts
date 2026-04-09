@@ -31,7 +31,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/dashboard/s/:path*",
-        destination: "/dashboard/short/:path*",
+        destination: "/dashboard/share/:path*",
       },
     ];
   },
