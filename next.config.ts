@@ -30,8 +30,8 @@ const nextConfig: NextConfig = {
         destination: "/dashboard/recipes/:path*",
       },
       {
-        source: "/dashboard/s/:path*",
-        destination: "/dashboard/share/:path*",
+        source: "/s/:path*",
+        destination: "/share/:path*",
       },
     ];
   },

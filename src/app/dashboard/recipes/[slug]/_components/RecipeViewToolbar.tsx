@@ -46,7 +46,7 @@ export function RecipeViewToolbar({
 
   const handleShare = async () => {
     const url = new URL(
-      `/dashboard/s/${recipePublicId}`,
+      `/s/${recipePublicId}`,
       window.location.origin,
     ).toString();
 
