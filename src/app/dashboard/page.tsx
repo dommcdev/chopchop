@@ -2,8 +2,10 @@ import BrowseCategories from "@/app/dashboard/_components/BrowseCategories";
 import BrowseRecipes from "@/app/dashboard/_components/BrowseRecipes";
 import { fetchRecipesBlock } from "@/data/recipes";
 
+const INITIAL_RECIPE_BATCH_SIZE = 20;
+
 export default async function DashboardPage() {
-  const initialRecipes = await fetchRecipesBlock(15, 0);
+  const initialRecipes = await fetchRecipesBlock(INITIAL_RECIPE_BATCH_SIZE, 0);
 
   return (
     <main className="mx-auto max-w-screen-2xl p-3">
@@ -11,7 +13,10 @@ export default async function DashboardPage() {
         <BrowseCategories />
       </div>
 
-      <BrowseRecipes initialItems={initialRecipes} />
+      <BrowseRecipes
+        initialItems={initialRecipes}
+        initialBatchSize={INITIAL_RECIPE_BATCH_SIZE}
+      />
     </main>
   );
 }

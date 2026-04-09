@@ -4,9 +4,7 @@
 
 import { fetchRecipesBlock as fetchRecipesFromDAL } from "@/data/recipes";
 
-export async function fetchRecipesBlock(limit: number, page: number) {
-  const offset = page * limit;
-
+export async function fetchRecipesBlock(limit: number, offset: number) {
   const data = await fetchRecipesFromDAL(limit, offset);
 
   if (data.length === 0) return null;

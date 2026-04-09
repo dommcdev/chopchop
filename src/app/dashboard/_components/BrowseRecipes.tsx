@@ -8,23 +8,26 @@ import RecipeCard, {
 import { fetchRecipesBlock } from "@/app/dashboard/_actions/fetchRecipesBlock";
 import Link from "next/link";
 
-// How many recipes to fetch at a time
-const PAGE_SIZE = 15;
+const LOAD_MORE_PAGE_SIZE = 15;
 
-function computeInitialHasMore(items: RecipeCardRecipe[]) {
-  return items.length === 0 || items.length === PAGE_SIZE;
+function hasMoreAfterFullBatch(
+  items: RecipeCardRecipe[],
+  requestedBatchSize: number,
+) {
+  return items.length > 0 && items.length === requestedBatchSize;
 }
 
 export default function BrowseRecipes({
   initialItems = [],
+  initialBatchSize,
 }: {
   initialItems?: RecipeCardRecipe[];
+  initialBatchSize: number;
 }) {
   const [items, setItems] = useState<RecipeCardRecipe[]>(initialItems);
-  const pageRef = useRef(initialItems.length > 0 ? 1 : 0);
-  const hasMoreRef = useRef(computeInitialHasMore(initialItems));
-  const [hasMore, setHasMore] = useState(() =>
-    computeInitialHasMore(initialItems),
+  const nextOffsetRef = useRef(initialItems.length);
+  const hasMoreRef = useRef(
+    hasMoreAfterFullBatch(initialItems, initialBatchSize),
   );
   const loadingRef = useRef(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -37,23 +40,21 @@ export default function BrowseRecipes({
       loadingRef.current = true;
       setIsLoading(true);
 
-      void fetchRecipesBlock(PAGE_SIZE, pageRef.current)
+      void fetchRecipesBlock(LOAD_MORE_PAGE_SIZE, nextOffsetRef.current)
         .then((newRecipes) => {
           loadingRef.current = false;
           setIsLoading(false);
 
           if (!newRecipes || newRecipes.length === 0) {
             hasMoreRef.current = false;
-            setHasMore(false);
             return;
           }
 
+          nextOffsetRef.current += newRecipes.length;
           setItems((prev) => [...prev, ...newRecipes]);
-          pageRef.current += 1;
 
-          if (newRecipes.length < PAGE_SIZE) {
+          if (newRecipes.length < LOAD_MORE_PAGE_SIZE) {
             hasMoreRef.current = false;
-            setHasMore(false);
           }
         })
         .catch(() => {
