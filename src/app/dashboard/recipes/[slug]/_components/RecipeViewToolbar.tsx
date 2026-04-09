@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
-  CopySimple,
-  PencilSimple,
-  Printer,
-  ShareNetwork,
+  CopySimpleIcon,
+  PencilSimpleIcon,
+  PrinterIcon,
+  LinkIcon,
 } from "@phosphor-icons/react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -26,30 +26,23 @@ export function RecipeViewToolbar({
   recipeSlug,
   recipePublicId,
 }: RecipeViewToolbarProps) {
-  const [shareStatus, setShareStatus] = useState<"idle" | "copied" | "error">(
+  const [shareNotice, setShareNotice] = useState<"idle" | "copied" | "error">(
     "idle",
   );
-  const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
-    return () => {
-      if (timeoutRef.current != null) {
-        window.clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
-
-  const setTemporaryStatus = (status: "copied" | "error") => {
-    if (timeoutRef.current != null) {
-      window.clearTimeout(timeoutRef.current);
+    if (shareNotice === "idle") {
+      return;
     }
 
-    setShareStatus(status);
-    timeoutRef.current = window.setTimeout(() => {
-      setShareStatus("idle");
-      timeoutRef.current = null;
+    const timeout = window.setTimeout(() => {
+      setShareNotice("idle");
     }, 2200);
-  };
+
+    return () => {
+      window.clearTimeout(timeout);
+    };
+  }, [shareNotice]);
 
   const handleShare = async () => {
     const url = new URL(
@@ -59,9 +52,9 @@ export function RecipeViewToolbar({
 
     try {
       await navigator.clipboard.writeText(url);
-      setTemporaryStatus("copied");
+      setShareNotice("copied");
     } catch {
-      setTemporaryStatus("error");
+      setShareNotice("error");
     }
   };
 
@@ -78,7 +71,7 @@ export function RecipeViewToolbar({
           aria-label="Edit recipe"
           title="Edit recipe"
         >
-          <PencilSimple className="h-4 w-4" weight="bold" />
+          <PencilSimpleIcon className="h-4 w-4" weight="bold" />
         </Link>
         <Button
           type="button"
@@ -86,21 +79,17 @@ export function RecipeViewToolbar({
           size="icon-sm"
           className={cn(
             "transition-colors",
-            shareStatus === "copied"
+            shareNotice === "copied"
               ? "text-emerald-600 hover:text-emerald-700"
               : "text-muted-foreground hover:text-foreground",
           )}
           aria-label={
-            shareStatus === "copied" ? "Link copied" : "Copy share link"
+            shareNotice === "copied" ? "Link copied" : "Copy share link"
           }
-          title={shareStatus === "copied" ? "Copied" : "Copy share link"}
+          title={shareNotice === "copied" ? "Copied" : "Copy share link"}
           onClick={handleShare}
         >
-          {shareStatus === "copied" ? (
-            <CopySimple className="h-4 w-4" weight="fill" />
-          ) : (
-            <ShareNetwork className="h-4 w-4" weight="bold" />
-          )}
+          <LinkIcon className="h-4 w-4" weight="bold" />
         </Button>
         <Button
           type="button"
@@ -111,15 +100,15 @@ export function RecipeViewToolbar({
           title="Print recipe"
           onClick={() => window.print()}
         >
-          <Printer className="h-4 w-4" weight="bold" />
+          <PrinterIcon className="h-4 w-4" weight="bold" />
         </Button>
       </div>
 
-      {shareStatus !== "idle" ? (
+      {shareNotice !== "idle" ? (
         <div
           className={cn(
             "pointer-events-none absolute right-0 top-full z-10 mt-2 min-w-max rounded-none border bg-card px-3 py-1.5 text-xs font-semibold shadow-sm",
-            shareStatus === "copied"
+            shareNotice === "copied"
               ? "border-emerald-200 text-emerald-700 dark:border-emerald-900 dark:text-emerald-400"
               : "border-destructive/20 text-destructive",
           )}
@@ -127,13 +116,13 @@ export function RecipeViewToolbar({
           aria-live="polite"
         >
           <span className="inline-flex items-center gap-1.5">
-            {shareStatus === "copied" ? (
-              <CopySimple weight="fill" className="h-3.5 w-3.5" />
+            {shareNotice === "copied" ? (
+              <CopySimpleIcon weight="fill" className="h-3.5 w-3.5" />
             ) : (
-              <ShareNetwork weight="bold" className="h-3.5 w-3.5" />
+              <LinkIcon weight="bold" className="h-3.5 w-3.5" />
             )}
-            {shareStatus === "copied"
-              ? "Copied to clipboard"
+            {shareNotice === "copied"
+              ? "Link copied!"
               : "Could not copy share link"}
           </span>
         </div>

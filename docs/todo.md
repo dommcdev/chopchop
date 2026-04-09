@@ -44,7 +44,6 @@
 - TOS/Privacy Policy pages
 - Better logo
 - Full categories page (simple)
-- Share icon copyies link to clipboard w/toast
 - STYLING
 
 - Optimizations & Tweaks
