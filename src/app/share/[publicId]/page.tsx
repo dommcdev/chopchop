@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { db } from "@/db";
 import { recipes } from "@/db/schema";
 import { auth } from "@clerk/nextjs/server";
+import ShareLinkError from "@/app/share/_components/SharingLinkError";
 
 export default async function ShareRecipePage({
   params,
@@ -25,13 +26,7 @@ export default async function ShareRecipePage({
   const { userId } = await auth();
 
   if (!userId) {
-    return (
-      <main className="mx-auto max-w-screen-2xl p-3">
-        <h1 className="text-2xl font-bold">
-          Please sign in or create an account to view this recipe.
-        </h1>
-      </main>
-    );
+    return <ShareLinkError />;
   } else {
     redirect(`/dashboard/r/${recipe.slug}`);
   }

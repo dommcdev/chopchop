@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Show } from "@clerk/nextjs";
-import { LinkButton } from "@/app/(landing)/_components/LinkButton";
+import { LinkButton } from "@/app//_components/LinkButton";
 import { ThemeToggleButton } from "@/app/(landing)/_components/ThemeToggleButton";
 import CustomUserButton from "@/app/_components/CustomUserButton";
 

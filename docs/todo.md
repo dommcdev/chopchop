@@ -56,6 +56,7 @@
 - More stuff on landing page
 
 ### Bugs
+- Share link needs url redirect thing
 
 ### Future features (?)
 - [ ] Bulk recipe ingest/queuing
