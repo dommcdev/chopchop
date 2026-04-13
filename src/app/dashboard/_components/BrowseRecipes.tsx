@@ -69,9 +69,6 @@ export default function BrowseRecipes({
       <div className="m-4 flex flex-col gap-2 md:m-6">
         <div className="flex flex-row justify-between items-center">
           <h2 className="text-xl font-bold">Recent Recipes</h2>
-          <Link href="/dashboard/r" className="underline">
-            View all recipes
-          </Link>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {items.map((recipe) => (
