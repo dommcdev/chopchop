@@ -15,7 +15,8 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "install:skills": "bunx --bun skills experimental_install"
+    "install:skills": "bunx --bun skills experimental_install",
+    "deploy": "vercel --prod"
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.60",
