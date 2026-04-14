@@ -12,7 +12,6 @@ export default async function DashboardPage() {
       <div className="flex flex-col gap-6">
         <BrowseCategories />
       </div>
-
       <BrowseRecipes
         initialItems={initialRecipes}
         initialBatchSize={INITIAL_RECIPE_BATCH_SIZE}

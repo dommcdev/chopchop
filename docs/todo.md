@@ -65,3 +65,4 @@
 - [ ] Preferences
 - [ ] Nutritional info
 - [ ] Dedicated recipes page with sorting
+- [ ] Ability to create categories from edit page

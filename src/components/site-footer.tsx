@@ -8,7 +8,7 @@ export function SiteFooter() {
   return (
     <footer
       className={cn(
-        "border-t border-border/60 py-2 text-center text-[11px] text-muted-foreground",
+        "border-t border-border/60 py-2 text-center text-[11px] text-muted-foreground print:hidden",
       )}
     >
       <p>&copy; {year} The ChopChop Team. All rights reserved.</p>
