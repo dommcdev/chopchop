@@ -58,7 +58,8 @@
 - More stuff on landing page
 
 ### Bugs
-- Share link needs url redirect thing
+- Share link needs url redirect parameters
+- Long recipe titles run into toolbar in viewer
 
 ### Future features (?)
 - [ ] Bulk recipe ingest/queuing

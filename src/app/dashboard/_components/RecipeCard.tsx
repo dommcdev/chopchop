@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { RecipeWithCategory } from "@/types";
-import { totalCookMinutes } from "@/data/recipes";
+import { totalCookMinutes } from "@/lib/utils";
 
 export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
   const totalMin = totalCookMinutes(recipe);

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { fillDatabase } from "@/data/seedDb";
 import { Spinner } from "@/components/ui/spinner";
-import { Database } from "@phosphor-icons/react";
+import { DatabaseIcon } from "@phosphor-icons/react";
 
 export function FillDatabaseButton() {
   const [loading, setLoading] = useState(false);
@@ -42,7 +42,7 @@ export function FillDatabaseButton() {
         variant="outline"
         className="flex items-center gap-2"
       >
-        {loading ? <Spinner className="w-4 h-4" /> : <Database size={20} />}
+        {loading ? <Spinner className="w-4 h-4" /> : <DatabaseIcon size={20} />}
         {loading ? "Filling Database..." : "Fill Database (Test Data)"}
       </Button>
       {message && (

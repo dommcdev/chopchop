@@ -1,4 +1,4 @@
-import { calculateScaleFactor } from "@/data/recipes";
+import { calculateScaleFactor } from "@/lib/utils";
 import { formatNumber } from "@/lib/utils";
 import { PrintableRecipe, PrintableScaledIngredient } from "@/types";
 

@@ -2,16 +2,14 @@
 
 import { useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import RecipeCard, {
-  type RecipeCardRecipe,
-} from "@/app/dashboard/_components/RecipeCard";
-import { fetchRecipesBlock } from "@/app/dashboard/_actions/fetchRecipesBlock";
-import Link from "next/link";
+import { fetchRecipesBlock } from "@/data/recipesActions";
+import { RecipeWithCategory } from "@/types";
+import RecipeCard from "./RecipeCard";
 
 const LOAD_MORE_PAGE_SIZE = 15;
 
 function hasMoreAfterFullBatch(
-  items: RecipeCardRecipe[],
+  items: RecipeWithCategory[],
   requestedBatchSize: number,
 ) {
   return items.length > 0 && items.length === requestedBatchSize;
@@ -21,10 +19,10 @@ export default function BrowseRecipes({
   initialItems = [],
   initialBatchSize,
 }: {
-  initialItems?: RecipeCardRecipe[];
+  initialItems?: RecipeWithCategory[];
   initialBatchSize: number;
 }) {
-  const [items, setItems] = useState<RecipeCardRecipe[]>(initialItems);
+  const [items, setItems] = useState<RecipeWithCategory[]>(initialItems);
   const nextOffsetRef = useRef(initialItems.length);
   const hasMoreRef = useRef(
     hasMoreAfterFullBatch(initialItems, initialBatchSize),

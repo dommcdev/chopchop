@@ -1,97 +1,37 @@
-import { auth } from "@clerk/nextjs/server";
-import { db } from "@/db";
-import { recipes } from "@/db/schema";
-import { and, eq, or } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
-import {
-  PrintableRecipeCard,
-  type PrintableRecipeCardRecipe,
-  type PrintableScaledIngredient,
-} from "@/app/dashboard/recipes/[slug]/_components/PrintableRecipeCard";
+import { ArrowLeftIcon } from "@phosphor-icons/react/dist/ssr";
+import { PrintableRecipeCard } from "@/app/dashboard/recipes/[slug]/_components/PrintableRecipeCard";
 import { RecipeViewToolbar } from "@/app/dashboard/recipes/[slug]/_components/RecipeViewToolbar";
-import { cn } from "@/lib/utils";
+import { calculateScaleFactor, cn } from "@/lib/utils";
+import { fetchAllRecipeData } from "@/data/recipes";
+import { getScaledIngredients } from "@/lib/utils";
 
-/** Left column from md; on small screens the photo sits in the narrow column (here, end / right). */
 const recipeMediaShellClassName = cn(
   "relative h-full min-h-0 w-full overflow-hidden bg-muted",
-  // Mobile split row: photo on the right; divider on the inner edge of the image
   "aspect-[3/4] max-h-52 border-l-[3px] border-foreground md:border-l-0",
   "md:aspect-auto md:max-h-none md:min-h-[10rem] md:max-h-56 md:border-b-[3px] md:border-r-[3px]",
   "lg:min-h-[11rem] lg:max-h-60",
 );
-
-function getScaleFactor(baseServings: number, targetServings: number) {
-  if (baseServings <= 0) return 1;
-  return targetServings / baseServings;
-}
 
 export default async function RecipePage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const { userId } = await auth();
   const { slug } = await params;
-
-  if (!userId) {
-    return (
-      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
-        <div className="text-center">
-          <h1 className="mb-2 text-2xl font-bold">Please sign in</h1>
-          <p className="text-muted-foreground">
-            You need to be signed in to view recipes.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  // Fetch by URL segment: human slug or stable public id
-  const recipe = await db.query.recipes.findFirst({
-    where: and(
-      eq(recipes.userId, userId),
-      or(eq(recipes.slug, slug), eq(recipes.publicId, slug)),
-    ),
-    with: {
-      category: true,
-      ingredients: {
-        orderBy: (ingredients, { asc }) => [asc(ingredients.id)],
-      },
-      instructions: {
-        orderBy: (instructions, { asc }) => [asc(instructions.stepNumber)],
-      },
-    },
-  });
+  const recipe = await fetchAllRecipeData(slug);
 
   if (!recipe) {
     notFound();
   }
 
-  const targetServings = recipe.servings;
-  const scaleFactor = getScaleFactor(recipe.servings, targetServings);
-
-  const scaledIngredients: PrintableScaledIngredient[] = recipe.ingredients.map(
-    (ingredient) => ({
-      id: ingredient.id,
-      name: ingredient.name,
-      unit: ingredient.unit,
-      scaledAmount:
-        ingredient.quantity == null ? null : ingredient.quantity * scaleFactor,
-    }),
+  const scaleFactor = calculateScaleFactor(recipe?.servings, recipe?.servings);
+  const scaledIngredients = getScaledIngredients(
+    recipe?.ingredients,
+    scaleFactor,
   );
-
-  const printableRecipe: PrintableRecipeCardRecipe = {
-    name: recipe.name,
-    description: recipe.description ?? "",
-    servings: recipe.servings,
-    instructions: recipe.instructions.map((instruction) => ({
-      id: instruction.id,
-      text: instruction.text,
-    })),
-  };
 
   const mediaBlock = recipe.imageUrl ? (
     <div className={recipeMediaShellClassName}>
@@ -130,7 +70,7 @@ export default async function RecipePage({
             href="/dashboard"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
           >
-            <ArrowLeft weight="bold" className="h-4 w-4" />
+            <ArrowLeftIcon weight="bold" className="h-4 w-4" />
             Back to Dashboard
           </Link>
         </div>
@@ -235,9 +175,8 @@ export default async function RecipePage({
 
       <div className="hidden print:block">
         <PrintableRecipeCard
-          recipe={printableRecipe}
-          targetServings={targetServings}
-          scaleFactor={scaleFactor}
+          recipe={recipe}
+          targetServings={recipe.servings}
           scaledIngredients={scaledIngredients}
         />
       </div>

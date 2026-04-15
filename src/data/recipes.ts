@@ -1,19 +1,14 @@
 /*
- * This file is for all recipe-related functions that involve auth/a user id.
+ * This file is for all recipe-related functions that involve database reads
  */
 
 import "server-only";
 import { db } from "@/db";
 import { recipes } from "@/db/schema";
-import { desc, eq } from "drizzle-orm";
-import { auth } from "@clerk/nextjs/server";
-import { Recipe, RecipeWithDetails } from "@/types";
-
-async function checkAuth() {
-  const { userId } = await auth();
-  if (!userId) throw new Error("Unauthorized");
-  return userId;
-}
+import { and, or, eq } from "drizzle-orm";
+import { RecipeWithDetails } from "@/types";
+import { checkAuth } from "./shared";
+import { cache } from "react";
 
 // Fetch block of recipes for homepage infinite scroll
 export async function fetchRecipesBlock(limit: number, offset: number) {
@@ -47,3 +42,23 @@ export async function fetchSearchData(): Promise<RecipeWithDetails[]> {
     categoryName: recipe.category?.name ?? null,
   }));
 }
+
+export const fetchAllRecipeData = cache(async (slug: string) => {
+  const userId = await checkAuth();
+
+  return await db.query.recipes.findFirst({
+    where: and(
+      eq(recipes.userId, userId),
+      or(eq(recipes.slug, slug), eq(recipes.publicId, slug)),
+    ),
+    with: {
+      category: true,
+      ingredients: {
+        orderBy: (ingredients, { asc }) => [asc(ingredients.id)],
+      },
+      instructions: {
+        orderBy: (instructions, { asc }) => [asc(instructions.stepNumber)],
+      },
+    },
+  });
+});
