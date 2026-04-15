@@ -51,6 +51,7 @@
   * Cache categories, etc.
   * Make sure suspense boundaries etc are placed correctly
   * Loading spinners when needed
+  * Skeleton ui
 
 ### Low Priority
 - Bulk recipe json exporter
