@@ -6,7 +6,7 @@ import { Logo } from "@/components/Logo";
 
 export function DashNavbar() {
   return (
-    <nav className="relative z-50 flex items-center justify-between bg-background px-4 py-3 dark:bg-[oklch(0.18_0_0)] sm:px-6 lg:px-8 print:hidden">
+    <nav className="relative z-50 flex items-center justify-between bg-background px-4 py-3 sm:px-6 lg:px-8 print:hidden">
       <Link href="/dashboard" className="flex items-center gap-3 group">
         <Logo />
         <span className="text-2xl font-black uppercase tracking-tighter text-foreground drop-shadow-[2px_2px_0px_var(--primary)] hidden sm:block mt-1"></span>
