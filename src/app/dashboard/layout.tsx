@@ -2,7 +2,7 @@ import { DashNavbar } from "@/app/dashboard/_components/DashNavbar";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "ChopChop | Dashboard",
+  title: "Dashboard - ChopChop",
   description: "The Digital Cookbook",
 };
 

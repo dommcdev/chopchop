@@ -8,7 +8,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Note to self - primary green is #006047 */
+/* Note to self - primary green is #006045 */
 
 :root {
   --clerk-border-radius: 0rem;

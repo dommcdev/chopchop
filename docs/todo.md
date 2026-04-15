@@ -43,7 +43,6 @@
   * Make error toast message for ui
 
 - TOS/Privacy Policy pages
-- Better logo
 - Full categories page (simple)
 - STYLING
 

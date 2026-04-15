@@ -1,5 +1,5 @@
 // --- Color Definitions ---
-#let ccgreen = rgb("006047")
+#let ccgreen = rgb("006045")
 #let ccink = rgb("2D2D2D")
 #let cclink = rgb("1B5C8D")
 
