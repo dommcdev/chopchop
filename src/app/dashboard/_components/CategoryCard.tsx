@@ -2,11 +2,10 @@
 
 import Link from "next/link";
 import { ForkKnifeIcon } from "@phosphor-icons/react";
-
-import { Category } from "@/db/schema";
+import { CategoryBrief } from "@/types";
 
 interface CategoryCardProps {
-  category: Pick<Category, "name" | "slug">;
+  category: CategoryBrief;
 }
 
 export default function CategoryCard({ category }: CategoryCardProps) {

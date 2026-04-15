@@ -17,3 +17,14 @@ export function slugify(text: string): string {
     .replace(/[^\w-]+/g, "") // Remove all non-word chars
     .replace(/--+/g, "-"); // Replace multiple - with single -
 }
+
+/*
+ * Formats numbers cleanly for display
+ */
+export function formatNumber(value: number) {
+  if (Number.isInteger(value)) return value.toString();
+  return value
+    .toFixed(2)
+    .replace(/\.00$/, "")
+    .replace(/(\.\d)0$/, "$1");
+}

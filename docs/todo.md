@@ -15,6 +15,7 @@
   * Image selector for recipe image (reuse from recipe upload)
   * Create server action to take json input and update db
   * Call said server action (& refresh cache/ui/state/etc?)
+  * default serving sizes to 1
 
 - Home page
   * Add 3-dot dropdown on recipe cards with delete option (+ confirmation + actual deletion logic)

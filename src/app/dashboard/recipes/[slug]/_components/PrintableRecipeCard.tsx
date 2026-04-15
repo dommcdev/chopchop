@@ -1,51 +1,22 @@
-import type { InferSelectModel } from "drizzle-orm";
-import { ingredients, recipes } from "@/db/schema";
+import { calculateScaleFactor } from "@/data/recipes";
+import { formatNumber } from "@/lib/utils";
+import { PrintableRecipe, PrintableScaledIngredient } from "@/types";
 
-type RecipeRow = InferSelectModel<typeof recipes>;
-type IngredientRow = InferSelectModel<typeof ingredients>;
-
-export type PrintableRecipeCardRecipe = Pick<RecipeRow, "name" | "servings"> & {
-  description: string;
-  instructions: Array<{
-    id: number;
-    text: string;
-  }>;
-};
-
-export type PrintableScaledIngredient = Pick<
-  IngredientRow,
-  "id" | "name" | "unit"
-> & {
-  scaledAmount: number | null;
-};
-
-type PrintableRecipeCardProps = {
-  recipe: PrintableRecipeCardRecipe;
+interface PrintableRecipeCardProps {
+  recipe: PrintableRecipe;
   targetServings: number;
-  scaleFactor: number;
   scaledIngredients: PrintableScaledIngredient[];
-};
-
-/**
- * Formats numbers cleanly for display
- */
-function formatNumber(value: number) {
-  if (Number.isInteger(value)) return value.toString();
-  return value
-    .toFixed(2)
-    .replace(/\.00$/, "")
-    .replace(/(\.\d)0$/, "$1");
 }
 
 export function PrintableRecipeCard({
   recipe,
   targetServings,
-  scaleFactor,
   scaledIngredients,
 }: PrintableRecipeCardProps) {
+  const scaleFactor = calculateScaleFactor(targetServings, recipe.servings);
+
   return (
     <section className="bg-white text-black">
-      {/* Recipe title, description, and serving summary */}
       <div className="mb-6 border-b border-neutral-200 pb-6">
         <h2 className="text-3xl font-bold text-neutral-900">{recipe.name}</h2>
         {recipe.description && (
@@ -69,7 +40,6 @@ export function PrintableRecipeCard({
         </div>
       </div>
 
-      {/* Ingredients list */}
       <div className="mb-6">
         <h3 className="mb-3 text-lg font-semibold text-neutral-900">
           Ingredients
@@ -95,7 +65,6 @@ export function PrintableRecipeCard({
         </ul>
       </div>
 
-      {/* Instructions list */}
       <div className="mb-6">
         <h3 className="mb-3 text-lg font-semibold text-neutral-900">
           Instructions

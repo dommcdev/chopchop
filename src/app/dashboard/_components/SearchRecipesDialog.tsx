@@ -13,7 +13,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { type RecipeWithDetails } from "@/types/recipes";
+import { type RecipeWithDetails } from "@/types";
 
 export default function SearchRecipesDialog({
   recipesPromise,

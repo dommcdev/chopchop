@@ -83,7 +83,7 @@ export default function BrowseRecipes({
       >
         {isLoading && (
           <p className="text-sm font-medium text-muted-foreground animate-pulse">
-            Fetching more recipes...
+            Loading more recipes...
           </p>
         )}
       </div>

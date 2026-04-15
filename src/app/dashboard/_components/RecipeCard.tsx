@@ -1,14 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Category, Recipe } from "@/db/schema";
+import { RecipeWithCategory } from "@/types";
+import { totalCookMinutes } from "@/data/recipes";
 
-export type RecipeCardRecipe = Recipe & { category: Category | null };
-
-function totalCookMinutes(recipe: Recipe) {
-  return (recipe.prepTime ?? 0) + (recipe.cookTime ?? 0);
-}
-
-export default function RecipeCard({ recipe }: { recipe: RecipeCardRecipe }) {
+export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
   const totalMin = totalCookMinutes(recipe);
 
   return (

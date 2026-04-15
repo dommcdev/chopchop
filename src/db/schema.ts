@@ -96,3 +96,6 @@ export type NewCategory = InferInsertModel<typeof categories>;
 
 export type Recipe = InferSelectModel<typeof recipes>;
 export type NewRecipe = InferInsertModel<typeof recipes>;
+
+export type Ingredient = InferSelectModel<typeof ingredients>;
+export type NewIngredient = InferInsertModel<typeof ingredients>;
