@@ -5,7 +5,7 @@ export function Logo() {
       <img
         src="/logo-light.svg"
         alt="ChopChop Logo"
-        width={150}
+        width={160}
         height={40}
         className="block dark:hidden"
       />
@@ -13,7 +13,7 @@ export function Logo() {
       <img
         src="/logo-dark.svg"
         alt="ChopChop Logo"
-        width={150}
+        width={160}
         height={40}
         className="hidden dark:block"
       />

@@ -6,7 +6,7 @@ import "server-only";
 import { db } from "@/db";
 import { recipes } from "@/db/schema";
 import { and, or, eq } from "drizzle-orm";
-import { RecipeWithDetails } from "@/types";
+import { RecipeSearchItem } from "@/types";
 import { checkAuth } from "./shared";
 import { cache } from "react";
 
@@ -26,21 +26,26 @@ export async function fetchRecipesBlock(limit: number, offset: number) {
 }
 
 // Fetch all recipes for a user, for use in search
-export async function fetchSearchData(): Promise<RecipeWithDetails[]> {
+export async function fetchSearchData(): Promise<RecipeSearchItem[]> {
   const userId = await checkAuth();
 
-  const results = await db.query.recipes.findMany({
+  return await db.query.recipes.findMany({
     where: eq(recipes.userId, userId),
+    columns: {
+      id: true,
+      slug: true,
+      name: true,
+      description: true,
+    },
     with: {
-      category: true,
-      ingredients: true,
+      category: {
+        columns: { name: true },
+      },
+      ingredients: {
+        columns: { name: true },
+      },
     },
   });
-
-  return results.map((recipe) => ({
-    ...recipe,
-    categoryName: recipe.category?.name ?? null,
-  }));
 }
 
 export const fetchAllRecipeData = cache(async (slug: string) => {
@@ -62,3 +67,14 @@ export const fetchAllRecipeData = cache(async (slug: string) => {
     },
   });
 });
+
+export async function getRecipeSlugFromPublicId(publicId: string) {
+  const result = await db.query.recipes.findFirst({
+    columns: {
+      slug: true,
+    },
+    where: eq(recipes.publicId, publicId),
+  });
+
+  return result?.slug ?? null;
+}

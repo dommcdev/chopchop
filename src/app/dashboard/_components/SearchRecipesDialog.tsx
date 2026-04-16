@@ -13,12 +13,12 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { type RecipeWithDetails } from "@/types";
+import { type RecipeSearchItem } from "@/types";
 
 export default function SearchRecipesDialog({
   recipesPromise,
 }: {
-  recipesPromise: Promise<RecipeWithDetails[]>;
+  recipesPromise: Promise<RecipeSearchItem[]>;
 }) {
   const [open, setValue] = useState(false);
   const router = useRouter();
@@ -77,7 +77,7 @@ function RecipeList({
   promise,
   onSelect,
 }: {
-  promise: Promise<RecipeWithDetails[]>;
+  promise: Promise<RecipeSearchItem[]>;
   onSelect: (slug: string) => void;
 }) {
   const recipes = use(promise);
@@ -87,7 +87,7 @@ function RecipeList({
       {recipes.map((recipe) => {
         const keywords = [
           recipe.name,
-          recipe.categoryName,
+          recipe.category?.name,
           recipe.description,
           ...recipe.ingredients.map((i) => i.name),
         ].filter((k): k is string => Boolean(k));
