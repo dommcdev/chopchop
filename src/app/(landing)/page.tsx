@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowRight,
-  Camera,
-  Scales,
-  ShareNetwork,
+  ArrowRightIcon,
+  CameraIcon,
+  ScalesIcon,
+  ShareNetworkIcon,
 } from "@phosphor-icons/react/dist/ssr";
 
 export default function HomePage() {
@@ -16,7 +16,7 @@ export default function HomePage() {
       {/* Main Grid Container */}
       <div className="flex-grow w-full max-w-[90rem] mx-auto p-4 sm:p-6 lg:p-8 flex flex-col">
         {/* Outer border for the main hero section */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 border-[3px] border-foreground shadow-[8px_8px_0px_0px_var(--foreground)] bg-card overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-12 border-[3px] border-foreground shadow-[6px_6px_0px_0px_var(--foreground)] bg-card overflow-hidden">
           {/* Hero Left */}
           <div className="lg:col-span-8 p-8 md:p-12 lg:p-16 flex flex-col justify-center border-b-[3px] lg:border-b-0 lg:border-r-[3px] border-foreground relative bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:2rem_2rem]">
             <div className="relative z-10 flex flex-col justify-center items-start h-full py-12 w-full">
@@ -56,7 +56,7 @@ export default function HomePage() {
                   100% Free Forever
                 </span>
               </div>
-              <ArrowRight
+              <ArrowRightIcon
                 weight="bold"
                 className="w-10 h-10 group-hover:translate-x-2 transition-transform duration-300 relative z-10 group-hover:text-background"
               />
@@ -71,7 +71,7 @@ export default function HomePage() {
         <div className="grid grid-cols-1 md:grid-cols-3 mt-10 lg:mt-12 gap-6 lg:gap-8">
           <div className="border-[3px] border-foreground bg-card p-6 md:p-8 shadow-[6px_6px_0px_0px_var(--foreground)] hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[10px_10px_0px_0px_var(--primary)] transition-all duration-300 group">
             <div className="bg-primary/10 text-foreground w-fit p-4 border-[3px] border-foreground mb-6 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-              <Camera weight="bold" className="w-8 h-8" />
+              <CameraIcon weight="bold" className="w-8 h-8" />
             </div>
             <h3 className="text-2xl font-black uppercase tracking-tight mb-4 border-b-[3px] border-foreground pb-4">
               Easy Uploads
@@ -84,7 +84,7 @@ export default function HomePage() {
 
           <div className="border-[3px] border-foreground bg-card p-6 md:p-8 shadow-[6px_6px_0px_0px_var(--foreground)] hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[10px_10px_0px_0px_var(--primary)] transition-all duration-300 group">
             <div className="bg-primary/10 text-foreground w-fit p-4 border-[3px] border-foreground mb-6 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-              <Scales weight="bold" className="w-8 h-8" />
+              <ScalesIcon weight="bold" className="w-8 h-8" />
             </div>
             <h3 className="text-2xl font-black uppercase tracking-tight mb-4 border-b-[3px] border-foreground pb-4">
               Smart Quantities
@@ -97,7 +97,7 @@ export default function HomePage() {
 
           <div className="border-[3px] border-foreground bg-card p-6 md:p-8 shadow-[6px_6px_0px_0px_var(--foreground)] hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[10px_10px_0px_0px_var(--primary)] transition-all duration-300 group">
             <div className="bg-primary/10 text-foreground w-fit p-4 border-[3px] border-foreground mb-6 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-              <ShareNetwork weight="bold" className="w-8 h-8" />
+              <ShareNetworkIcon weight="bold" className="w-8 h-8" />
             </div>
             <h3 className="text-2xl font-black uppercase tracking-tight mb-4 border-b-[3px] border-foreground pb-4">
               Simple Sharing

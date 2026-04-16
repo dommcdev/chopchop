@@ -5,6 +5,7 @@ import { useInView } from "react-intersection-observer";
 import { fetchRecipesBlock } from "@/data/recipesActions";
 import { RecipeWithCategory } from "@/types";
 import RecipeCard from "./RecipeCard";
+import { RecipeCardSkeleton } from "@/app/dashboard/_components/RecipeCardSkeleton";
 
 const LOAD_MORE_PAGE_SIZE = 15;
 
@@ -77,12 +78,16 @@ export default function BrowseRecipes({
 
       <div
         ref={ref}
-        className="h-20 col-span-full flex justify-center items-center"
+        className="m-4 md:m-6"
       >
-        {isLoading && (
-          <p className="text-sm font-medium text-muted-foreground animate-pulse">
-            Loading more recipes...
-          </p>
+        {isLoading ? (
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {Array.from({ length: LOAD_MORE_PAGE_SIZE }).map((_, i) => (
+              <RecipeCardSkeleton key={i} />
+            ))}
+          </div>
+        ) : (
+          <div className="h-8" />
         )}
       </div>
     </>

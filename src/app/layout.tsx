@@ -39,8 +39,8 @@ export default function RootLayout({
       <body>
         <ThemeProvider>
           <ClerkProvider appearance={{ theme: shadcn }}>
-            <div className="flex min-h-screen flex-col">
-              <div className="flex-1">{children}</div>
+            <div>
+              <div>{children}</div>
               <Suspense>
                 <SiteFooter />
               </Suspense>

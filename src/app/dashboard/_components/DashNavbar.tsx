@@ -1,20 +1,20 @@
 import Link from "next/link";
-import Image from "next/image";
 import CustomUserButton from "@/app/_components/CustomUserButton";
 import SearchBox from "@/app/dashboard/_components/SearchBox";
 import { Logo } from "@/components/Logo";
 
 export function DashNavbar() {
   return (
-    <nav className="relative z-50 flex items-center justify-between bg-background px-4 py-3 sm:px-6 lg:px-8 print:hidden">
-      <Link href="/dashboard" className="flex items-center gap-3 group">
-        <Logo />
-        <span className="text-2xl font-black uppercase tracking-tighter text-foreground drop-shadow-[2px_2px_0px_var(--primary)] hidden sm:block mt-1"></span>
-      </Link>
-      <div className="flex items-center gap-4 sm:gap-6">
-        <SearchBox />
-        <CustomUserButton />
-      </div>
-    </nav>
+    <header className="sticky top-0 z-50 w-full bg-background shadow-sm border-b border-foreground/5 print:hidden">
+      <nav className="mx-auto flex max-w-[100rem] items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
+        <Link href="/" className="flex items-center gap-3 group">
+          <Logo />
+        </Link>
+        <div className="flex items-center gap-4 sm:gap-6">
+          <SearchBox />
+          <CustomUserButton />
+        </div>
+      </nav>
+    </header>
   );
 }
