@@ -39,7 +39,7 @@ export default function SearchRecipesDialog({
       <Button
         onClick={() => setValue(true)}
         variant="outline"
-        className="w-fit border-2 p-3 border-foreground rounded-none font-bold"
+        className="w-fit border-2 p-3 dark:border-white border-foreground rounded-none font-bold"
       >
         <MagnifyingGlassIcon className="h-6 w-6 shrink-0" weight="bold" />
         Find Recipe <div className="border-1 p-0.5 ml-2 text-xs">Ctrl K</div>
