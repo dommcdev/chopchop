@@ -4,6 +4,23 @@ export type RecipeWithCategory = Recipe & {
   category: Category | null;
 };
 
+export type UpdateRecipePayload = {
+  recipeId: number;
+  name: string;
+  slug: string;
+  description: string | null;
+  servings: number;
+  prepTime: number | null;
+  cookTime: number | null;
+  categoryId: number | null;
+  ingredients: Array<{
+    name: string;
+    quantity: number | null;
+    unit: string | null;
+  }>;
+  instructions: Array<{ text: string }>;
+};
+
 export type PrintableRecipe = Pick<
   Recipe,
   "name" | "servings" | "description"

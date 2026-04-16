@@ -19,8 +19,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
   updateRecipeAction,
-  type UpdateRecipePayload,
 } from "@/data/recipesActions";
+import type { UpdateRecipePayload } from "@/types";
 
 type CategoryOption = { id: number; name: string; slug: string };
 

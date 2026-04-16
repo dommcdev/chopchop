@@ -12,6 +12,7 @@ import { db } from "@/db";
 import { ingredients, instructions, recipes } from "@/db/schema";
 import { fetchRecipesBlock as fetchRecipesFromDAL } from "@/data/recipes";
 import { checkAuth } from "@/data/shared";
+import type { UpdateRecipePayload } from "@/types";
 
 // Allow the BrowseRecipes client component to fetch more recipes as necessary.
 export async function fetchRecipesBlock(limit: number, offset: number) {
@@ -21,23 +22,6 @@ export async function fetchRecipesBlock(limit: number, offset: number) {
 
   return data; // Return raw JSON objects
 }
-
-export type UpdateRecipePayload = {
-  recipeId: number;
-  name: string;
-  slug: string;
-  description: string | null;
-  servings: number;
-  prepTime: number | null;
-  cookTime: number | null;
-  categoryId: number | null;
-  ingredients: Array<{
-    name: string;
-    quantity: number | null;
-    unit: string | null;
-  }>;
-  instructions: Array<{ text: string }>;
-};
 
 export async function updateRecipeAction(
   payload: UpdateRecipePayload,
