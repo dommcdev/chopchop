@@ -14,11 +14,15 @@ const CustomUserButton = () => {
   }, []);
 
   const isDark = mounted ? resolvedTheme === "dark" : true;
+
   return (
-    <div className="flex size-7 shrink-0 items-center justify-center rounded-full ring-2 ring-foreground ring-offset-0 bg-primary">
+    // Changed: rounded-full -> rounded-none
+    // Changed: ring-2 ring-foreground -> border border-border
+    // Added: shadow-sm
+    <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary shadow-sm transition-shadow hover:shadow-md">
       <UserButton
         fallback={
-          <div className="size-full rounded-full bg-card/80 animate-pulse" />
+          <div className="size-full rounded-none bg-card/80 animate-pulse" />
         }
       >
         <UserButton.MenuItems>
@@ -31,7 +35,6 @@ const CustomUserButton = () => {
               )
             }
             onClick={() => setTheme(isDark ? "light" : "dark")}
-            aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
             label={"Toggle theme"}
           />
         </UserButton.MenuItems>
@@ -39,5 +42,4 @@ const CustomUserButton = () => {
     </div>
   );
 };
-
 export default CustomUserButton;
