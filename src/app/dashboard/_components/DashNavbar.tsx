@@ -1,6 +1,6 @@
 import Link from "next/link";
 import CustomUserButton from "@/app/_components/CustomUserButton";
-import SearchBox from "@/app/dashboard/_components/SearchBox";
+import SearchMounter from "@/app/dashboard/_components/SearchMounter";
 import { Logo } from "@/components/Logo";
 
 export function DashNavbar() {
@@ -11,7 +11,7 @@ export function DashNavbar() {
           <Logo />
         </Link>
         <div className="flex items-center gap-4 sm:gap-6">
-          <SearchBox />
+          <SearchMounter />
           <CustomUserButton />
         </div>
       </nav>

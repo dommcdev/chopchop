@@ -35,14 +35,14 @@ export default function SearchRecipesDialog({
   }, []);
 
   return (
-    <div className="flex flex-col gap-4">
+    <>
       <Button
         onClick={() => setValue(true)}
         variant="outline"
-        className="w-fit flex items-center gab-2 px-4 py-2 font-medium transition-all hover:bg-accent hover:shadow-md rounded-non border border-border bg-background shadow-sm"
+        className="w-fit flex items-center gap-2 px-4 py-2 font-medium transition-all hover:bg-accent hover:shadow-md rounded-none border border-border bg-background shadow-sm"
       >
         <MagnifyingGlassIcon className="h-6 w-6 shrink-0" weight="bold" />
-        Find Recipe <div className="border-1 p-0.5 ml-2 text-xs">Ctrl K</div>
+        Find Recipe <div className="border p-0.5 ml-2 text-xs">Ctrl K</div>
       </Button>
 
       <CommandDialog open={open} onOpenChange={setValue}>
@@ -69,7 +69,7 @@ export default function SearchRecipesDialog({
           </CommandList>
         </Command>
       </CommandDialog>
-    </div>
+    </>
   );
 }
 

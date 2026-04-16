@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { UserButton } from "@clerk/nextjs";
-import { Moon, Sun } from "@phosphor-icons/react";
+import { MoonIcon, SunIcon, UserCircleIcon } from "@phosphor-icons/react";
 import { useTheme } from "next-themes";
 
 const CustomUserButton = () => {
@@ -16,22 +16,19 @@ const CustomUserButton = () => {
   const isDark = mounted ? resolvedTheme === "dark" : true;
 
   return (
-    // Changed: rounded-full -> rounded-none
-    // Changed: ring-2 ring-foreground -> border border-border
-    // Added: shadow-sm
-    <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary shadow-sm transition-shadow hover:shadow-md">
+    <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-background shadow-md">
       <UserButton
         fallback={
-          <div className="size-full rounded-none bg-card/80 animate-pulse" />
+          <UserCircleIcon className="size-7 rounded-full bg-card/80 animate-pulse" />
         }
       >
         <UserButton.MenuItems>
           <UserButton.Action
             labelIcon={
               isDark ? (
-                <Sun weight="bold" className="size-4" />
+                <SunIcon weight="bold" className="size-4" />
               ) : (
-                <Moon weight="bold" className="size-4" />
+                <MoonIcon weight="bold" className="size-4" />
               )
             }
             onClick={() => setTheme(isDark ? "light" : "dark")}
