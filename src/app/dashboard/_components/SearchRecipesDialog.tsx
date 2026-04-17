@@ -59,7 +59,7 @@ export default function SearchRecipesDialog({
               }
             >
               <RecipeList
-                promise={recipesPromise}
+                searchDataPromise={recipesPromise}
                 onSelect={(slug) => {
                   router.push(`/dashboard/r/${slug}`);
                   setValue(false);
@@ -74,13 +74,13 @@ export default function SearchRecipesDialog({
 }
 
 function RecipeList({
-  promise,
+  searchDataPromise,
   onSelect,
 }: {
-  promise: Promise<RecipeSearchItem[]>;
+  searchDataPromise: Promise<RecipeSearchItem[]>;
   onSelect: (slug: string) => void;
 }) {
-  const recipes = use(promise);
+  const recipes = use(searchDataPromise);
 
   return (
     <CommandGroup>

@@ -20,7 +20,8 @@
 
 - Home page
   - Add 3-dot dropdown on recipe cards with delete option (+ confirmation + actual deletion logic)
-  - Replace custom scroller with carousel shadcn component
+  - Replace custom categories scroller with carousel shadcn component
+  - Pagination
 
 - Recipe viewer
   - Ingredient scaling
@@ -71,3 +72,4 @@
 - Nutritional info
 - Dedicated recipes page with sorting
 - Ability to create categories from edit page
+- Infinite scroll with virtualization
