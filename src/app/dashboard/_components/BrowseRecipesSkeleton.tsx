@@ -1,11 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { RecipeCardSkeleton } from "@/app/dashboard/_components/RecipeCardSkeleton";
 
-export function BrowseRecipesSkeleton({
-  count = 20,
-}: {
-  count?: number;
-}) {
+export function BrowseRecipesSkeleton({ count = 20 }: { count?: number }) {
   return (
     <div className="m-4 flex flex-col gap-2 md:m-6">
       <div className="flex flex-row items-center justify-between">
@@ -22,4 +18,3 @@ export function BrowseRecipesSkeleton({
     </div>
   );
 }
-

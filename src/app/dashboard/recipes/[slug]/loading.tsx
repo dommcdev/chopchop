@@ -3,4 +3,3 @@ import { RecipePageSkeleton } from "@/app/dashboard/recipes/[slug]/_components/R
 export default function Loading() {
   return <RecipePageSkeleton />;
 }
-

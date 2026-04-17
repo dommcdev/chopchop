@@ -17,9 +17,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  updateRecipeAction,
-} from "@/data/recipesActions";
+import { updateRecipeAction } from "@/data/recipesActions";
 import type { UpdateRecipePayload } from "@/types";
 
 type CategoryOption = { id: number; name: string; slug: string };
@@ -98,9 +96,7 @@ export function RecipeEditorForm({
   );
 
   const [instructionRows, setInstructionRows] = useState<string[]>(() =>
-    recipe.instructions.length
-      ? recipe.instructions.map((s) => s.text)
-      : [""],
+    recipe.instructions.length ? recipe.instructions.map((s) => s.text) : [""],
   );
 
   function buildPayload():
@@ -113,10 +109,7 @@ export function RecipeEditorForm({
       return { ok: false, error: "Servings must be a positive integer." };
     }
 
-    const cat =
-      categoryId === ""
-        ? null
-        : Number.parseInt(categoryId, 10);
+    const cat = categoryId === "" ? null : Number.parseInt(categoryId, 10);
     if (cat != null && Number.isNaN(cat)) {
       return { ok: false, error: "Invalid category." };
     }
@@ -316,7 +309,9 @@ export function RecipeEditorForm({
                 variant="secondary"
                 size="sm"
                 onClick={() => {
-                  setIngredientRows(ingredientRows.filter((_, i) => i !== index));
+                  setIngredientRows(
+                    ingredientRows.filter((_, i) => i !== index),
+                  );
                 }}
               >
                 Remove row

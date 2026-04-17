@@ -113,8 +113,7 @@ export async function updateRecipeAction(
     console.error("updateRecipeAction", e);
     return {
       ok: false,
-      message:
-        e instanceof Error ? e.message : "Failed to update recipe.",
+      message: e instanceof Error ? e.message : "Failed to update recipe.",
     };
   }
 
