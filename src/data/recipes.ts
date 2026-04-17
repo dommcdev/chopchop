@@ -13,6 +13,7 @@ import { cache } from "react";
 // Fetch block of recipes for homepage infinite scroll
 export async function fetchRecipesBlock(limit: number, offset: number) {
   const userId = await checkAuth();
+  await new Promise((resolve) => setTimeout(resolve, 3000)); // Simulate network delay
 
   return await db.query.recipes.findMany({
     where: eq(recipes.userId, userId),

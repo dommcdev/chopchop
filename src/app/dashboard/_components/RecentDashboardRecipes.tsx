@@ -15,9 +15,9 @@ export default async function RecentDashboardRecipes() {
         <Suspense
           key={1}
           fallback={<RecipesGridSkeleton pageSize={pageSize} />}
-        />
-        <RecipesGrid page={1} pageSize={pageSize} />
-        <Suspense />
+        >
+          <RecipesGrid page={1} pageSize={pageSize} />
+        </Suspense>
       </section>
     </>
   );

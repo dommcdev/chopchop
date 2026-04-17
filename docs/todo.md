@@ -46,6 +46,7 @@
 - TOS/Privacy Policy pages
 - Full categories page (simple)
 - STYLING
+- Everything needs to be wider on larger screens
 
 - Optimizations & Tweaks
   - Cache categories, etc.
@@ -57,12 +58,13 @@
   - Add alert dialog to destructive actions (deleting category, recipe, etc)
 
 ### Low Priority
-- Bulk recipe json exporter
+- Bulk recipe json exporter/importer
 - More stuff on landing page
 
 ### Bugs
 - Share link needs url redirect parameters
 - Long recipe titles run into toolbar in viewer
+
 
 ### Future features (?)
 - Bulk recipe ingest/queuing

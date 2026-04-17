@@ -5,7 +5,7 @@ import { ArrowLeftIcon } from "@phosphor-icons/react/dist/ssr";
 import { PrintableRecipeCard } from "@/app/dashboard/recipes/[slug]/_components/PrintableRecipeCard";
 import { RecipeViewToolbar } from "@/app/dashboard/recipes/[slug]/_components/RecipeViewToolbar";
 import { calculateScaleFactor, cn } from "@/lib/utils";
-import { fetchAllRecipeData } from "@/data/recipes";
+import { fetchRecipeBlob } from "@/data/recipes";
 import { getScaledIngredients } from "@/lib/utils";
 
 const recipeMediaShellClassName = cn(
@@ -21,7 +21,7 @@ export default async function RecipePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const recipe = await fetchAllRecipeData(slug);
+  const recipe = await fetchRecipeBlob(slug);
 
   if (!recipe) {
     notFound();

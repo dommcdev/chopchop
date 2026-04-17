@@ -4,9 +4,11 @@ import RecipesGrid, { RecipesGridSkeleton } from "../_components/RecipesGrid";
 export default async function RecipesPage({
   searchParams,
 }: {
-  searchParams?: { page?: string };
+  searchParams: Promise<{ page?: string }>;
 }) {
-  const page = Number(searchParams?.page) || 1;
+  const { page: pageParam } = await searchParams; //since searchParams are now asynchronous
+
+  const page = Number(pageParam) || 1;
   const pageSize = 20; //can change if needed
 
   return (
@@ -18,9 +20,9 @@ export default async function RecipesPage({
         <Suspense
           key={page}
           fallback={<RecipesGridSkeleton pageSize={pageSize} />}
-        />
-        <RecipesGrid page={page} pageSize={pageSize} />
-        <Suspense />
+        >
+          <RecipesGrid page={page} pageSize={pageSize} />
+        </Suspense>
         {/* Pagination bar here*/}
       </section>
     </>

@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 
 import { RecipeEditorForm } from "@/app/dashboard/recipes/[slug]/edit/_components/RecipeEditorForm";
 import { getCategoriesForUser } from "@/data/categories";
-import { fetchAllRecipeData } from "@/data/recipes";
+import { fetchRecipeBlob } from "@/data/recipes";
 
 export default async function RecipeEditPage({
   params,
@@ -11,7 +11,7 @@ export default async function RecipeEditPage({
 }) {
   const { slug } = await params;
   const [recipe, categories] = await Promise.all([
-    fetchAllRecipeData(slug),
+    fetchRecipeBlob(slug),
     getCategoriesForUser(),
   ]);
 
