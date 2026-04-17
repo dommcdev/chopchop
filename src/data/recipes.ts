@@ -48,6 +48,7 @@ export async function fetchSearchData(): Promise<RecipeSearchItem[]> {
   });
 }
 
+//TODO why do we have the or stuff here
 export const fetchAllRecipeData = cache(async (slug: string) => {
   const userId = await checkAuth();
 
