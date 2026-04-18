@@ -1,15 +1,12 @@
-import { fetchRecipesBlock } from "@/data/recipes";
 import RecipeCard, { RecipeCardSkeleton } from "./RecipeCard";
+import { RecipeWithCategory } from "@/types";
 
 export default async function RecipesGrid({
-  page,
-  pageSize,
+  recipesPromise,
 }: {
-  page: number;
-  pageSize: number;
+  recipesPromise: Promise<RecipeWithCategory[]>;
 }) {
-  const offset = (page - 1) * pageSize;
-  const recipes = await fetchRecipesBlock(pageSize, offset);
+  const recipes = await recipesPromise;
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">

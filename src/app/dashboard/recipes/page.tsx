@@ -1,15 +1,20 @@
 import { Suspense } from "react";
 import RecipesGrid, { RecipesGridSkeleton } from "../_components/RecipesGrid";
+import { PaginationBar } from "./_components/PaginationBar";
+import { fetchRecipesBlock, getNumOfPages } from "@/data/recipes";
 
 export default async function RecipesPage({
   searchParams,
 }: {
   searchParams: Promise<{ page?: string }>;
 }) {
-  const { page: pageParam } = await searchParams; //since searchParams are now asynchronous
+  const { page: p } = await searchParams; //since searchParams are now asynchronous
+  const page = Number(p) || 1;
+  const PAGE_SIZE = 20; //can change if needed
 
-  const page = Number(pageParam) || 1;
-  const pageSize = 20; //can change if needed
+  //Begin parallel data fetching for page count and recipes
+  const recipesPromise = fetchRecipesBlock(PAGE_SIZE, (page - 1) * PAGE_SIZE);
+  const totalPagesPromise = getNumOfPages(PAGE_SIZE);
 
   return (
     <>
@@ -19,11 +24,14 @@ export default async function RecipesPage({
         </div>
         <Suspense
           key={page}
-          fallback={<RecipesGridSkeleton pageSize={pageSize} />}
+          fallback={<RecipesGridSkeleton pageSize={PAGE_SIZE} />}
         >
-          <RecipesGrid page={page} pageSize={pageSize} />
+          <RecipesGrid recipesPromise={recipesPromise} />
         </Suspense>
-        {/* Pagination bar here*/}
+        <PaginationBar
+          currentPage={page}
+          totalPagesPromise={totalPagesPromise}
+        />
       </section>
     </>
   );

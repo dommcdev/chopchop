@@ -5,7 +5,7 @@
 import "server-only";
 import { db } from "@/db";
 import { recipes } from "@/db/schema";
-import { and, or, eq } from "drizzle-orm";
+import { and, or, eq, count } from "drizzle-orm";
 import { RecipeSearchItem } from "@/types";
 import { checkAuth } from "./shared";
 import { cache } from "react";
@@ -79,4 +79,16 @@ export async function getRecipeSlugFromPublicId(publicId: string) {
   });
 
   return result?.slug ?? null;
+}
+
+export async function getNumOfPages(pageSize: number) {
+  const userId = await checkAuth();
+
+  const result = await db
+    .select({ value: count() })
+    .from(recipes)
+    .where(eq(recipes.userId, userId));
+
+  const totalCount = result[0].value;
+  return Math.ceil(totalCount / pageSize);
 }

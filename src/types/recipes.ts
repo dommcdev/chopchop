@@ -1,8 +1,9 @@
 import { Recipe, Category, Ingredient } from "@/db/schema";
+import { fetchRecipesBlock } from "@/data/recipes";
 
-export type RecipeWithCategory = Recipe & {
-  category: Category | null;
-};
+export type RecipeWithCategory = Awaited<
+  ReturnType<typeof fetchRecipesBlock>
+>[number];
 
 export type UpdateRecipePayload = {
   recipeId: number;

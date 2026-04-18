@@ -12,10 +12,7 @@ export default async function RecentDashboardRecipes() {
         <div className="flex flex-row justify-between items-center">
           <h2 className="text-xl font-bold">Recent Recipes</h2>
         </div>
-        <Suspense
-          key={1}
-          fallback={<RecipesGridSkeleton pageSize={pageSize} />}
-        >
+        <Suspense fallback={<RecipesGridSkeleton pageSize={pageSize} />}>
           <RecipesGrid page={1} pageSize={pageSize} />
         </Suspense>
       </section>

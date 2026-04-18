@@ -4,11 +4,11 @@ import Link from "next/link";
 import { ForkKnifeIcon } from "@phosphor-icons/react";
 import { CategoryBrief } from "@/types";
 
-interface CategoryCardProps {
+export default function CategoryCard({
+  category,
+}: {
   category: CategoryBrief;
-}
-
-export default function CategoryCard({ category }: CategoryCardProps) {
+}) {
   return (
     <Link
       href={`/dashboard/c/${category.slug}`}
