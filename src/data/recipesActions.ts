@@ -14,15 +14,6 @@ import { fetchRecipesBlock as fetchRecipesFromDAL } from "@/data/recipes";
 import { checkAuth } from "@/data/shared";
 import type { UpdateRecipePayload } from "@/types";
 
-// Allow the BrowseRecipes client component to fetch more recipes as necessary.
-export async function fetchRecipesBlock(limit: number, offset: number) {
-  const data = await fetchRecipesFromDAL(limit, offset);
-
-  if (data.length === 0) return null;
-
-  return data; // Return raw JSON objects
-}
-
 export async function updateRecipeAction(
   payload: UpdateRecipePayload,
 ): Promise<{ ok: true } | { ok: false; message: string }> {
