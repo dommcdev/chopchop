@@ -24,4 +24,8 @@ if (process.env.NODE_ENV !== "production") {
   globalForDb.client = client;
 }
 
-export const db = drizzle(client, { schema, casing: "snake_case" });
+export const db = drizzle(client, {
+  schema,
+  casing: "snake_case",
+  logger: true,
+});

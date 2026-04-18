@@ -3,6 +3,7 @@
 ### Todo
 
 - Search dialog
+  - Fix so it uses ingredient keywords rather than ingredients table
   - Styling (make it bigger)
   - Fix weird bug
   - Support category & incredient filters
@@ -62,6 +63,7 @@
 ### Bugs
 - Share link needs url redirect parameters
 - Long recipe titles run into toolbar in viewer
+- Confirm db fetching is normal
 
 
 ### Future features (?)
