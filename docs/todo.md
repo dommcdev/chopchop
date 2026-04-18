@@ -21,7 +21,6 @@
 - Home page
   - Add 3-dot dropdown on recipe cards with delete option (+ confirmation + actual deletion logic)
   - Replace custom categories scroller with carousel shadcn component
-  - Pagination
 
 - Recipe viewer
   - Ingredient scaling
@@ -46,7 +45,6 @@
 - TOS/Privacy Policy pages
 - Full categories page (simple)
 - STYLING
-- Everything needs to be wider on larger screens
 
 - Optimizations & Tweaks
   - Cache categories, etc.
@@ -72,6 +70,6 @@
 - Advanced search page
 - Preferences
 - Nutritional info
-- Dedicated recipes page with sorting
+- Add sorting/groups to recipes page
 - Ability to create categories from edit page
 - Infinite scroll with virtualization

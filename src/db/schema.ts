@@ -1,64 +1,71 @@
-import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core";
+import {
+  sqliteTable,
+  text,
+  integer,
+  real,
+  index,
+  uniqueIndex,
+} from "drizzle-orm/sqlite-core";
 import { relations, sql } from "drizzle-orm";
 import { InferSelectModel, InferInsertModel } from "drizzle-orm";
 
 // ── Categories ──────────────────────────────────────────────────────────────
 export const categories = sqliteTable("categories", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  slug: text("slug").notNull(),
-  userId: text("user_id").notNull(), // Logical foreign key to Clerk
-  name: text("name").notNull(),
-  imageUrl: text("image_url"),
-  imageKey: text("image_key"),
-  createdAt: text("created_at")
+  id: integer().primaryKey({ autoIncrement: true }),
+  slug: text().notNull(),
+  userId: text().notNull(), // Logical foreign key to Clerk
+  name: text().notNull(),
+  imageUrl: text(),
+  imageKey: text(),
+  createdAt: text()
     .notNull()
     .default(sql`(current_timestamp)`),
-  updatedAt: text("updated_at")
+  updatedAt: text()
     .notNull()
     .default(sql`(current_timestamp)`),
 });
 
 // ── Recipes ─────────────────────────────────────────────────────────────────
 export const recipes = sqliteTable("recipes", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  publicId: text("public_id").notNull().unique(), // Public identifier for URLs
-  slug: text("slug").notNull(),
-  userId: text("user_id").notNull(), // Logical foreign key to Clerk
-  name: text("name").notNull(),
-  description: text("description"),
-  servings: integer("servings").notNull().default(1),
-  prepTime: integer("prep_time"),
-  cookTime: integer("cook_time"),
-  categoryId: integer("category_id").references(() => categories.id),
-  imageUrl: text("image_url"),
-  imageKey: text("image_key"),
-  createdAt: text("created_at")
+  id: integer().primaryKey({ autoIncrement: true }),
+  publicId: text().notNull().unique(), // Public identifier for URLs
+  slug: text().notNull(),
+  userId: text().notNull(), // Logical foreign key to Clerk
+  name: text().notNull(),
+  description: text(),
+  servings: integer().notNull().default(1),
+  prepTime: integer(),
+  cookTime: integer(),
+  categoryId: integer().references(() => categories.id),
+  imageUrl: text(),
+  imageKey: text(),
+  createdAt: text()
     .notNull()
     .default(sql`(current_timestamp)`),
-  updatedAt: text("updated_at")
+  updatedAt: text()
     .notNull()
     .default(sql`(current_timestamp)`),
 });
 
 // ── Ingredients ─────────────────────────────────────────────────────────────
 export const ingredients = sqliteTable("ingredients", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  recipeId: integer("recipe_id")
+  id: integer().primaryKey({ autoIncrement: true }),
+  recipeId: integer()
     .notNull()
     .references(() => recipes.id, { onDelete: "cascade" }),
-  name: text("name").notNull(),
-  quantity: real("quantity"),
-  unit: text("unit"),
+  name: text().notNull(),
+  quantity: real(),
+  unit: text(),
 });
 
 // ── Instructions ────────────────────────────────────────────────────────────
 export const instructions = sqliteTable("instructions", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  recipeId: integer("recipe_id")
+  id: integer().primaryKey({ autoIncrement: true }),
+  recipeId: integer()
     .notNull()
     .references(() => recipes.id, { onDelete: "cascade" }),
-  stepNumber: integer("step_number").notNull(),
-  text: text("text").notNull(),
+  stepNumber: integer().notNull(),
+  text: text().notNull(),
 });
 
 // ** Relations **

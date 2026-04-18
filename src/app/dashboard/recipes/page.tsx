@@ -18,7 +18,7 @@ export default async function RecipesPage({
 
   return (
     <>
-      <section className="m-4 flex flex-col gap-2 md:m-6">
+      <main className="mx-auto max-w-screen-3xl p-4 flex flex-col gap-2 md:p-6">
         <div className="flex flex-row justify-between items-center">
           <h2 className="text-xl font-bold">All Recipes</h2>
         </div>
@@ -32,7 +32,7 @@ export default async function RecipesPage({
           currentPage={page}
           totalPagesPromise={totalPagesPromise}
         />
-      </section>
+      </main>
     </>
   );
 }

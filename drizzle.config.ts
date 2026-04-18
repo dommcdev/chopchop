@@ -14,4 +14,5 @@ export default defineConfig({
     url,
     authToken: process.env.TURSO_AUTH_TOKEN,
   },
+  casing: "snake_case",
 });
