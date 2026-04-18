@@ -42,9 +42,6 @@ export async function fetchSearchData(): Promise<RecipeSearchItem[]> {
       category: {
         columns: { name: true },
       },
-      ingredients: {
-        columns: { name: true },
-      },
     },
   });
 }

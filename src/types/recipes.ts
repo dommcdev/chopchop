@@ -44,5 +44,4 @@ export type RecipeSearchItem = Pick<
   "id" | "slug" | "name" | "description"
 > & {
   category: Pick<Category, "name"> | null;
-  ingredients: Array<Pick<Ingredient, "name">>;
 };

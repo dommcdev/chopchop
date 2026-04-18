@@ -26,50 +26,66 @@ export const categories = sqliteTable("categories", {
 });
 
 // ── Recipes ─────────────────────────────────────────────────────────────────
-export const recipes = sqliteTable("recipes", {
-  id: integer().primaryKey({ autoIncrement: true }),
-  publicId: text().notNull().unique(), // Public identifier for URLs
-  slug: text().notNull(),
-  userId: text().notNull(), // Logical foreign key to Clerk
-  name: text().notNull(),
-  description: text(),
-  servings: integer().notNull().default(1),
-  prepTime: integer(),
-  cookTime: integer(),
-  categoryId: integer().references(() => categories.id),
-  imageUrl: text(),
-  imageKey: text(),
-  createdAt: text()
-    .notNull()
-    .default(sql`(current_timestamp)`),
-  updatedAt: text()
-    .notNull()
-    .default(sql`(current_timestamp)`),
-});
+export const recipes = sqliteTable(
+  "recipes",
+  {
+    id: integer().primaryKey({ autoIncrement: true }),
+    publicId: text().notNull().unique(), // Public identifier for URLs
+    slug: text().notNull(),
+    userId: text().notNull(), // Logical foreign key to Clerk
+    name: text().notNull(),
+    description: text(),
+    servings: integer().notNull().default(1),
+    prepTime: integer(),
+    cookTime: integer(),
+    categoryId: integer().references(() => categories.id),
+    imageUrl: text(),
+    imageKey: text(),
+    ingredientKeywords: text(),
+    createdAt: text()
+      .notNull()
+      .default(sql`(current_timestamp)`),
+    updatedAt: text()
+      .notNull()
+      .default(sql`(current_timestamp)`),
+  },
+  (table) => [
+    index("user_id_idx").on(table.userId),
+    uniqueIndex("recipes_slug_idx").on(table.slug),
+    uniqueIndex("recipes_public_id_idx").on(table.publicId),
+  ],
+);
 
 // ── Ingredients ─────────────────────────────────────────────────────────────
-export const ingredients = sqliteTable("ingredients", {
-  id: integer().primaryKey({ autoIncrement: true }),
-  recipeId: integer()
-    .notNull()
-    .references(() => recipes.id, { onDelete: "cascade" }),
-  name: text().notNull(),
-  quantity: real(),
-  unit: text(),
-});
+export const ingredients = sqliteTable(
+  "ingredients",
+  {
+    id: integer().primaryKey({ autoIncrement: true }),
+    recipeId: integer()
+      .notNull()
+      .references(() => recipes.id, { onDelete: "cascade" }),
+    name: text().notNull(),
+    quantity: real(),
+    unit: text(),
+  },
+  (table) => [index("ingredients_recipe_id_idx").on(table.recipeId)],
+);
 
 // ── Instructions ────────────────────────────────────────────────────────────
-export const instructions = sqliteTable("instructions", {
-  id: integer().primaryKey({ autoIncrement: true }),
-  recipeId: integer()
-    .notNull()
-    .references(() => recipes.id, { onDelete: "cascade" }),
-  stepNumber: integer().notNull(),
-  text: text().notNull(),
-});
+export const instructions = sqliteTable(
+  "instructions",
+  {
+    id: integer().primaryKey({ autoIncrement: true }),
+    recipeId: integer()
+      .notNull()
+      .references(() => recipes.id, { onDelete: "cascade" }),
+    stepNumber: integer().notNull(),
+    text: text().notNull(),
+  },
+  (table) => [index("instructions_recipe_id_idx").on(table.recipeId)],
+);
 
-// ** Relations **
-
+// Relations
 export const categoriesRelations = relations(categories, ({ many }) => ({
   recipes: many(recipes),
 }));
