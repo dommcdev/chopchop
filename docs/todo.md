@@ -17,7 +17,6 @@
   - Image selector for recipe image (reuse from recipe upload)
   - Create server action to take json input and update db
   - Call said server action (& refresh cache/ui/state/etc?)
-  - default serving sizes to 1
 
 - Home page
   - Add 3-dot dropdown on recipe cards with delete option (+ confirmation + actual deletion logic)
@@ -40,13 +39,6 @@
   - Add QR code/short link
   - Finalize layout/styling
 
-- Errors
-  - Return error message objects on auth check failures (backend)
-
-- TOS/Privacy Policy pages
-- Full categories page (simple)
-- STYLING
-
 - Optimizations & Tweaks
   - Cache categories, etc.
   - Make sure suspense boundaries etc are placed correctly
@@ -55,6 +47,10 @@
   - Tooltips (shadcn tooltip)
   - Add sonnar toasts for save/error messages (shadcn sonnar, maybe alert?)
   - Add alert dialog to destructive actions (deleting category, recipe, etc)
+  - Return error message objects on auth check failures (backend)
+  - TOS/Privacy Policy pages
+  - Full categories page (simple)
+  - STYLING
 
 ### Low Priority
 - Bulk recipe json exporter/importer
@@ -63,7 +59,6 @@
 ### Bugs
 - Share link needs url redirect parameters
 - Long recipe titles run into toolbar in viewer
-- Confirm db fetching is normal
 
 
 ### Future features (?)
