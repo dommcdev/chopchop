@@ -5,13 +5,13 @@ import { google } from "@ai-sdk/google";
 import { generateText, Output } from "ai";
 import { RecipeSchema, FileUploadSchema } from "@/lib/recipe-schema";
 
-export async function analyzeRecipe(formData: FormData) {
+export async function geminiAnalyzeRecipe(formData: FormData) {
   const { userId } = await auth();
   if (!userId) {
     throw new Error("Unauthorized");
   }
 
-  const file = FileUploadSchema.parse(formData.get("image"));
+  const file = FileUploadSchema.parse(formData.get("recipeFile"));
   const fileData = await file.arrayBuffer();
   const filePart =
     file.type === "application/pdf"

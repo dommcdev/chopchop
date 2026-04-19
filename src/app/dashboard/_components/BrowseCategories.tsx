@@ -1,10 +1,10 @@
 import BrowseCategoriesCarousel from "./BrowseCategoriesCarousel";
 import CategoryCard from "./CategoryCard";
 import Link from "next/link";
-import { getCategoriesForUser } from "@/data/categories";
+import { fetchCategories } from "@/data/categories";
 
 export default async function BrowseCategories() {
-  const allCategories = await getCategoriesForUser();
+  const allCategories = await fetchCategories();
 
   return (
     <div className="m-4 flex flex-col gap-2 md:m-6">

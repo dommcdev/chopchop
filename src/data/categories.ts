@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import { cache } from "react";
 import { checkAuth } from "./shared";
 
-export const getCategoriesForUser = cache(async () => {
+export const fetchCategories = cache(async () => {
   const userId = await checkAuth();
   return await db
     .select({
