@@ -12,9 +12,9 @@
   - (Display more data in results??)
 
 - Recipe editor
+  - Need some kind of processing ui dialog
   - General layout (editable fields, draggable steps, etc)
-  - Styling
-  - Image selector for recipe image (reuse from recipe upload)
+  - Image selector for recipe image (use uploadthing's w/dragable zone)
   - Create server action to take json input and update db
   - Call said server action (& refresh cache/ui/state/etc?)
 
@@ -24,10 +24,6 @@
 
 - Recipe viewer
   - Ingredient scaling
-- `Add recipe` button
-  - Add ui to navbar
-  - Add file upload dialog (shadcn? uploadthing's?) with user hints (make sure native selector is in all files mode)
-  - `Processing` ui while Gemini is working
 
 - Categories
   - Add delete/rename ui to cards

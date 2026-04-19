@@ -6,7 +6,6 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { cn } from "@/lib/utils";
 import "./globals.css";
-import { Suspense } from "react";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -41,9 +40,7 @@ export default function RootLayout({
           <ClerkProvider appearance={{ theme: shadcn }}>
             <div className="flex min-h-screen flex-col">
               <div className="flex-1">{children}</div>
-              <Suspense>
-                <SiteFooter />
-              </Suspense>
+              <SiteFooter />
             </div>
           </ClerkProvider>
         </ThemeProvider>

@@ -1,9 +1,12 @@
-"use client";
-
 import { cn } from "@/lib/utils";
 
+async function getCurrentYear() {
+  "use cache";
+  return new Date().getFullYear();
+}
+
 export function SiteFooter() {
-  const year = new Date().getFullYear();
+  const year = getCurrentYear();
 
   return (
     <footer

@@ -1,9 +1,8 @@
-// Categories page
-
-export default function CategoryPage() {
+export default async function CategoryPage() {
+  await new Promise((resolve) => setTimeout(resolve, 3000)); // Simulate network delay
   return (
     <div>
-      <h1>hello</h1>
+      <h1>Category here</h1>
       {/* Here you would fetch and display the category details based on the slug */}
     </div>
   );
