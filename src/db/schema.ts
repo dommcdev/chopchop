@@ -15,8 +15,6 @@ export const categories = sqliteTable("categories", {
   slug: text().notNull(),
   userId: text().notNull(), // Logical foreign key to Clerk
   name: text().notNull(),
-  imageUrl: text(),
-  imageKey: text(),
   createdAt: text()
     .notNull()
     .default(sql`(current_timestamp)`),

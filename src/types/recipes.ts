@@ -41,7 +41,7 @@ export type PrintableScaledIngredient = Pick<
 
 export type RecipeSearchItem = Pick<
   Recipe,
-  "id" | "slug" | "name" | "description"
+  "id" | "slug" | "name" | "description" | "ingredientKeywords"
 > & {
   category: Pick<Category, "name"> | null;
 };

@@ -10,7 +10,7 @@ import { RecipeSearchItem } from "@/types";
 import { checkAuth } from "./shared";
 import { cache } from "react";
 
-// Fetch block of recipes for homepage infinite scroll
+// Fetch block of recipes
 export async function fetchRecipesBlock(limit: number, offset: number) {
   const userId = await checkAuth();
   await new Promise((resolve) => setTimeout(resolve, 3000)); // Simulate network delay
@@ -19,7 +19,7 @@ export async function fetchRecipesBlock(limit: number, offset: number) {
     where: eq(recipes.userId, userId),
     orderBy: (r, { desc: descCol }) => [descCol(r.createdAt)],
     limit,
-    offset,
+    offset, //nota bene - db still reads everything up to this point, but then simply discards most of it (ok but not ideal)
     with: {
       category: true,
     },
@@ -37,6 +37,7 @@ export async function fetchSearchData(): Promise<RecipeSearchItem[]> {
       slug: true,
       name: true,
       description: true,
+      ingredientKeywords: true,
     },
     with: {
       category: {

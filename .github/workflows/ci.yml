@@ -3,8 +3,14 @@ name: CI
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - "docs/**"
+      - "**.md"
   pull_request:
     branches: [main]
+    paths-ignore:
+      - "docs/**"
+      - "**.md"
 
 jobs:
   test:
@@ -35,11 +41,9 @@ jobs:
           path: |
             ~/.bun/install/cache
             ${{ github.workspace }}/.next/cache
-          # The key changes if your lockfile OR your code changes
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/bun.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-          # If code changes but deps stay the same, still pull the old cache
+          key: ${{ runner.os }}-bun-next-${{ hashFiles('**/bun.lock') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/bun.lock') }}-
+            ${{ runner.os }}-bun-next-
 
       - name: Install Dependencies
         run: bun install --frozen-lockfile
@@ -54,3 +58,5 @@ jobs:
 
       - name: Build Project
         run: bun run build
+
+#Note - if using db in tests I will need to run bun db:push first somewhere
