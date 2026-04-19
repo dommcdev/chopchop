@@ -35,18 +35,29 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Cache Bun & Next.js
+      - name: Cache Bun
         uses: actions/cache@v5
         with:
           path: |
             ~/.bun/install/cache
-            ${{ github.workspace }}/.next/cache
-          key: ${{ runner.os }}-bun-next-${{ hashFiles('**/bun.lock') }}
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
           restore-keys: |
-            ${{ runner.os }}-bun-next-
+            ${{ runner.os }}-bun-
+
+      - name: Cache Next Build
+        uses: actions/cache@v5
+        with:
+          path: |
+            ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/bun.lock') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/bun.lock') }}-
 
       - name: Install Dependencies
         run: bun install --frozen-lockfile
+
+      - name: Push DB schema
+        run: bun run db:push
 
       - name: Lint & Format
         run: |
@@ -58,5 +69,3 @@ jobs:
 
       - name: Build Project
         run: bun run build
-
-#Note - if using db in tests I will need to run bun db:push first somewhere
