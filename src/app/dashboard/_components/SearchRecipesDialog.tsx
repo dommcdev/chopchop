@@ -39,10 +39,11 @@ export default function SearchRecipesDialog({
       <Button
         onClick={() => setValue(true)}
         variant="outline"
-        className="w-fit flex items-center gap-2 px-4 py-2 font-medium transition-all hover:bg-accent hover:shadow-md rounded-none border border-border bg-background shadow-sm"
+        size="sm"
+        className="w-fit flex items-center gap-2 px-4 py-2 font-small transition-all hover:bg-accent hover:shadow-md rounded-none border border-border bg-background shadow-sm"
       >
-        <MagnifyingGlassIcon className="h-6 w-6 shrink-0" weight="bold" />
-        Find Recipe <div className="border p-0.5 ml-2 text-xs">Ctrl K</div>
+        <MagnifyingGlassIcon className="h-fit shrink-0" weight="bold" />
+        Find Recipe <div className="border p-0.4 ml-2 text-xs">Ctrl K</div>
       </Button>
 
       <CommandDialog open={open} onOpenChange={setValue}>

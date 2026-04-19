@@ -2,6 +2,7 @@ import Link from "next/link";
 import CustomUserButton from "@/app/_components/CustomUserButton";
 import SearchMounter from "@/app/dashboard/_components/SearchMounter";
 import { Logo } from "@/components/Logo";
+import { UploadRecipeButton } from "./UploadRecipeButton";
 
 export function DashNavbar() {
   return (
@@ -12,6 +13,7 @@ export function DashNavbar() {
         </Link>
         <div className="flex items-center gap-4 sm:gap-6">
           <SearchMounter />
+          <UploadRecipeButton />
           <CustomUserButton />
         </div>
       </nav>
