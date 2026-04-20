@@ -1,4 +1,3 @@
-import CategoryCard from "./CategoryCard";
 import Link from "next/link";
 import { fetchCategories } from "@/data/categories";
 import { Card, CardContent } from "@/components/ui/card";
@@ -23,25 +22,32 @@ export default async function DashboardCategories() {
       </div>
 
       {allCategories.length > 0 ? (
-        <Carousel className="w-full max-w-[12rem] sm:max-w-xs md:max-w-sm">
-          <CarouselContent className="-ml-1">
-            {Array.from({ length: 20 }).map((_, index) => (
-              <CarouselItem key={index} className="basis-1/2 pl-1 lg:basis-1/3">
-                <div className="p-1">
-                  <Card>
-                    <CardContent className="flex aspect-square items-center justify-center p-6">
-                      <span className="text-2xl font-semibold">
-                        {index + 1}
-                      </span>
-                    </CardContent>
-                  </Card>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
+        <div className="px-12">
+          <Carousel opts={{ align: "start", loop: true }} className="w-full">
+            <CarouselContent className="-ml-1">
+              {allCategories.map((category) => (
+                <CarouselItem
+                  key={category.id}
+                  className="pl-2 basis-1/2 sm:basis-1/4 md:basis-1/4 lg:basis-1/6 xl:basis-1/8 2xl:basis-1/10"
+                >
+                  <div className="p-1">
+                    <Card className="shadow">
+                      <CardContent className="flex h-32 items-center justify-center p-6">
+                        <span className="text-xl font-semibold text-wrap text-center">
+                          <Link href={`/dashboard/c/${category.slug}`}>
+                            {category.name}
+                          </Link>
+                        </span>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        </div>
       ) : (
         <p> No categories</p>
         //New category button rendered here

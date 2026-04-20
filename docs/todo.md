@@ -20,14 +20,12 @@
 
 - Home page
   - Add 3-dot dropdown on recipe cards with delete option (+ confirmation + actual deletion logic)
-  - Replace custom categories scroller with carousel shadcn component
 
 - Recipe viewer
   - Ingredient scaling
 
 - Categories
-  - Add delete/rename ui to cards
-  - Confirmation dialog if category contains recipes
+  - Add delete/rename ui to cards (+ confirmation dialog)
   - Logic to edit those recipes to change category to `uncategorized`
   - Add create category ui
 
