@@ -9,10 +9,8 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Suspense } from "react";
-import { CategoryBrief } from "@/types";
 
 export default async function DashboardCategories() {
-  const categoriesPromise = fetchCategories();
   return (
     <div className="m-4 flex flex-col gap-2 md:m-6">
       <div className="flex flex-row justify-between items-center">
@@ -34,7 +32,7 @@ export default async function DashboardCategories() {
                 </CarouselItem>
               ))}
             >
-              <DashboardCategoriesList categoriesPromise={categoriesPromise} />
+              <DashboardCategoriesList />
             </Suspense>
           </CarouselContent>
           <CarouselPrevious />
@@ -45,12 +43,8 @@ export default async function DashboardCategories() {
   );
 }
 
-async function DashboardCategoriesList({
-  categoriesPromise,
-}: {
-  categoriesPromise: Promise<CategoryBrief[]>;
-}) {
-  const allCategories = await categoriesPromise;
+async function DashboardCategoriesList() {
+  const allCategories = await fetchCategories();
 
   //Create category button here
   if (allCategories.length === 0) return [];

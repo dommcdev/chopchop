@@ -1,9 +1,13 @@
 import { Recipe, Category, Ingredient } from "@/db/schema";
-import { fetchRecipesBlock } from "@/data/recipes";
+import { fetchRecipeBlob, fetchRecipesBlock } from "@/data/recipes";
 
 export type RecipeWithCategory = Awaited<
   ReturnType<typeof fetchRecipesBlock>
 >[number];
+
+export type RecipeBlob = NonNullable<
+  Awaited<ReturnType<typeof fetchRecipeBlob>>
+>;
 
 export type UpdateRecipePayload = {
   recipeId: number;

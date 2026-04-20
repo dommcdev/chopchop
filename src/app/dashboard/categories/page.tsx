@@ -1,9 +1,11 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { ArrowLeftIcon } from "@phosphor-icons/react/dist/ssr";
-import { CategoryCardSkeleton } from "../_components/CategoryCard";
+import CategoryCard, {
+  CategoryCardSkeleton,
+} from "../_components/CategoryCard";
 import ResponsiveGrid from "../_components/ResponsiveGrid";
-import CategoriesList from "../_components/CategoriesList";
+import { fetchCategories } from "@/data/categories";
 
 export default function CategoriesPage() {
   return (
@@ -36,5 +38,17 @@ export default function CategoriesPage() {
         </ResponsiveGrid>
       </Suspense>
     </main>
+  );
+}
+
+async function CategoriesList() {
+  const allCategories = await fetchCategories();
+
+  return (
+    <>
+      {allCategories.map((category) => (
+        <CategoryCard key={category.id} category={category} />
+      ))}
+    </>
   );
 }

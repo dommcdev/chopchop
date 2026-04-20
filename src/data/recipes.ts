@@ -50,6 +50,7 @@ export async function fetchSearchData(): Promise<RecipeSearchItem[]> {
 //TODO why do we have the or stuff here
 export const fetchRecipeBlob = cache(async (slug: string) => {
   const userId = await checkAuth();
+  await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate network delay
 
   return await db.query.recipes.findFirst({
     where: and(
