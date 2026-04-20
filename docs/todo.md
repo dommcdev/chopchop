@@ -12,6 +12,7 @@
   - Categories carousel button has weird click boundaries
   - Ingredient scaling on recipe viewer
   - Individual recipe-by-category pages
+  - Update Recipeviewer skeleton + suspend around categories carousel
 
 - Search dialog
   - Fix so it uses ingredient keywords rather than ingredients table
