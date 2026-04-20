@@ -3,6 +3,14 @@ import Link from "next/link";
 import { RecipeWithCategory } from "@/types";
 import { totalCookMinutes } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
   const totalMin = totalCookMinutes(recipe);
@@ -10,71 +18,72 @@ export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
   return (
     <Link
       href={`/dashboard/r/${recipe.slug}`}
-      className="group flex h-full flex-col overflow-hidden border-[3px] border-foreground bg-card transition-all duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+      // Removed the wrapper rounding here as well
+      className="group block h-full outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
     >
-      <div
-        className={`relative aspect-[2/1] overflow-hidden border-b-[3px] border-foreground ${
-          recipe.imageUrl ? "bg-muted" : "bg-white dark:bg-background"
-        }`}
-      >
-        {recipe.imageUrl ? (
-          <Image
-            src={recipe.imageUrl}
-            alt={recipe.name}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 25vw, 16vw"
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
-          />
-        ) : null}
-        {recipe.category ? (
-          <span className="absolute left-2 top-2 max-w-[calc(100%-1rem)] truncate border-[2px] border-foreground bg-background px-1.5 py-0.5 text-[9px] font-black uppercase tracking-[0.16em] text-foreground">
-            {recipe.category.name}
-          </span>
-        ) : null}
-      </div>
+      {/* Added rounded-none to override shadcn's default border radius */}
+      <Card className="flex h-full flex-col overflow-hidden rounded-none transition-colors hover:bg-muted/40 hover:shadow-sm">
+        {/* Image Section - This will now sit completely flush at the true top edge with no clipping artifacts */}
+        <div className="relative aspect-video w-full overflow-hidden bg-muted">
+          {recipe.imageUrl ? (
+            <Image
+              src={recipe.imageUrl}
+              alt={recipe.name}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          ) : null}
+        </div>
 
-      <div className="flex flex-1 flex-col gap-2 p-3">
-        <h2 className="line-clamp-2 min-h-[2.25rem] text-sm font-black uppercase tracking-tight text-foreground">
-          {recipe.name}
-        </h2>
+        {/* Header Section */}
+        <CardHeader>
+          {/* Bumped the title size up slightly to text-xl */}
+          <CardTitle className="line-clamp-1 text-xl">{recipe.name}</CardTitle>
+          {recipe.category ? (
+            <CardDescription>{recipe.category.name}</CardDescription>
+          ) : null}
 
-        <p className="line-clamp-2 text-xs text-muted-foreground">
-          {recipe.description || "No description provided yet."}
-        </p>
+          {totalMin > 0 ? (
+            <CardAction>
+              {/* Made the badge smaller, square, and gave it an uppercase/tracking treatment to match sharp aesthetics */}
+              <span className="inline-flex items-center rounded-none bg-secondary px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-secondary-foreground">
+                {totalMin} min
+              </span>
+            </CardAction>
+          ) : null}
+        </CardHeader>
 
-        {totalMin > 0 ? (
-          <div className="mt-auto border-t-[3px] border-foreground pt-2 text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
-            {totalMin} min total
-          </div>
-        ) : null}
-      </div>
+        {/* Content Section */}
+        <CardContent className="flex-1">
+          <p className="line-clamp-2 text-sm text-muted-foreground">
+            {recipe.description || "No description provided yet."}
+          </p>
+        </CardContent>
+      </Card>
     </Link>
   );
 }
 
 export function RecipeCardSkeleton() {
   return (
-    <div className="flex h-full flex-col overflow-hidden border-[3px] border-foreground bg-card">
-      <div className="relative aspect-[2/1] overflow-hidden border-b-[3px] border-foreground bg-muted">
-        <Skeleton className="absolute inset-0" />
-        <Skeleton className="absolute left-2 top-2 h-5 w-20 border-[2px] border-foreground bg-background/50" />
+    <Card className="flex h-full flex-col overflow-hidden rounded-none">
+      <div className="relative aspect-video w-full bg-muted">
+        <Skeleton className="absolute inset-0 rounded-none" />
       </div>
 
-      <div className="flex flex-1 flex-col gap-2 p-3">
-        <div className="space-y-2">
-          <Skeleton className="h-4 w-5/6" />
-          <Skeleton className="h-4 w-2/3" />
-        </div>
+      <CardHeader>
+        <Skeleton className="h-6 w-2/3 rounded-none" />
+        <Skeleton className="mt-1 h-4 w-1/3 rounded-none" />
+        <CardAction>
+          <Skeleton className="h-5 w-12 rounded-none" />
+        </CardAction>
+      </CardHeader>
 
-        <div className="space-y-2 pt-1">
-          <Skeleton className="h-3 w-full" />
-          <Skeleton className="h-3 w-5/6" />
-        </div>
-
-        <div className="mt-auto border-t-[3px] border-foreground pt-2">
-          <Skeleton className="h-3 w-24" />
-        </div>
-      </div>
-    </div>
+      <CardContent className="flex-1 space-y-2">
+        <Skeleton className="h-4 w-full rounded-none" />
+        <Skeleton className="h-4 w-4/5 rounded-none" />
+      </CardContent>
+    </Card>
   );
 }
