@@ -90,7 +90,7 @@ function RecipeList({
           recipe.name,
           recipe.category?.name,
           recipe.description,
-          ...recipe.ingredients.map((i) => i.name),
+          recipe.ingredientKeywords,
         ].filter((k): k is string => Boolean(k));
 
         return (

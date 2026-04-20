@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { fetchCategories } from "@/data/categories";
-import { Card, CardContent } from "@/components/ui/card";
+import CategoryCard from "./CategoryCard";
 import {
   Carousel,
   CarouselContent,
@@ -28,15 +28,7 @@ export default async function DashboardCategories() {
               {allCategories.map((category) => (
                 <CarouselItem key={category.id} className="pl-2 basis-54">
                   <div className="p-1">
-                    <Card className="shadow">
-                      <CardContent className="flex h-28 items-center justify-center p-6">
-                        <span className="text-xl font-semibold text-wrap text-center">
-                          <Link href={`/dashboard/c/${category.slug}`}>
-                            {category.name}
-                          </Link>
-                        </span>
-                      </CardContent>
-                    </Card>
+                    <CategoryCard category={category} />
                   </div>
                 </CarouselItem>
               ))}

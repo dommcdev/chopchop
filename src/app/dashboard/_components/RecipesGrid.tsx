@@ -9,7 +9,7 @@ export default async function RecipesGrid({
   const recipes = await recipesPromise;
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7">
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
       {recipes.map((recipe) => (
         <RecipeCard key={recipe.id} recipe={recipe} />
       ))}
@@ -19,7 +19,7 @@ export default async function RecipesGrid({
 
 export function RecipesGridSkeleton({ pageSize }: { pageSize: number }) {
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7">
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
       {Array.from({ length: pageSize }).map((_, index) => (
         <RecipeCardSkeleton key={index} />
       ))}
