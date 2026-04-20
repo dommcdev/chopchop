@@ -24,12 +24,13 @@ export type UpdateRecipePayload = {
 
 export type PrintableRecipe = Pick<
   Recipe,
-  "name" | "servings" | "description"
+  "name" | "servings" | "description" | "prepTime" | "cookTime" | "publicId"
 > & {
   instructions: Array<{
     id: number;
     text: string;
   }>;
+  category: Pick<Category, "name"> | null;
 };
 
 export type PrintableScaledIngredient = Pick<

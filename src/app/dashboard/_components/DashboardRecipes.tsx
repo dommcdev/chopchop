@@ -6,7 +6,7 @@ import { fetchRecipesBlock } from "@/data/recipes";
 import Link from "next/link";
 
 export default async function RecentDashboardRecipes() {
-  const PAGE_SIZE = 20; //can change if needed
+  const PAGE_SIZE = 27; //can change if needed
 
   const recipesPromise = fetchRecipesBlock(PAGE_SIZE, 0);
   return (

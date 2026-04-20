@@ -6,6 +6,8 @@ import { checkAuth } from "./shared";
 
 export const fetchCategories = cache(async () => {
   const userId = await checkAuth();
+  await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate network delay
+
   return await db
     .select({
       id: categories.id,

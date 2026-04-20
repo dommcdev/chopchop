@@ -39,15 +39,15 @@ export default function SearchRecipesDialog({
       <Button
         onClick={() => setValue(true)}
         variant="outline"
-        className="w-fit items-center gap-2 rounded-none shadow-sm"
+        className="px-3 sm:px-4 w-fit items-center gap-2 rounded-none shadow-sm"
       >
         <MagnifyingGlassIcon className="h-4 w-4 shrink-0" weight="bold" />
 
-        <span className="text-sm font-medium">Find Recipe</span>
+        <span className="hidden sm:inline-block text-sm font-medium">
+          Find Recipe
+        </span>
 
-        {/* Using the semantic <kbd> tag for keyboard shortcuts.
-      Styled to match the sharp, high-contrast look of your category badges. */}
-        <kbd className="ml-4 inline-flex h-5 items-center rounded-none border border-border bg-muted px-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+        <kbd className="hidden sm:inline-flex ml-4 h-5 items-center rounded-none border border-border bg-muted px-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
           Ctrl K
         </kbd>
       </Button>

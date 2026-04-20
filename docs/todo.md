@@ -1,6 +1,21 @@
 ## Project Tasks
 
 ### Todo
+  - Cache categories, etc.
+  - Pdf printing - finalize layout/styling
+  - Make sure suspense boundaries etc are placed correctly
+  - Loading spinners when needed
+  - Skeleton ui (use shadcn skeleton)
+  - Tooltips (shadcn tooltip)
+  - Add sonnar toasts for save/error messages (shadcn sonnar, maybe alert?)
+  - Add alert dialog to destructive actions (deleting category, recipe, etc)
+  - Return error message objects on auth check failures (backend)
+  - TOS/Privacy Policy pages
+  - STYLING
+  - Add 3-dot dropdown on recipe cards with delete option (+ confirmation + actual deletion logic)
+  - Categories carousel button has weird click boundaries
+  - Ingredient scaling on recipe viewer
+  - Individual recipe-by-category pages
 
 - Search dialog
   - Fix so it uses ingredient keywords rather than ingredients table
@@ -18,37 +33,10 @@
   - Create server action to take json input and update db
   - Call said server action (& refresh cache/ui/state/etc?)
 
-- Home page
-  - Add 3-dot dropdown on recipe cards with delete option (+ confirmation + actual deletion logic)
-  - Categories carousel button has weird click boundaries
-  - Swap navbar to just search icon/upload icon on small screen sizes
-
-- Recipe viewer
-  - Ingredient scaling
-
 - Categories
   - Add delete/rename ui to cards (+ confirmation dialog)
   - Logic to edit those recipes to change category to `uncategorized`
   - Add create category ui
-
-- PDF printing
-  - Add QR code/short link
-  - Finalize layout/styling
-
-- Optimizations & Tweaks
-  - Cache categories, etc.
-  - Make sure suspense boundaries etc are placed correctly
-  - Loading spinners when needed
-  - Skeleton ui (use shadcn skeleton)
-  - Tooltips (shadcn tooltip)
-  - Add sonnar toasts for save/error messages (shadcn sonnar, maybe alert?)
-  - Add alert dialog to destructive actions (deleting category, recipe, etc)
-  - Return error message objects on auth check failures (backend)
-  - TOS/Privacy Policy pages
-  - Full categories page (simple)
-  - STYLING
-  - Long recipe titles run into toolbar in viewer
-
 
 
 ### Future features (?)

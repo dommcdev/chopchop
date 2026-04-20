@@ -1,6 +1,6 @@
-import { calculateScaleFactor } from "@/lib/utils";
 import { formatNumber } from "@/lib/utils";
 import { PrintableRecipe, PrintableScaledIngredient } from "@/types";
+import { QRCodeSVG } from "qrcode.react";
 
 interface PrintableRecipeCardProps {
   recipe: PrintableRecipe;
@@ -13,75 +13,102 @@ export function PrintableRecipeCard({
   targetServings,
   scaledIngredients,
 }: PrintableRecipeCardProps) {
-  const scaleFactor = calculateScaleFactor(targetServings, recipe.servings);
-
+  const shareUrl = `https://lechopchop.vercel.app/dashboard/s/${recipe.publicId}`;
   return (
-    <section className="bg-white text-black">
-      <div className="mb-6 border-b border-neutral-200 pb-6">
-        <h2 className="text-3xl font-bold text-neutral-900">{recipe.name}</h2>
+    <section className="bg-white p-4 text-black sm:p-8">
+      {/* HEADER */}
+      <div className="mb-6">
+        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+          {recipe.name}
+        </h1>
         {recipe.description && (
-          <p className="mt-2 text-neutral-600">{recipe.description}</p>
+          <p className="mt-2 max-w-prose text-sm leading-relaxed text-black/70">
+            {recipe.description}
+          </p>
         )}
 
-        <div className="mt-4 text-sm text-neutral-700">
-          Base servings:{" "}
-          <span className="font-semibold">{recipe.servings}</span>
-          {"  ·  "}
-          Scaled to: <span className="font-semibold">{targetServings}</span>
-          {scaleFactor !== 1 && (
-            <>
-              {"  ·  "}
-              Scale factor:{" "}
-              <span className="font-semibold">
-                {formatNumber(scaleFactor)}x
-              </span>
-            </>
+        <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-[10px] font-bold uppercase tracking-widest text-black/60">
+          {recipe.category && (
+            <span>
+              Category:{" "}
+              <span className="text-black">{recipe.category.name}</span>
+            </span>
+          )}
+          <span>
+            Servings: <span className="text-black">{targetServings}</span>
+          </span>
+          {recipe.prepTime != null && recipe.prepTime > 0 && (
+            <span>
+              Prep: <span className="text-black">{recipe.prepTime} min</span>
+            </span>
+          )}
+          {recipe.cookTime != null && recipe.cookTime > 0 && (
+            <span>
+              Cook: <span className="text-black">{recipe.cookTime} min</span>
+            </span>
           )}
         </div>
       </div>
 
-      <div className="mb-6">
-        <h3 className="mb-3 text-lg font-semibold text-neutral-900">
-          Ingredients
-        </h3>
-        <ul className="space-y-2">
-          {scaledIngredients.map((ingredient) => (
-            <li
-              key={ingredient.id}
-              className="flex items-center gap-2 border-b border-neutral-100 py-2 text-sm text-neutral-800 break-inside-avoid"
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-neutral-400" />
-              {ingredient.scaledAmount != null && (
-                <span className="font-medium">
-                  {formatNumber(ingredient.scaledAmount)}
+      <div className="grid grid-cols-1 items-start gap-8 border-t-[3px] border-black pt-6 sm:grid-cols-3">
+        {/* INGREDIENTS */}
+        <div className="sm:col-span-1">
+          <h2 className="mb-4 text-lg font-semibold tracking-tight">
+            Ingredients
+          </h2>
+          <ul className="space-y-2">
+            {scaledIngredients.map((ingredient) => (
+              <li
+                key={ingredient.id}
+                className="flex items-start gap-3 break-inside-avoid text-sm"
+              >
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 bg-black" />
+                <span className="leading-relaxed">
+                  {ingredient.scaledAmount != null && (
+                    <span className="font-bold">
+                      {formatNumber(ingredient.scaledAmount)}{" "}
+                      {ingredient.unit}{" "}
+                    </span>
+                  )}
+                  <span className="text-black/80">{ingredient.name}</span>
                 </span>
-              )}
-              {ingredient.unit && (
-                <span className="text-neutral-500">{ingredient.unit}</span>
-              )}
-              <span>{ingredient.name}</span>
-            </li>
-          ))}
-        </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* INSTRUCTIONS */}
+        <div className="sm:col-span-2">
+          <h2 className="mb-4 text-lg font-semibold tracking-tight">
+            Instructions
+          </h2>
+          <ol className="space-y-5">
+            {recipe.instructions.map((step, index) => (
+              <li
+                key={step.id}
+                className="flex gap-4 break-inside-avoid text-sm"
+              >
+                <span className="mt-0.5 shrink-0 font-semibold tabular-nums text-black/50">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span className="leading-relaxed text-black/90">
+                  {step.text}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
 
-      <div className="mb-6">
-        <h3 className="mb-3 text-lg font-semibold text-neutral-900">
-          Instructions
-        </h3>
-        <ol className="space-y-4">
-          {recipe.instructions.map((step, index) => (
-            <li
-              key={step.id}
-              className="flex gap-3 text-sm text-neutral-800 break-inside-avoid"
-            >
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-neutral-900 text-xs font-bold text-white">
-                {index + 1}
-              </span>
-              <span className="pt-0.5">{step.text}</span>
-            </li>
-          ))}
-        </ol>
+      {/* FOOTER / QR CODE */}
+      <div className="mt-12 flex items-center gap-4 break-inside-avoid border-t-[3px] border-black pt-6">
+        <QRCodeSVG value={shareUrl} size={56} level="L" className="shrink-0" />
+        <div className="flex flex-col gap-1">
+          <span className="text-sm font-bold tracking-tight text-black">
+            View this recipe online
+          </span>
+          <span className="text-xs text-black/70">{shareUrl}</span>
+        </div>
       </div>
     </section>
   );
