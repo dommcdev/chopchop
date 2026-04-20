@@ -36,6 +36,7 @@ export default function RootLayout({
       )}
     >
       <body>
+        {/*Note to self - <ThemeProvider> needs to be wraped in suspense (loading.tsx)*/}
         <ThemeProvider>
           <ClerkProvider appearance={{ theme: shadcn }}>
             <div className="flex min-h-screen flex-col">

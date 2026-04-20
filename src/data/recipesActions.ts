@@ -10,7 +10,6 @@ import { and, eq, sql } from "drizzle-orm";
 
 import { db } from "@/db";
 import { ingredients, instructions, recipes } from "@/db/schema";
-import { fetchRecipesBlock as fetchRecipesFromDAL } from "@/data/recipes";
 import { checkAuth } from "@/data/shared";
 import type { UpdateRecipePayload } from "@/types";
 

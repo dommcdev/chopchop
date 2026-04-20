@@ -1,7 +1,6 @@
 ## Project Tasks
 
 ### Todo
-  - Cache categories, etc.
   - Pdf printing - finalize layout/styling
   - Tooltips (shadcn tooltip)
   - Add sonnar toasts for save/error messages (shadcn sonnar, maybe alert?)
@@ -34,11 +33,6 @@
   - Add delete/rename ui to cards (+ confirmation dialog)
   - Logic to edit those recipes to change category to `uncategorized`
   - Add create category ui
-
-
-- Finalize
-  - Loading spinners + suspense + fallback skeletons
-
 
 ### Future features (?)
 - Better error handling + help page
