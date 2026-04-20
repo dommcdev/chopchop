@@ -36,7 +36,6 @@ export default function RootLayout({
       )}
     >
       <body>
-        {/*Note to self - <ThemeProvider> needs to be wraped in suspense (loading.tsx)*/}
         <ThemeProvider>
           <ClerkProvider appearance={{ theme: shadcn }}>
             <div className="flex min-h-screen flex-col">
@@ -50,5 +49,4 @@ export default function RootLayout({
   );
 }
 
-//Notes
-//TODO ClerkProvider might need to be wrapped in a suspense boundary
+//Nota bene - <ThemeProvider> needs to be wraped in suspense (loading.tsx)
