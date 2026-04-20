@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { fetchCategories } from "@/data/categories";
-import CategoryCard from "./CategoryCard";
+import CategoryCard, { CategoryCardSkeleton } from "./CategoryCard";
 import {
   Carousel,
   CarouselContent,
@@ -8,10 +8,11 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Suspense } from "react";
+import { CategoryBrief } from "@/types";
 
 export default async function DashboardCategories() {
-  const allCategories = await fetchCategories();
-
+  const categoriesPromise = fetchCategories();
   return (
     <div className="m-4 flex flex-col gap-2 md:m-6">
       <div className="flex flex-row justify-between items-center">
@@ -21,26 +22,48 @@ export default async function DashboardCategories() {
         </Link>
       </div>
 
-      {allCategories.length > 0 ? (
-        <div className="px-12">
-          <Carousel className="w-full">
-            <CarouselContent className="-ml-1">
-              {allCategories.map((category) => (
-                <CarouselItem key={category.id} className="pl-2 basis-54">
+      <div className="px-12">
+        <Carousel className="w-full">
+          <CarouselContent className="-ml-1">
+            <Suspense
+              fallback={Array.from({ length: 12 }).map((_, i) => (
+                <CarouselItem key={i} className="pl-2 basis-54">
                   <div className="p-1">
-                    <CategoryCard category={category} />
+                    <CategoryCardSkeleton />
                   </div>
                 </CarouselItem>
               ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </div>
-      ) : (
-        <p> No categories</p>
-        //New category button rendered here
-      )}
+            >
+              <DashboardCategoriesList categoriesPromise={categoriesPromise} />
+            </Suspense>
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      </div>
     </div>
+  );
+}
+
+async function DashboardCategoriesList({
+  categoriesPromise,
+}: {
+  categoriesPromise: Promise<CategoryBrief[]>;
+}) {
+  const allCategories = await categoriesPromise;
+
+  //Create category button here
+  if (allCategories.length === 0) return [];
+
+  return (
+    <>
+      {allCategories.map((category) => (
+        <CarouselItem key={category.id} className="pl-2 basis-54">
+          <div className="p-1">
+            <CategoryCard category={category} />
+          </div>
+        </CarouselItem>
+      ))}
+    </>
   );
 }

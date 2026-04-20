@@ -1,12 +1,12 @@
-//Displays the most recent 20 recipes in a grid. Intended for use on dashboard page only
-
-import RecipesGrid, { RecipesGridSkeleton } from "./RecipesGrid";
 import { Suspense } from "react";
 import { fetchRecipesBlock } from "@/data/recipes";
 import Link from "next/link";
 import { RECIPES_PAGE_SIZE } from "@/lib/constants";
+import ResponsiveGrid from "./ResponsiveGrid";
+import { RecipeCardSkeleton } from "./RecipeCard";
+import RecipesList from "./RecipesList";
 
-export default async function RecentDashboardRecipes() {
+export default async function DashboardRecipes() {
   const recipesPromise = fetchRecipesBlock(RECIPES_PAGE_SIZE, 0);
   return (
     <>
@@ -17,10 +17,19 @@ export default async function RecentDashboardRecipes() {
             View all recipes
           </Link>
         </div>
+
         <Suspense
-          fallback={<RecipesGridSkeleton pageSize={RECIPES_PAGE_SIZE} />}
+          fallback={
+            <ResponsiveGrid>
+              {Array.from({ length: RECIPES_PAGE_SIZE }).map((_, index) => (
+                <RecipeCardSkeleton key={index} />
+              ))}
+            </ResponsiveGrid>
+          }
         >
-          <RecipesGrid recipesPromise={recipesPromise} />
+          <ResponsiveGrid>
+            <RecipesList recipesPromise={recipesPromise} />
+          </ResponsiveGrid>
         </Suspense>
       </section>
     </>

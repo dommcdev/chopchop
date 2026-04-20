@@ -1,6 +1,5 @@
 import DashboardCategories from "@/app/dashboard/_components/DashboardCategories";
 import DashboardRecipes from "./_components/DashboardRecipes";
-import { Suspense } from "react";
 
 export default async function DashboardPage() {
   return (

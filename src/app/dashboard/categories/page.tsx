@@ -1,18 +1,9 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { ArrowLeftIcon } from "@phosphor-icons/react/dist/ssr";
-import CategoriesGrid from "../_components/CategoriesGrid";
 import { CategoryCardSkeleton } from "../_components/CategoryCard";
-
-function CategoriesGridSkeleton() {
-  return (
-    <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
-      {Array.from({ length: 12 }).map((_, i) => (
-        <CategoryCardSkeleton key={i} />
-      ))}
-    </div>
-  );
-}
+import ResponsiveGrid from "../_components/ResponsiveGrid";
+import CategoriesList from "../_components/CategoriesList";
 
 export default function CategoriesPage() {
   return (
@@ -26,14 +17,23 @@ export default function CategoriesPage() {
           Back to Dashboard
         </Link>
 
-        {/* Bumped the title size up to match the hierarchy of your Recipe pages */}
         <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
           All Categories
         </h1>
       </div>
 
-      <Suspense fallback={<CategoriesGridSkeleton />}>
-        <CategoriesGrid />
+      <Suspense
+        fallback={
+          <ResponsiveGrid>
+            {Array.from({ length: 12 }).map((_, i) => (
+              <CategoryCardSkeleton key={i} />
+            ))}
+          </ResponsiveGrid>
+        }
+      >
+        <ResponsiveGrid>
+          <CategoriesList />
+        </ResponsiveGrid>
       </Suspense>
     </main>
   );

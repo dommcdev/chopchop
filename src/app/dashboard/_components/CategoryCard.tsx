@@ -21,7 +21,7 @@ export default function CategoryCard({
 
 export function CategoryCardSkeleton() {
   return (
-    <Card className="rounded-none border border-border shadow-sm">
+    <Card className="shadow-sm">
       <CardContent className="flex h-28 items-center justify-center p-6">
         <Skeleton className="h-7 w-2/3 rounded-none" />
       </CardContent>
