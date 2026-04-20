@@ -6,7 +6,7 @@ export function Logo() {
         src="/logo-light.svg"
         alt="ChopChop Logo"
         width={150}
-        height={40}
+        height={31}
         className="block dark:hidden"
       />
       {/* Hidden by default, shown when .dark class is present */}
@@ -14,7 +14,7 @@ export function Logo() {
         src="/logo-dark.svg"
         alt="ChopChop Logo"
         width={150}
-        height={40}
+        height={31}
         className="hidden dark:block"
       />
     </>

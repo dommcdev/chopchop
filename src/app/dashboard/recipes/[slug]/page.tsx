@@ -4,6 +4,8 @@ import Link from "next/link";
 import { ArrowLeftIcon } from "@phosphor-icons/react/dist/ssr";
 import { PrintableRecipeCard } from "@/app/dashboard/recipes/[slug]/_components/PrintableRecipeCard";
 import { RecipeViewToolbar } from "@/app/dashboard/recipes/[slug]/_components/RecipeViewToolbar";
+import { RecipeInstructions } from "@/app/dashboard/recipes/[slug]/_components/RecipeInstructions";
+import { RecipeIngredients } from "@/app/dashboard/recipes/[slug]/_components/RecipeIngredients";
 import { calculateScaleFactor } from "@/lib/utils";
 import { fetchRecipeBlob } from "@/data/recipes";
 import { getScaledIngredients } from "@/lib/utils";
@@ -43,6 +45,11 @@ export default async function RecipePage({
           <div className="border-b border-border p-5 sm:p-6">
             <div className="flex items-start justify-between gap-4">
               <div className="min-w-0 flex-1">
+                {recipe.category && (
+                  <span className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                    {recipe.category.name}
+                  </span>
+                )}
                 <h1 className="mb-2 text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl">
                   {recipe.name}
                 </h1>
@@ -61,11 +68,6 @@ export default async function RecipePage({
             </div>
 
             <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
-              {recipe.category && (
-                <span className="inline-flex items-center bg-secondary px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-secondary-foreground">
-                  {recipe.category.name}
-                </span>
-              )}
               <div className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground">
                 <span>Servings:</span>
                 <span className="text-foreground">{recipe.servings}</span>
@@ -90,26 +92,7 @@ export default async function RecipePage({
               <h2 className="mb-4 text-lg font-semibold tracking-tight md:text-xl">
                 Ingredients
               </h2>
-              <ul className="space-y-3">
-                {recipe.ingredients.map((ingredient) => (
-                  <li
-                    key={ingredient.id}
-                    className="flex gap-3 break-words text-sm text-foreground"
-                  >
-                    <span className="mt-1.5 h-1 w-1 shrink-0 bg-primary" />
-                    <span className="leading-relaxed">
-                      {ingredient.quantity != null && ingredient.unit && (
-                        <span className="font-medium">
-                          {ingredient.quantity} {ingredient.unit}{" "}
-                        </span>
-                      )}
-                      <span className="text-muted-foreground">
-                        {ingredient.name}
-                      </span>
-                    </span>
-                  </li>
-                ))}
-              </ul>
+              <RecipeIngredients ingredients={recipe.ingredients} />
             </div>
 
             <div className="relative order-1 min-h-[16rem] w-full overflow-hidden border-b border-border bg-muted md:order-2 md:h-full md:border-b-0">
@@ -136,18 +119,7 @@ export default async function RecipePage({
             <h2 className="mb-5 text-lg font-semibold tracking-tight md:text-xl">
               Instructions
             </h2>
-            <ol className="list-none space-y-6">
-              {recipe.instructions.map((instruction) => (
-                <li key={instruction.id} className="flex gap-4">
-                  <span className="mt-0.5 shrink-0 text-sm font-semibold tabular-nums text-muted-foreground">
-                    {String(instruction.stepNumber).padStart(2, "0")}
-                  </span>
-                  <p className="text-sm leading-relaxed text-foreground">
-                    {instruction.text}
-                  </p>
-                </li>
-              ))}
-            </ol>
+            <RecipeInstructions instructions={recipe.instructions} />
           </div>
         </div>
       </div>

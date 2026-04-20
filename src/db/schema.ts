@@ -120,3 +120,6 @@ export type NewRecipe = InferInsertModel<typeof recipes>;
 
 export type Ingredient = InferSelectModel<typeof ingredients>;
 export type NewIngredient = InferInsertModel<typeof ingredients>;
+
+export type Instruction = InferSelectModel<typeof instructions>;
+export type NewInstruction = InferInsertModel<typeof instructions>;
