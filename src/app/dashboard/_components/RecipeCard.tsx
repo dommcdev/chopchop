@@ -18,12 +18,9 @@ export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
   return (
     <Link
       href={`/dashboard/r/${recipe.slug}`}
-      // Removed the wrapper rounding here as well
       className="group block h-full outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
     >
-      {/* Added rounded-none to override shadcn's default border radius */}
       <Card className="flex h-full flex-col overflow-hidden rounded-none transition-colors hover:bg-muted/40 hover:shadow-sm">
-        {/* Image Section - This will now sit completely flush at the true top edge with no clipping artifacts */}
         <div className="relative aspect-video w-full overflow-hidden bg-muted">
           {recipe.imageUrl ? (
             <Image
@@ -36,9 +33,7 @@ export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
           ) : null}
         </div>
 
-        {/* Header Section */}
         <CardHeader>
-          {/* Bumped the title size up slightly to text-xl */}
           <CardTitle className="line-clamp-1 text-xl">{recipe.name}</CardTitle>
           {recipe.category ? (
             <CardDescription>{recipe.category.name}</CardDescription>
@@ -46,15 +41,13 @@ export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
 
           {totalMin > 0 ? (
             <CardAction>
-              {/* Made the badge smaller, square, and gave it an uppercase/tracking treatment to match sharp aesthetics */}
-              <span className="inline-flex items-center rounded-none bg-secondary px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-secondary-foreground">
+              <span className="translate-y-1 inline-flex items-center rounded-none bg-secondary px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-secondary-foreground">
                 {totalMin} min
               </span>
             </CardAction>
           ) : null}
         </CardHeader>
 
-        {/* Content Section */}
         <CardContent className="flex-1">
           <p className="line-clamp-2 text-sm text-muted-foreground">
             {recipe.description || "No description provided yet."}

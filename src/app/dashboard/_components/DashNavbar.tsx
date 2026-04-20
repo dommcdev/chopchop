@@ -7,7 +7,7 @@ import { UploadRecipeButton } from "./UploadRecipeButton";
 export function DashNavbar() {
   return (
     <header className="sticky top-0 z-50 w-full bg-background shadow-sm border-b border-foreground/5 print:hidden">
-      <nav className="mx-auto flex max-w-screen-3xl items-center justify-between px-3 py-2 md:px-9">
+      <nav className="mx-auto flex max-w-screen-3xl items-center justify-between px-3 py-3 md:px-9">
         <Link href="/" className="flex items-center gap-3 group">
           <Logo />
         </Link>

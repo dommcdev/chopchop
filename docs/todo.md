@@ -20,6 +20,8 @@
 
 - Home page
   - Add 3-dot dropdown on recipe cards with delete option (+ confirmation + actual deletion logic)
+  - Categories carousel button has weird click boundaries
+  - Swap navbar to just search icon/upload icon on small screen sizes
 
 - Recipe viewer
   - Ingredient scaling
@@ -45,17 +47,13 @@
   - TOS/Privacy Policy pages
   - Full categories page (simple)
   - STYLING
+  - Long recipe titles run into toolbar in viewer
 
-### Low Priority
-- Bulk recipe json exporter/importer
-- More stuff on landing page
-
-### Bugs
-- Share link needs url redirect parameters
-- Long recipe titles run into toolbar in viewer
 
 
 ### Future features (?)
+- More stuff on landing page
+- Bulk recipe json exporter/importer
 - Bulk recipe ingest/queuing
 - Rate limiting, private links
 - Advanced search page
