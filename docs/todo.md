@@ -6,14 +6,13 @@
   - Tooltips (shadcn tooltip)
   - Add sonnar toasts for save/error messages (shadcn sonnar, maybe alert?)
   - Add alert dialog to destructive actions (deleting category, recipe, etc)
-  - Return error message objects on auth check failures (backend)
   - TOS/Privacy Policy pages
   - Add 3-dot dropdown on recipe cards with delete option (+ confirmation + actual deletion logic)
   - Categories carousel button has weird click boundaries
   - Ingredient scaling on recipe viewer
   - Individual recipe-by-category pages
-  - Update Recipeviewer skeleton
   - Swap sharelinkerror with dialog
+  - Random food icons as image placeholders
 
 - Search dialog
   - Fix so it uses ingredient keywords rather than ingredients table
@@ -25,7 +24,7 @@
   - (Display more data in results??)
 
 - Recipe editor
-  - Need some kind of processing ui dialog
+  - Need some kind of processing ui dialog (cc thinking words)
   - General layout (editable fields, draggable steps, etc)
   - Image selector for recipe image (use uploadthing's w/dragable zone)
   - Create server action to take json input and update db
@@ -42,6 +41,7 @@
 
 
 ### Future features (?)
+- Better error handling + help page
 - More stuff on landing page
 - Bulk recipe json exporter/importer
 - Bulk recipe ingest/queuing
