@@ -4,6 +4,7 @@ import { ArrowLeftIcon } from "@phosphor-icons/react/dist/ssr";
 import RecipesGrid, { RecipesGridSkeleton } from "../_components/RecipesGrid";
 import { PaginationBar } from "./_components/PaginationBar";
 import { fetchRecipesBlock, getNumOfPages } from "@/data/recipes";
+import { RECIPES_PAGE_SIZE } from "@/lib/constants";
 
 export default async function RecipesPage({
   searchParams,
@@ -12,11 +13,13 @@ export default async function RecipesPage({
 }) {
   const { page: p } = await searchParams; //since searchParams are now asynchronous
   const page = Number(p) || 1;
-  const PAGE_SIZE = 27; //can change if needed
 
   //Begin parallel data fetching for page count and recipes
-  const recipesPromise = fetchRecipesBlock(PAGE_SIZE, (page - 1) * PAGE_SIZE);
-  const totalPagesPromise = getNumOfPages(PAGE_SIZE);
+  const recipesPromise = fetchRecipesBlock(
+    RECIPES_PAGE_SIZE,
+    (page - 1) * RECIPES_PAGE_SIZE,
+  );
+  const totalPagesPromise = getNumOfPages(RECIPES_PAGE_SIZE);
 
   return (
     <main className="mx-auto max-w-screen-3xl p-4 sm:p-6 lg:p-8">
@@ -35,7 +38,7 @@ export default async function RecipesPage({
 
       <Suspense
         key={page}
-        fallback={<RecipesGridSkeleton pageSize={PAGE_SIZE} />}
+        fallback={<RecipesGridSkeleton pageSize={RECIPES_PAGE_SIZE} />}
       >
         <RecipesGrid recipesPromise={recipesPromise} />
       </Suspense>
