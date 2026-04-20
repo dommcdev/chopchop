@@ -41,12 +41,18 @@ export function UploadRecipeButton() {
     <>
       <Button
         variant="outline"
-        size="sm"
+        className="w-fit items-center gap-2 rounded-none shadow-sm"
         onClick={handleButtonClick}
         disabled={isUploading}
       >
-        <UploadSimpleIcon className="mr-2" />
-        {isUploading ? "Scanning..." : "Upload Recipe"}
+        <UploadSimpleIcon
+          className={`h-4 w-4 shrink-0 ${isUploading ? "animate-pulse" : ""}`}
+          weight="bold"
+        />
+
+        <span className="text-sm font-medium">
+          {isUploading ? "Scanning..." : "Upload Recipe"}
+        </span>
       </Button>
 
       <input

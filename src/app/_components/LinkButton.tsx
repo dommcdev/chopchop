@@ -3,7 +3,7 @@
 import Link, { type LinkProps } from "next/link";
 import { Button } from "@/components/ui/button";
 
-export function LinkButton({ text, href }: LinkButtonProps) {
+export function LinkButton({ text, href }: { text: string; href: string }) {
   return (
     <Button
       nativeButton={false}

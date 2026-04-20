@@ -39,13 +39,18 @@ export default function SearchRecipesDialog({
       <Button
         onClick={() => setValue(true)}
         variant="outline"
-        size="sm"
-        className="w-fit flex items-center gap-2 px-4 py-2 font-small transition-all hover:bg-accent hover:shadow-md rounded-none border border-border bg-background shadow-sm"
+        className="w-fit items-center gap-2 rounded-none shadow-sm"
       >
-        <MagnifyingGlassIcon className="h-fit shrink-0" weight="bold" />
-        Find Recipe <div className="border p-0.4 ml-2 text-xs">Ctrl K</div>
-      </Button>
+        <MagnifyingGlassIcon className="h-4 w-4 shrink-0" weight="bold" />
 
+        <span className="text-sm font-medium">Find Recipe</span>
+
+        {/* Using the semantic <kbd> tag for keyboard shortcuts.
+      Styled to match the sharp, high-contrast look of your category badges. */}
+        <kbd className="ml-4 inline-flex h-5 items-center rounded-none border border-border bg-muted px-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+          Ctrl K
+        </kbd>
+      </Button>
       <CommandDialog open={open} onOpenChange={setValue}>
         <Command>
           <CommandInput placeholder="Find a recipe..." />
