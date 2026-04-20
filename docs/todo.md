@@ -13,6 +13,7 @@
   - Ingredient scaling on recipe viewer
   - Individual recipe-by-category pages
   - Update Recipeviewer skeleton + suspend around categories carousel
+  - Swap sharelinkerror with dialog
 
 - Search dialog
   - Fix so it uses ingredient keywords rather than ingredients table

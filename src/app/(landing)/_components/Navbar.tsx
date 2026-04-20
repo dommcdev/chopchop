@@ -1,6 +1,6 @@
 import Link from "next/link";
 import CustomUserButton from "@/app/_components/CustomUserButton";
-import { Logo } from "@/components/Logo";
+import { Logo } from "../../_components/Logo";
 import { Show } from "@clerk/nextjs";
 import { ThemeToggleButton } from "@/app/(landing)/_components/ThemeToggleButton";
 import { LinkButton } from "@/app/_components/LinkButton";
@@ -15,10 +15,10 @@ export function Navbar() {
         <div className="flex items-center gap-4 sm:gap-6">
           <ThemeToggleButton />
           <Show when="signed-out">
-            <LinkButton href="/login" text="Sign In" />
+            <LinkButton href="/login">Sign in</LinkButton>
           </Show>
           <Show when="signed-in">
-            <LinkButton href="/dashboard" text="Dashboard" />
+            <LinkButton href="/dashboard">Dashboard</LinkButton>
             <CustomUserButton />
           </Show>
         </div>

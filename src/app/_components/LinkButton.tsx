@@ -1,17 +1,38 @@
 "use client";
 
-import Link, { type LinkProps } from "next/link";
+import React from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { type VariantProps } from "class-variance-authority";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-export function LinkButton({ text, href }: { text: string; href: string }) {
+// Extend the props of the base Button to include href
+interface LinkButtonProps
+  extends
+    React.ComponentPropsWithoutRef<typeof Button>,
+    VariantProps<typeof buttonVariants> {
+  href: string;
+}
+
+export function LinkButton({
+  href,
+  children,
+  className,
+  ...props
+}: LinkButtonProps) {
   return (
     <Button
+      {...props}
+      // Merge custom <LinkButton> look with any classes passed from the parent
+      className={cn(
+        "px-6 text-sm font-extrabold uppercase tracking-widest transition-all duration-300 rounded-none",
+        className,
+      )}
       nativeButton={false}
-      size="lg"
-      className="px-6 text-sm font-extrabold uppercase tracking-widest transition-all duration-300 rounded-none bg-primary text-primary-foreground"
       render={<Link href={href} />}
     >
-      {text}
+      {children}
     </Button>
   );
 }

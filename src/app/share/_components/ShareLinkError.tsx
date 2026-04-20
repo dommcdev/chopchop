@@ -31,7 +31,6 @@ export default function ShareLinkError({
 
       <Card className="rounded-none border border-border shadow-sm">
         <CardHeader className="space-y-2">
-          {/* Swapped font-black for font-semibold to match the cleaner aesthetic */}
           <CardTitle className="text-2xl font-semibold tracking-tight sm:text-3xl">
             Sign in to view this recipe
           </CardTitle>
@@ -41,9 +40,8 @@ export default function ShareLinkError({
           </CardDescription>
         </CardHeader>
 
-        {/* Shadcn CardContent automatically handles the padding and spacing from the header */}
         <CardContent>
-          <LinkButton href={loginHref} text="Sign In" />
+          <LinkButton href={loginHref}>Sign In</LinkButton>
         </CardContent>
       </Card>
     </div>
