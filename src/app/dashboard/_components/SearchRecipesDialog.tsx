@@ -27,7 +27,7 @@ export default function SearchRecipesDialog({
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        setValue((open) => !open);
+        setValue(true);
       }
     };
     document.addEventListener("keydown", down);

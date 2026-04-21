@@ -15,7 +15,6 @@
 
 - Search dialog
   - Fix so it uses ingredient keywords rather than ingredients table
-  - Styling (make it bigger)
   - Fix weird bug
   - Support category & incredient filters
   - Category/ingredient filter ui bubbles
