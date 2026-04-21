@@ -19,8 +19,6 @@ async function queryRecipesBlock(
   "use cache";
   cacheTag(`recipes-${userId}`);
 
-  await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate network delay
-
   return await db.query.recipes.findMany({
     where: eq(recipes.userId, userId),
     orderBy: (r, { desc: descCol }) => [descCol(r.createdAt)],
@@ -68,8 +66,6 @@ export async function fetchSearchData(): Promise<RecipeSearchItem[]> {
 async function queryRecipeBlob(userId: string, slug: string) {
   "use cache";
   cacheTag(`recipes-${userId}`);
-
-  await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate network delay
 
   return await db.query.recipes.findFirst({
     where: and(

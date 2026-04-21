@@ -18,7 +18,7 @@ async function queryCategories(userId: string) {
   "use cache";
   cacheTag(`categories-${userId}`);
 
-  await new Promise((resolve) => setTimeout(resolve, 1500));
+  //  await new Promise((resolve) => setTimeout(resolve, 1500));
   return await db
     .select({
       id: categories.id,
