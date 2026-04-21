@@ -14,10 +14,7 @@
   - Random food icons as image placeholders
 
 - Search dialog
-  - Fix so it uses ingredient keywords rather than ingredients table
-  - Fix weird bug
-  - Support category & incredient filters
-  - Category/ingredient filter ui bubbles
+  - Support category & incredient filters (ui bubbles)
   - UI hints
   - (Display more data in results??)
 
