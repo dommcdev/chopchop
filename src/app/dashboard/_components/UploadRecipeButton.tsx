@@ -51,8 +51,16 @@ export function UploadRecipeButton() {
       // Call API with file
       const result = await geminiAnalyzeRecipe(formData);
 
-      // Send data to editor
-      setAnalyzedData(result.data);
+      // Handle result objects from server
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+
+      // Put data from server in our store
+      if (result.data) {
+        setAnalyzedData(result.data);
+        console.log("Success!");
+      }
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "An unknown error occurred";

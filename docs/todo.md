@@ -12,6 +12,7 @@
   - Individual recipe-by-category pages
   - Swap sharelinkerror with dialog
   - Random food icons as image placeholders
+  - Error.tsx page
 
 - Search dialog
   - Support category & incredient filters (ui bubbles)
