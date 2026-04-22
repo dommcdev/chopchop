@@ -41,7 +41,7 @@ export default function RootLayout({
           <ClerkProvider appearance={{ theme: shadcn }}>
             <div className="flex min-h-screen flex-col">
               <main className="flex-1">{children}</main>
-              <Toaster />
+              <Toaster richColors duration={3000} />
               <SiteFooter />
             </div>
           </ClerkProvider>

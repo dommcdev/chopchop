@@ -5,7 +5,7 @@
 
 import { z } from "zod";
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const MAX_FILE_SIZE = 1 * 1024 * 1024;
 const ACCEPTED_TYPES = [
   "image/jpeg",
   "image/png",
@@ -15,7 +15,10 @@ const ACCEPTED_TYPES = [
 
 export const fileUploadSchema = z
   .instanceof(File)
-  .refine((file) => file.size <= MAX_FILE_SIZE, `Max size is 5MB.`)
+  .refine(
+    (file) => file.size <= MAX_FILE_SIZE,
+    `Max file size is ${MAX_FILE_SIZE / (1024 * 1024)}MB.`,
+  )
   .refine(
     (file) => ACCEPTED_TYPES.includes(file.type),
     "Only .jpg, .png, .webp and .pdf are supported.",

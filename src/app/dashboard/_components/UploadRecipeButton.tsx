@@ -73,12 +73,12 @@ export function UploadRecipeButton() {
         finally: () => {
           setAnalyzing(false);
         },
-        position: "top-center",
+        position: "bottom-right",
       });
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "An unknown error occurred";
-      toast.error(message, { position: "top-center" });
+      toast.error(message, { position: "bottom-right" });
     } finally {
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
