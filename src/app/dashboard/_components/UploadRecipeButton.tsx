@@ -1,13 +1,21 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { UploadSimpleIcon } from "@phosphor-icons/react";
 import { geminiAnalyzeRecipe } from "../_actions/geminiAnalyzeRecipe";
+import { fileUploadSchema } from "@/lib/recipe-schema";
+import { useRecipeUploadStore } from "@/store/useRecipeUploadStore";
 
 export function UploadRecipeButton() {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [isUploading, setIsUploading] = useState(false);
+
+  // Grab actions from my store
+  const setAnalyzedData = useRecipeUploadStore(
+    (state) => state.setAnalyzedData,
+  );
+  const isAnalyzing = useRecipeUploadStore((state) => state.isAnalyzing);
+  const setAnalyzing = useRecipeUploadStore((state) => state.setAnalyzing);
 
   // triggered when the button is clicked
   const handleButtonClick = () => {
@@ -16,25 +24,45 @@ export function UploadRecipeButton() {
 
   // triggered when the user selects a file
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const { files } = e.target; //`files` is now the FileList object
 
-    setIsUploading(true);
+    // If no files (user closed picker)
+    if (!files?.length) return;
 
     try {
+      // Too many files
+      if (files.length > 1) {
+        throw new Error("Please upload only one recipe at a time.");
+      }
+
+      // Wrong type of file
+      const file = files[0];
+      const validation = fileUploadSchema.safeParse(file);
+      if (!validation.success) {
+        // Throw the specific error message from Zod
+        throw new Error(validation.error.issues[0].message);
+      }
+
+      // Happy path
+      setAnalyzing(true); //global 'Gemini is processing' state
       const formData = new FormData();
       formData.append("recipeFile", file);
 
+      // Call API with file
       const result = await geminiAnalyzeRecipe(formData);
-      console.log("Gemini Results:", result);
-      // Send data to editor here
-      console.log("Formatted Output:", JSON.stringify(result, null, 2));
+
+      // Send data to editor
+      setAnalyzedData(result.data);
     } catch (error) {
-      console.error("Scanning failed:", error);
-      // TODO Use `error` in ui dialog here
+      const message =
+        error instanceof Error ? error.message : "An unknown error occurred";
+      console.error(message);
     } finally {
-      setIsUploading(false);
-      if (fileInputRef.current) fileInputRef.current.value = "";
+      // Cleanup
+      setAnalyzing(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     }
   };
 
@@ -44,16 +72,16 @@ export function UploadRecipeButton() {
         variant="outline"
         className="px-3 sm:px-4 w-fit items-center gap-2 rounded-none shadow-sm"
         onClick={handleButtonClick}
-        disabled={isUploading}
+        disabled={isAnalyzing}
         aria-label="Upload Recipe"
       >
         <UploadSimpleIcon
-          className={`h-4 w-4 shrink-0 ${isUploading ? "animate-pulse" : ""}`}
+          className={`h-4 w-4 shrink-0 ${isAnalyzing ? "animate-pulse" : ""}`}
           weight="bold"
         />
 
         <span className="hidden md:inline-block text-sm font-medium">
-          {isUploading ? "Scanning..." : "Upload Recipe"}
+          {isAnalyzing ? "Scanning..." : "Upload Recipe"}
         </span>
       </Button>
 
@@ -67,3 +95,5 @@ export function UploadRecipeButton() {
     </>
   );
 }
+
+// TODO Add ui error dialogs where console.errors currently are
