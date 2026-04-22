@@ -59,14 +59,12 @@ export function PaginationBar({
   return (
     <Pagination>
       <PaginationContent>
-        {/* Previous button*/}
         <PaginationItem>
           <PaginationPrevious
             href={currentPage > 1 ? getPageUrl(currentPage - 1) : "#"}
           />
         </PaginationItem>
 
-        {/* Shows all page nums - TODO might want elipses later */}
         {getPagesToShow().map((page, index) => (
           <PaginationItem key={index}>
             {page === "ellipsis" ? (
@@ -82,7 +80,6 @@ export function PaginationBar({
           </PaginationItem>
         ))}
 
-        {/* Next button */}
         <PaginationItem>
           <PaginationNext
             href={currentPage < totalPages ? getPageUrl(currentPage + 1) : "#"}

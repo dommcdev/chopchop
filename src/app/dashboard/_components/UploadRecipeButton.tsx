@@ -31,6 +31,7 @@ export function UploadRecipeButton() {
       console.log("Formatted Output:", JSON.stringify(result, null, 2));
     } catch (error) {
       console.error("Scanning failed:", error);
+      // TODO Use `error` in ui dialog here
     } finally {
       setIsUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = "";

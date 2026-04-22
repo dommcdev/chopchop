@@ -3,7 +3,8 @@
 import { auth } from "@clerk/nextjs/server";
 import { google } from "@ai-sdk/google";
 import { generateText, Output } from "ai";
-import { RecipeSchema, FileUploadSchema } from "@/lib/recipe-schema";
+import { recipeSchema, fileUploadSchema } from "@/lib/recipe-schema";
+import { GEMINI_API_RETRIES } from "@/lib/constants";
 
 export async function geminiAnalyzeRecipe(formData: FormData) {
   const { userId } = await auth();
@@ -11,7 +12,16 @@ export async function geminiAnalyzeRecipe(formData: FormData) {
     throw new Error("Unauthorized");
   }
 
-  const file = FileUploadSchema.parse(formData.get("recipeFile"));
+  // Unlike .parse(), safeParse() returns a result object and never throws an error
+  const result = fileUploadSchema.safeParse(formData.get("recipeFile"));
+
+  // Only use result if we got a valid file back
+  if (!result.success) {
+    const zodErrorMessage = result.error.issues[0].message; //message from recipeSchema
+    throw new Error(zodErrorMessage);
+  }
+  const file = result.data;
+
   const fileData = await file.arrayBuffer();
   const filePart =
     file.type === "application/pdf"
@@ -26,24 +36,43 @@ export async function geminiAnalyzeRecipe(formData: FormData) {
           mediaType: file.type,
         };
 
-  const { output } = await generateText({
-    model: google("gemini-3-flash-preview"),
-    output: Output.object({
-      schema: RecipeSchema,
-    }),
-    messages: [
-      {
-        role: "user",
-        content: [
+  // Call Gemini API with some exponential backoff for when Google's servers are on fire
+  let attempt = 0;
+  while (attempt < GEMINI_API_RETRIES) {
+    try {
+      const { output } = await generateText({
+        model: google("gemini-3-flash-preview"),
+        output: Output.object({
+          schema: recipeSchema,
+        }),
+        messages: [
           {
-            type: "text",
-            text: "Please parse this recipe into structured JSON.",
+            role: "user",
+            content: [
+              {
+                type: "text",
+                text: "Please parse this recipe into structured JSON.",
+              },
+              filePart,
+            ],
           },
-          filePart,
         ],
-      },
-    ],
-  });
+      });
+      return output;
+    } catch (e) {
+      attempt++;
 
-  return output;
+      // Give up and send error to ui
+      if (attempt >= 2) {
+        console.error("Gemini failed after 2 attempts:", e);
+
+        throw new Error(
+          "The AI service is currently busy or couldn't read the file. Please try again.",
+        );
+      }
+
+      // Wait and then try again
+      await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
+    }
+  }
 }

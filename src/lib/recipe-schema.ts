@@ -13,13 +13,12 @@ const ACCEPTED_TYPES = [
   "application/pdf",
 ];
 
-export const FileUploadSchema = z
+export const fileUploadSchema = z
   .instanceof(File)
   .refine((file) => file.size <= MAX_FILE_SIZE, `Max size is 5MB.`)
   .refine(
     (file) => ACCEPTED_TYPES.includes(file.type),
     "Only .jpg, .png, .webp and .pdf are supported.",
-    //TODO Need to pass this message along to the user in the ui
   );
 
 const UnitEnum = z.enum([
@@ -36,7 +35,7 @@ const UnitEnum = z.enum([
   "to taste",
 ]);
 
-export const RecipeSchema = z.object({
+export const recipeSchema = z.object({
   name: z.string().describe("The name of the dish"),
   description: z.string().optional().describe("The description of the dish"),
   servings: z.number().nullable(),
@@ -71,4 +70,4 @@ export const RecipeSchema = z.object({
 });
 
 // This line extracts the TypeScript type from the Zod schema
-export type Recipe = z.infer<typeof RecipeSchema>;
+export type RecipeSchema = z.infer<typeof recipeSchema>;
