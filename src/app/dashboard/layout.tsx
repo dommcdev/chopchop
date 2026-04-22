@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "The Digital Cookbook",
 };
 
-export default function LandingLayout({
+export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -14,7 +14,7 @@ export default function LandingLayout({
   return (
     <div>
       <DashNavbar />
-      <main>{children}</main>
+      <div>{children}</div>
     </div>
   );
 }

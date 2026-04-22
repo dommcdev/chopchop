@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { shadcn } from "@clerk/ui/themes";
 import { SiteFooter } from "./_components/SiteFooter";
 import { ThemeProvider } from "./_components/ThemeProvider";
+import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
@@ -39,7 +40,8 @@ export default function RootLayout({
         <ThemeProvider>
           <ClerkProvider appearance={{ theme: shadcn }}>
             <div className="flex min-h-screen flex-col">
-              <div className="flex-1">{children}</div>
+              <main className="flex-1">{children}</main>
+              <Toaster />
               <SiteFooter />
             </div>
           </ClerkProvider>

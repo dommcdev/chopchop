@@ -6,6 +6,7 @@ import { UploadSimpleIcon } from "@phosphor-icons/react";
 import { geminiAnalyzeRecipe } from "../_actions/geminiAnalyzeRecipe";
 import { fileUploadSchema } from "@/lib/recipe-schema";
 import { useRecipeUploadStore } from "@/store/useRecipeUploadStore";
+import { toast } from "sonner";
 
 export function UploadRecipeButton() {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -65,6 +66,7 @@ export function UploadRecipeButton() {
       const message =
         error instanceof Error ? error.message : "An unknown error occurred";
       console.error(message);
+      toast(message);
     } finally {
       // Cleanup
       setAnalyzing(false);
