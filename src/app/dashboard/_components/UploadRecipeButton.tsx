@@ -45,31 +45,41 @@ export function UploadRecipeButton() {
       }
 
       // Happy path
-      setAnalyzing(true); //global 'Gemini is processing' state
-      const formData = new FormData();
-      formData.append("recipeFile", file);
+      // Any errors thrown before this point will be handled in the catch block.
+      // Any ones thrown after this point will be handled by toast.promise().error
+      const uploadPromise = async () => {
+        setAnalyzing(true); //global 'Gemini is processing' state
+        const formData = new FormData();
+        formData.append("recipeFile", file);
 
-      // Call API with file
-      const result = await geminiAnalyzeRecipe(formData);
+        // Call API with file
+        const result = await geminiAnalyzeRecipe(formData);
 
-      // Handle result objects from server
-      if (!result.success) {
-        throw new Error(result.error);
-      }
+        // Handle result objects from server
+        if (!result.success || !result.data) {
+          throw new Error(result.error || "Failed to parse recipe data.");
+        }
 
-      // Put data from server in our store
-      if (result.data) {
+        // Put data from server in our store
         setAnalyzedData(result.data);
-        console.log("Success!");
-      }
+        return result.data;
+      };
+
+      // Trigger the loading toast
+      toast.promise(uploadPromise(), {
+        loading: "Parsing recipe...",
+        success: (data) => `Success! Parsed "${data.name}"`,
+        error: (err) => err.message,
+        finally: () => {
+          setAnalyzing(false);
+        },
+        position: "top-center",
+      });
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "An unknown error occurred";
-      console.error(message);
-      toast(message);
+      toast.error(message, { position: "top-center" });
     } finally {
-      // Cleanup
-      setAnalyzing(false);
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
@@ -85,13 +95,10 @@ export function UploadRecipeButton() {
         disabled={isAnalyzing}
         aria-label="Upload Recipe"
       >
-        <UploadSimpleIcon
-          className={`h-4 w-4 shrink-0 ${isAnalyzing ? "animate-pulse" : ""}`}
-          weight="bold"
-        />
+        <UploadSimpleIcon className={"h-4 w-4 shrink-0"} weight="bold" />
 
         <span className="hidden md:inline-block text-sm font-medium">
-          {isAnalyzing ? "Scanning..." : "Upload Recipe"}
+          Upload Recipe
         </span>
       </Button>
 
@@ -105,5 +112,3 @@ export function UploadRecipeButton() {
     </>
   );
 }
-
-// TODO Add ui error dialogs where console.errors currently are

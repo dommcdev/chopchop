@@ -18,7 +18,9 @@ export function Navbar() {
             <LinkButton href="/login">Sign in</LinkButton>
           </Show>
           <Show when="signed-in">
-            <LinkButton href="/dashboard">Dashboard</LinkButton>
+            <LinkButton className="border border-primary" href="/dashboard">
+              Dashboard
+            </LinkButton>
             <CustomUserButton />
           </Show>
         </div>

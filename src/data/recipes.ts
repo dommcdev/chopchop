@@ -86,6 +86,8 @@ async function queryRecipeBlob(userId: string, slug: string) {
 
 export async function fetchRecipeBlob(slug: string) {
   const userId = await checkAuth();
+
+  //await new Promise((resolve) => setTimeout(resolve, 1500));
   return queryRecipeBlob(userId, slug);
 }
 

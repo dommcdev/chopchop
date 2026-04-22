@@ -121,27 +121,45 @@ export async function RecipeViewer({ slug }: { slug: string }) {
 export function RecipeViewerSkeleton() {
   return (
     <div className="print:hidden overflow-hidden border border-border bg-card shadow-sm">
-      <div className="border-b border-border p-5 sm:p-6 space-y-4">
-        <Skeleton className="h-4 w-24" />
-        <Skeleton className="h-10 w-3/4 sm:w-1/2" />
-        <Skeleton className="h-16 w-full" />
-        <Skeleton className="h-6 w-1/3 mt-4" />
+      {/* Header Section: */}
+      <div className="border-b border-border p-5 sm:p-6">
+        <div className="space-y-3">
+          <Skeleton className="h-3 w-20" /> {/* Category */}
+          <Skeleton className="h-9 w-2/3" /> {/* Title */}
+          <Skeleton className="h-5 w-full" /> {/* Description line 1 */}
+          <Skeleton className="h-5 w-4/5" /> {/* Description line 2 */}
+        </div>
+        <div className="mt-6 flex gap-4">
+          <Skeleton className="h-5 w-24" />
+          <Skeleton className="h-5 w-24" />
+        </div>
       </div>
 
       <div className="grid grid-cols-1 border-b border-border md:grid-cols-2">
+        {/* Ingredients Column */}
         <div className="order-2 p-5 sm:p-6 md:order-1 md:border-r md:border-border">
           <Skeleton className="mb-4 h-7 w-32" />
-          <Skeleton className="h-[200px] w-full rounded-md" />
+          <div className="space-y-3">
+            {[...Array(6)].map((_, i) => (
+              <Skeleton key={i} className="h-5 w-full" />
+            ))}
+          </div>
         </div>
 
-        <div className="relative order-1 aspect-video w-full md:order-2 md:h-full md:aspect-auto border-b md:border-b-0 border-border">
+        {/* Image Column: */}
+        <div className="relative order-1 min-h-[16rem] w-full bg-muted md:order-2 md:h-full">
           <Skeleton className="absolute inset-0 h-full w-full rounded-none" />
         </div>
       </div>
 
+      {/* Instructions Section */}
       <div className="p-5 sm:p-6">
-        <Skeleton className="mb-5 h-7 w-32" />
-        <Skeleton className="h-[300px] w-full rounded-md" />
+        <Skeleton className="mb-5 h-5 w-32" />
+        <div className="space-y-4">
+          {[...Array(2)].map((_, i) => (
+            <Skeleton key={i} className="h-15 w-full" />
+          ))}
+        </div>
       </div>
     </div>
   );
