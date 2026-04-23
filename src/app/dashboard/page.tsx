@@ -1,5 +1,5 @@
-import DashboardCategories from "@/app/dashboard/_components/DashboardCategories";
-import DashboardRecipes from "./_components/DashboardRecipes";
+import DashboardCategories from "@/components/dashboard/DashboardCategories";
+import DashboardRecipes from "@/components/dashboard/DashboardRecipes";
 
 export default async function DashboardPage() {
   return (

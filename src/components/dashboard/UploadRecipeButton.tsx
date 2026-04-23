@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { UploadSimpleIcon } from "@phosphor-icons/react";
-import { geminiAnalyzeRecipe } from "../_actions/geminiAnalyzeRecipe";
+import { geminiAnalyzeRecipe } from "@/actions/geminiAnalyzeRecipe";
 import { fileUploadSchema } from "@/lib/recipe-schema";
 import { useRecipeUploadStore } from "@/store/useRecipeUploadStore";
 import { toast } from "sonner";

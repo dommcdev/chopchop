@@ -1,9 +1,9 @@
 import Link from "next/link";
-import CustomUserButton from "@/app/_components/CustomUserButton";
-import { Logo } from "../../_components/Logo";
+import CustomUserButton from "@/components/CustomUserButton";
+import { Logo } from "@/components/Logo";
 import { Show } from "@clerk/nextjs";
-import { ThemeToggleButton } from "@/app/(landing)/_components/ThemeToggleButton";
-import { LinkButton } from "@/app/_components/LinkButton";
+import { ThemeToggleButton } from "@/components/ThemeToggleButton";
+import { LinkButton } from "@/components/LinkButton";
 
 export function Navbar() {
   return (

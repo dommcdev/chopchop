@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { PrintableRecipeCard } from "./PrintableRecipeCard";
-import { RecipeViewToolbar } from "./RecipeViewToolbar";
+import { RecipeToolbar } from "./RecipeToolbar";
 import { RecipeInstructions } from "./RecipeInstructions";
 import { RecipeIngredients } from "./RecipeIngredients";
 import { calculateScaleFactor, getScaledIngredients } from "@/lib/utils";
@@ -43,7 +43,7 @@ export async function RecipeViewer({ slug }: { slug: string }) {
                 )}
               </div>
               <div className="shrink-0 print:hidden">
-                <RecipeViewToolbar
+                <RecipeToolbar
                   recipeSlug={recipe.slug}
                   recipePublicId={recipe.publicId}
                 />

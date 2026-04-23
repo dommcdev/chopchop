@@ -22,7 +22,7 @@ type RecipeViewToolbarProps = {
   recipePublicId: string;
 };
 
-export function RecipeViewToolbar({
+export function RecipeToolbar({
   recipeSlug,
   recipePublicId,
 }: RecipeViewToolbarProps) {

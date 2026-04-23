@@ -1,5 +1,5 @@
 import { RecipeWithCategory } from "@/types";
-import RecipeCard from "../_components/RecipeCard";
+import RecipeCard from "./RecipeCard";
 
 export default async function RecipesList({
   recipesPromise,

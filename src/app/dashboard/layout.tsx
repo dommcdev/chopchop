@@ -1,4 +1,4 @@
-import { DashNavbar } from "@/app/dashboard/_components/DashNavbar";
+import { DashNavbar } from "@/components/dashboard/DashNavbar";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

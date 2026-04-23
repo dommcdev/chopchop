@@ -1,12 +1,12 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { ArrowLeftIcon } from "@phosphor-icons/react/dist/ssr";
-import { PaginationBar } from "./_components/PaginationBar";
+import { PaginationBar } from "@/components/PaginationBar";
 import { fetchRecipesBlock, getNumOfPages } from "@/data/recipes";
 import { RECIPES_PAGE_SIZE } from "@/lib/constants";
-import ResponsiveGrid from "../_components/ResponsiveGrid";
-import { RecipeCardSkeleton } from "../_components/RecipeCard";
-import RecipesList from "../_components/RecipesList";
+import ResponsiveGrid from "@/components/dashboard/ResponsiveGrid";
+import { RecipeCardSkeleton } from "@/components/dashboard/RecipeCard";
+import RecipesList from "@/components/dashboard/RecipesList";
 
 export default async function RecipesPage({
   searchParams,

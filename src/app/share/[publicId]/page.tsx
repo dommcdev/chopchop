@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
-import ShareLinkError from "@/app/share/_components/ShareLinkError";
+import ShareLinkError from "@/components/ShareLinkError";
 import { getRecipeSlugFromPublicId } from "@/data/recipes";
 
 export default async function ShareRecipePage({

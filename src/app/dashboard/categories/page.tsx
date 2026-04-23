@@ -3,8 +3,8 @@ import Link from "next/link";
 import { ArrowLeftIcon } from "@phosphor-icons/react/dist/ssr";
 import CategoryCard, {
   CategoryCardSkeleton,
-} from "../_components/CategoryCard";
-import ResponsiveGrid from "../_components/ResponsiveGrid";
+} from "@/components/dashboard/CategoryCard";
+import ResponsiveGrid from "@/components/dashboard/ResponsiveGrid";
 import { fetchCategories } from "@/data/categories";
 
 export default function CategoriesPage() {

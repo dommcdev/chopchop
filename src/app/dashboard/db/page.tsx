@@ -1,5 +1,5 @@
-import { FillDatabaseButton2 } from "../_components/FillDatabaseButton2";
-import { FillDatabaseButton } from "../_components/FillDatabaseButton";
+import { FillDatabaseButton2 } from "@/components/dashboard/FillDatabaseButton2";
+import { FillDatabaseButton } from "@/components/dashboard/FillDatabaseButton";
 
 export default function DashboardDBPage() {
   return (

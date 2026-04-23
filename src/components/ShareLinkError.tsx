@@ -2,7 +2,7 @@
 
 import { ArrowLeftIcon } from "@phosphor-icons/react";
 import Link from "next/link";
-import { LinkButton } from "@/app/_components/LinkButton";
+import { LinkButton } from "@/components/LinkButton";
 import {
   Card,
   CardContent,

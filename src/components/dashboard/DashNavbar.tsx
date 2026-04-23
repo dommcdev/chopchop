@@ -1,8 +1,8 @@
 import Link from "next/link";
-import CustomUserButton from "@/app/_components/CustomUserButton";
-import SearchMounter from "@/app/dashboard/_components/SearchMounter";
-import { Logo } from "../../_components/Logo";
-import { UploadRecipeButton } from "./UploadRecipeButton";
+import CustomUserButton from "@/components/CustomUserButton";
+import SearchMounter from "@/components/dashboard/SearchMounter";
+import { Logo } from "@/components/Logo";
+import { UploadRecipeButton } from "@/components/dashboard/UploadRecipeButton";
 
 export function DashNavbar() {
   return (

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowLeftIcon } from "@phosphor-icons/react/dist/ssr";
-import { RecipeViewer, RecipeViewerSkeleton } from "./_components/RecipeViewer";
+import { RecipeViewer, RecipeViewerSkeleton } from "@/components/RecipeViewer";
 import { Suspense } from "react";
 
 export default async function RecipePage({
