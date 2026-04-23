@@ -34,6 +34,7 @@
   - Tooltips (shadcn tooltip)
   - TOS/Privacy Policy pages
   - Random food icons as image placeholders
+  - Tighten up schema (min/max lengths, etc)
 
 ### Future features (?)
 - Better error handling + help page

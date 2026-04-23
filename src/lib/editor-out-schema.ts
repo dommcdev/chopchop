@@ -65,4 +65,5 @@ export const editorOutSchema = z.object({
     .default([]),
 });
 
+export type EditorFormState = z.input<typeof editorOutSchema>;
 export type EditorOutSchema = z.infer<typeof editorOutSchema>;

@@ -1,38 +1,61 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { recipeSchema, type RecipeSchema } from "@/lib/recipe-schema";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
+import * as z from "zod";
+import { editorInSchema } from "@/lib/editor-in-schema";
+import {
+  editorOutSchema,
+  EditorFormState,
+  EditorOutSchema,
+} from "@/lib/editor-out-schema";
 
-export function RecipeEditor({
-  initialData,
-}: {
-  initialData?: Partial<RecipeSchema>;
-}) {
-  // 1. Initialize the form
-  const form = useForm<RecipeSchema>({
-    resolver: zodResolver(recipeSchema),
-    mode: "onBlur", // Optional: validates when a user leaves a field
-    defaultValues: {
-      name: initialData?.name || "",
-      description: initialData?.description || "",
-      servings: initialData?.servings || 1,
-      prepTime: initialData?.prepTime || 0,
-      cookTime: initialData?.cookTime || 0,
-      ingredients: initialData?.ingredients || [],
-      instructions: initialData?.instructions || [],
-    },
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  InputGroupTextarea,
+} from "@/components/ui/input-group";
+
+export function RecipeEditor({ existingRecipeData = {} }) {
+  const form = useForm<EditorFormState, any, EditorOutSchema>({
+    // What to use to validate data during editing and on submit
+    resolver: zodResolver(editorOutSchema),
+    mode: "onTouched",
+
+    // What to use for initial data (must be RHF safe, i.e. no nulls etc)
+    defaultValues: editorInSchema.parse(existingRecipeData),
   });
 
-  // 2. Define the submit handler
-  const onSubmit = (data: RecipeSchema) => {
-    console.log("Form Data:", data);
-    // This is where your Server Action (e.g., saveRecipe) will go eventually
-  };
+  function onSubmit(data: EditorOutSchema) {
+    console.log("DB-ready data:", data);
+    toast("You submitted the following values:", {
+      description: (
+        <pre className="mt-2 w-[320px] overflow-x-auto rounded-md bg-code p-4 text-code-foreground">
+          <code>{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    });
+  }
 
-  return (
-    <form onSubmit={form.handleSubmit(onSubmit)}>
-      {/* We will build the fields here next! */}
-    </form>
-  );
+  return <form onSubmit={form.handleSubmit(onSubmit)}></form>;
 }
