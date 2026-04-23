@@ -9,6 +9,7 @@ import {
   EditorFormState,
   EditorOutSchema,
 } from "@/lib/editor-out-schema";
+import { RecipeSchema } from "@/lib/recipe-schema";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -36,7 +37,15 @@ import {
   InputGroupTextarea,
 } from "@/components/ui/input-group";
 
-export function RecipeEditor({ recipeData = {} }) {
+interface RecipeEditorProps {
+  recipeData: RecipeSchema | {};
+  handleSave: (data: RecipeSchema) => void;
+}
+
+export function RecipeEditor({
+  recipeData = {},
+  handleSave,
+}: RecipeEditorProps) {
   const form = useForm<EditorFormState, unknown, EditorOutSchema>({
     // What to use to validate data during editing and on submit
     resolver: zodResolver(editorOutSchema),
@@ -65,6 +74,7 @@ export function RecipeEditor({ recipeData = {} }) {
         </pre>
       ),
     });
+    handleSave(data);
   }
 
   return (

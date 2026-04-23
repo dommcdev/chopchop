@@ -58,13 +58,15 @@ export const recipeSchema = z.object({
   ingredients: z
     .array(
       z.object({
-        name: stringOrNull("Ingredient name (e.g., 'Butter')"),
+        name: stringOrNull(
+          "Ingredient name with special instructions if present (e.g. 'Butter, softened')",
+        ),
         quantity: numOrNull(
           0,
           "Numeric quantity. Words like 'half' to 0.5. If descriptive only, return null.",
         ),
         unit: stringOrNull(
-          "Standard unit (e.g., 'cups', 'tbsp'). If none, return null.",
+          "Standard unit (e.g., 'cups', 'tbsp'). Use abbreviations when possible. If none, return null.",
         ),
       }),
     )
