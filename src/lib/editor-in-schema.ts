@@ -1,6 +1,6 @@
 // Postel's Law - "Be conservative in what you do, be liberal in what you accept from others."
 // NOTE: Any changes in this file may require changes in other schema files
-// This schema guarantees that data going into RHF is either a string/number, or "". No form-crashing null/undefineds.
+// This schema guarantees that data going into RHF is either a string/number, or "". No form-crashing nulls or undefined
 
 import { z } from "zod";
 

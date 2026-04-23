@@ -1,5 +1,5 @@
-//Numbers must have a min and be nullable, strings must have a default("")
 // NOTE: Any changes in this file may require changes in the accompanying recipe-schema.ts file
+// AI *must* return either a valid string/number, or null. We then post-process any *string* nulls into "" for easier logic elsewhere.
 
 import { z } from "zod";
 
@@ -22,14 +22,12 @@ export const fileUploadSchema = z
     "Only .jpg, .png, .webp and .pdf are supported.",
   );
 
-// Helper for AI strings: Forces AI to return a string or null,
-// then transforms null to "" for your application logic.
-const aiString = (description: string) =>
+const stringOrNull = (description: string) =>
   z
     .string()
     .nullable()
     .describe(`${description}. If not present, return null.`)
-    .transform((val) => val ?? "");
+    .transform((val) => val?.trim() ?? "");
 
 const numOrNull = (minVal: number, aiMsg: string) =>
   z
@@ -45,7 +43,7 @@ export const recipeSchema = z.object({
     .min(1, "Recipe name is required")
     .describe("The name of the dish"),
 
-  description: aiString("A brief description of the dish"),
+  description: stringOrNull("A brief description of the dish"),
 
   servings: numOrNull(1, "Number of servings"),
   prepTime: numOrNull(0, "Prep time in minutes"),
@@ -54,24 +52,24 @@ export const recipeSchema = z.object({
   ingredients: z
     .array(
       z.object({
-        name: aiString("Ingredient name (e.g., 'Butter')"),
+        name: stringOrNull("Ingredient name (e.g., 'Butter')"),
         quantity: numOrNull(
           0,
           "Numeric quantity. Words like 'half' to 0.5. If descriptive only, return null.",
         ),
-        unit: aiString(
+        unit: stringOrNull(
           "Standard unit (e.g., 'cups', 'tbsp'). If none, return null.",
         ),
       }),
     )
-    .transform((ings) => ings.filter((i) => i.name !== ""))
+    .transform((ings) => ings.filter((i) => i.name.trim() !== ""))
     .default([]),
 
   instructions: z
-    .array(z.string())
+    .array(z.string().transform((s) => s.trim()))
     .nullable()
     .describe("Step-by-step instructions. If none are found, return null.")
-    .transform((steps) => (steps ?? []).filter((s) => s.trim() !== ""))
+    .transform((steps) => (steps ?? []).filter((s) => s !== "")) //remove whitespace-only steps
     .default([]),
 });
 
