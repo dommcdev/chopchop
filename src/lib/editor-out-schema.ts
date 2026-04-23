@@ -65,8 +65,8 @@ export const editorOutSchema = z.object({
     .default([]),
 
   instructions: z
-    .array(customString())
-    .transform((steps) => steps.filter((step) => step !== "")) //remove whitespace-only steps
+    .array(z.object({ step: customString() }))
+    .transform((steps) => steps.filter((item) => item.step !== "")) //remove whitespace-only steps
     .default([]),
 });
 

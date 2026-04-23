@@ -89,7 +89,7 @@ export function RecipeEditor({ existingRecipeData = {} }) {
                       {...field}
                       id={field.name}
                       aria-invalid={fieldState.invalid}
-                      placeholder="e.g., Grandma's Apple Pie"
+                      placeholder="e.g. Grandma's Apple Pie"
                     />
                     <FieldDescription>
                       Give your recipe a catchy title.
@@ -117,7 +117,7 @@ export function RecipeEditor({ existingRecipeData = {} }) {
                       />
                     </InputGroup>
                     <FieldDescription>
-                      Optional. Keep it short so it fits nicely.
+                      A decription of your recipe
                     </FieldDescription>
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -140,7 +140,7 @@ export function RecipeEditor({ existingRecipeData = {} }) {
                         inputMode="numeric"
                         type="number"
                         min={1}
-                        placeholder="e.g., 4"
+                        placeholder="e.g. 4"
                       />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
@@ -351,7 +351,7 @@ export function RecipeEditor({ existingRecipeData = {} }) {
                     {instructionsArray.fields.map((row, index) => (
                       <Controller
                         key={row.id}
-                        name={`instructions.${index}`}
+                        name={`instructions.${index}.step`}
                         control={form.control}
                         render={({ field, fieldState }) => (
                           <Field data-invalid={fieldState.invalid}>
@@ -398,7 +398,7 @@ export function RecipeEditor({ existingRecipeData = {} }) {
                         type="button"
                         variant="outline"
                         size="sm"
-                        onClick={() => instructionsArray.append("")}
+                        onClick={() => instructionsArray.append({ step: "" })}
                       >
                         Add Step
                       </Button>

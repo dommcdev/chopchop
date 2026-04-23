@@ -72,10 +72,10 @@ export const recipeSchema = z.object({
     .default([]),
 
   instructions: z
-    .array(z.string().transform((s) => s.trim()))
+    .array(z.object({ step: stringOrNull("A single instruction step") }))
     .nullable()
     .describe("Step-by-step instructions. If none are found, return null.")
-    .transform((steps) => (steps ?? []).filter((s) => s !== "")) //remove whitespace-only steps
+    .transform((steps) => (steps ?? []).filter((item) => item.step !== "")) //remove whitespace-only steps
     .default([]),
 });
 

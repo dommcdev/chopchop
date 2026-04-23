@@ -36,7 +36,7 @@ export const editorInSchema = z.object({
     .transform((val) => val ?? []),
 
   instructions: z
-    .array(inboundString)
+    .array(z.object({ step: inboundString }))
     .nullish()
     .transform((val) => val ?? []),
 });
