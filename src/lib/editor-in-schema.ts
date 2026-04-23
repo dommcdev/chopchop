@@ -1,0 +1,44 @@
+// Postel's Law - "Be conservative in what you do, be liberal in what you accept from others."
+// NOTE: Any changes in this file may require changes in other schema files
+// This schema guarantees that data going into RHF is either a string/number, or "". No form-crashing null/undefineds.
+
+import { z } from "zod";
+
+// Catch null/undefined and guarantee either a number or ""
+const inboundNumber = z
+  .number()
+  .nullish()
+  .transform((val) => val ?? "");
+
+// Catch null/undefined and guarantee a safe (even if empty) string for react-hook-form
+const inboundString = z
+  .string()
+  .nullish()
+  .transform((val) => val ?? "");
+
+export const editorInSchema = z.object({
+  name: inboundString,
+  description: inboundString,
+
+  servings: inboundNumber,
+  prepTime: inboundNumber,
+  cookTime: inboundNumber,
+
+  ingredients: z
+    .array(
+      z.object({
+        name: inboundString,
+        quantity: inboundNumber,
+        unit: inboundString,
+      }),
+    )
+    .nullish()
+    .transform((val) => val ?? []),
+
+  instructions: z
+    .array(inboundString)
+    .nullish()
+    .transform((val) => val ?? []),
+});
+
+export type EditorInSchema = z.infer<typeof editorInSchema>;

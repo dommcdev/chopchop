@@ -1,7 +1,5 @@
 //Numbers must have a min and be nullable, strings must have a default("")
-//Names are the only fields that are not nullable/default-able/optional
-
-// NOTE: Any changes in this file may require changes in the accompanying form-recipe-schema.ts file
+// NOTE: Any changes in this file may require changes in the accompanying recipe-schema.ts file
 
 import { z } from "zod";
 
@@ -24,59 +22,56 @@ export const fileUploadSchema = z
     "Only .jpg, .png, .webp and .pdf are supported.",
   );
 
-export const recipeSchema = z.object({
-  name: z.string().describe("The name of the dish"),
-  description: z
+// Helper for AI strings: Forces AI to return a string or null,
+// then transforms null to "" for your application logic.
+const aiString = (description: string) =>
+  z
     .string()
-    .default("")
-    .describe(
-      "The description of the dish. If not applicable, return an empty string.",
-    ),
-  servings: z
-    .number()
-    .min(1, "Servings must be at least 1.")
     .nullable()
-    .describe("Number of servings. If none are listed, return null"),
-  prepTime: z
+    .describe(`${description}. If not present, return null.`)
+    .transform((val) => val ?? "");
+
+const numOrNull = (minVal: number, aiMsg: string) =>
+  z
     .number()
-    .min(0)
+    .min(minVal)
     .nullable()
-    .describe(
-      "Preparation time in minutes. If no preparation time is mentioned, return null.",
-    ),
-  cookTime: z
-    .number()
-    .min(0)
-    .nullable()
-    .describe(
-      "Cooking time in minutes. If no cooking time is mentioned, return null.",
-    ),
+    .describe(`${aiMsg}. If not present, return null.`);
+
+export const recipeSchema = z.object({
+  // Name is the only field forced to be a non-zero-length string
+  name: z
+    .string()
+    .min(1, "Recipe name is required")
+    .describe("The name of the dish"),
+
+  description: aiString("A brief description of the dish"),
+
+  servings: numOrNull(1, "Number of servings"),
+  prepTime: numOrNull(0, "Prep time in minutes"),
+  cookTime: numOrNull(0, "Cook time in minutesl"),
+
   ingredients: z
     .array(
       z.object({
-        name: z
-          .string()
-          .describe(
-            "The name of the ingredient, with special instructions if included, e.g. 'Butter (softened)'",
-          ),
-        quantity: z
-          .number()
-          .min(0)
-          .nullable()
-          .describe(
-            "The numeric quantity. Convert words like 'half' to 0.5. If the quantity is an implicit singular (e.g., 'a pinch', 'a dash', 'juice of one lemon'), return 1. If it is purely descriptive with no math possible (e.g., 'salt to taste', 'garnish'), return null.",
-          ),
-        unit: z
-          .string()
-          .describe(
-            "The standard unit of measurement. If not unit is mentioned (e.g., '1 onion' return an empty string.)",
-          ),
+        name: aiString("Ingredient name (e.g., 'Butter')"),
+        quantity: numOrNull(
+          0,
+          "Numeric quantity. Words like 'half' to 0.5. If descriptive only, return null.",
+        ),
+        unit: aiString(
+          "Standard unit (e.g., 'cups', 'tbsp'). If none, return null.",
+        ),
       }),
     )
+    .transform((ings) => ings.filter((i) => i.name !== ""))
     .default([]),
+
   instructions: z
     .array(z.string())
-    .describe("Step-by-step instructions to prepare the dish")
+    .nullable()
+    .describe("Step-by-step instructions. If none are found, return null.")
+    .transform((steps) => (steps ?? []).filter((s) => s.trim() !== ""))
     .default([]),
 });
 
