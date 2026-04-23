@@ -9,9 +9,14 @@ import { z } from "zod";
 
 const nullableFormNumber = (minVal: number, errorMsg?: string) =>
   z
-    .literal("")
-    .or(z.coerce.number().min(minVal, errorMsg))
-    .transform((val) => (val === "" ? null : val));
+    .union([z.string(), z.number()])
+    .transform((val) => (val === "" ? null : Number(val)))
+    .pipe(
+      z
+        .number({ message: "Must be a valid number" })
+        .min(minVal, errorMsg)
+        .nullable(),
+    );
 
 const customString = () =>
   z
