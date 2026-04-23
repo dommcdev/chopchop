@@ -1,17 +1,16 @@
 ## Project Tasks
 
 ### Todo
-  - Pdf printing - finalize layout/styling
-  - Tooltips (shadcn tooltip)
   - Add alert dialog to destructive actions (deleting category, recipe, etc)
-  - TOS/Privacy Policy pages
   - Add 3-dot dropdown on recipe cards with delete option (+ confirmation + actual deletion logic)
   - Categories carousel button has weird click boundaries
   - Ingredient scaling on recipe viewer
   - Individual recipe-by-category pages
   - Swap sharelinkerror with dialog
-  - Random food icons as image placeholders
   - Error.tsx page
+  - On viewer page convert mins into hour+min
+  - Investiate use cache more
+  - Break back to dashboard test/icon into separate component
 
 - Search dialog
   - Support category & incredient filters (ui bubbles)
@@ -30,6 +29,12 @@
   - Logic to edit those recipes to change category to `uncategorized`
   - Add create category ui
 
+- Low Priority
+  - Pdf printing - finalize layout/styling
+  - Tooltips (shadcn tooltip)
+  - TOS/Privacy Policy pages
+  - Random food icons as image placeholders
+
 ### Future features (?)
 - Better error handling + help page
 - More stuff on landing page
@@ -38,7 +43,7 @@
 - Rate limiting, private links
 - Advanced search page
 - Preferences
-- Nutritional info
+- Add to schema: Nutritional info, difficulty, rating
 - Add sorting/groups to recipes page
 - Ability to create categories from edit page
 - Infinite scroll with virtualization
