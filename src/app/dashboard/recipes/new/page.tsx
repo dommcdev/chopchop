@@ -31,5 +31,3 @@ export default function NewRecipePage() {
   const initialData = analyzedData || {};
   return <RecipeEditor recipeData={initialData} handleSave={handleSave} />;
 }
-
-// schema doesn't support floats

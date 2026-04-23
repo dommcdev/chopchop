@@ -149,6 +149,7 @@ export function RecipeEditor({
                         aria-invalid={fieldState.invalid}
                         inputMode="numeric"
                         type="number"
+                        step="any"
                         min={1}
                         placeholder="e.g. 4"
                       />
@@ -175,6 +176,7 @@ export function RecipeEditor({
                           aria-invalid={fieldState.invalid}
                           inputMode="numeric"
                           type="number"
+                          step="any"
                           min={0}
                           placeholder="0"
                         />
@@ -202,6 +204,7 @@ export function RecipeEditor({
                           aria-invalid={fieldState.invalid}
                           inputMode="numeric"
                           type="number"
+                          step="any"
                           min={0}
                           placeholder="0"
                         />
@@ -279,6 +282,7 @@ export function RecipeEditor({
                                   aria-invalid={fieldState.invalid}
                                   inputMode="numeric"
                                   type="number"
+                                  step="any"
                                   min={0}
                                   placeholder="0"
                                 />
