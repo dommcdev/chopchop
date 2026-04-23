@@ -1,10 +1,9 @@
 // Postel's Law - "Be conservative in what you do, be liberal in what you accept from others."
-// NOTE: Any changes in this file may require changes in the accompanying recipe-schema.ts file
+// NOTE: Any changes in this file may require changes in the other schema files
 // This schema strictly enforces the shape of data coming out of RHF (& into our DB)
 // Numbers must be a valid number for the field or null
-// Strings must be a valid string for the field or ""
+// Strings must be a valid (trimmed) string for the field or ""
 // Arrays must not have any rows with only ""
-// We then post-process any "" to null
 
 import { z } from "zod";
 
@@ -14,12 +13,15 @@ const nullableFormNumber = (minVal: number, errorMsg?: string) =>
     .or(z.coerce.number().min(minVal, errorMsg))
     .transform((val) => (val === "" ? null : val));
 
-export const editorOutSchema = z.object({
-  name: z.string().min(1, "Recipe name is required"),
-  description: z
+const customString = () =>
+  z
     .string()
     .default("")
-    .transform((v) => v.trim()),
+    .transform((v) => v.trim());
+
+export const editorOutSchema = z.object({
+  name: z.string().min(1, "Recipe name is required"),
+  description: customString(),
 
   servings: nullableFormNumber(1, "Servings must be at least 1"),
   prepTime: nullableFormNumber(0, "Prep time cannot be negative"),
@@ -28,12 +30,9 @@ export const editorOutSchema = z.object({
   ingredients: z
     .array(
       z.object({
-        name: z.string().default(""),
+        name: customString(),
         quantity: nullableFormNumber(0, "Quantity cannot be negative"),
-        unit: z
-          .string()
-          .default("")
-          .transform((v) => v.trim()),
+        unit: customString(),
       }),
     )
     // STAGE 1: Silently remove rows where EVERYTHING is empty
@@ -50,7 +49,7 @@ export const editorOutSchema = z.object({
       ings.forEach((ing, index) => {
         if (ing.name.trim() === "") {
           ctx.addIssue({
-            code: z.ZodIssueCode.custom,
+            code: "custom",
             message:
               "Ingredient name is required if quantity or unit is provided",
             path: [index, "name"],
@@ -61,8 +60,8 @@ export const editorOutSchema = z.object({
     .default([]),
 
   instructions: z
-    .array(z.string().default(""))
-    .transform((steps) => steps.filter((step) => step.trim() !== "")) //remove whitespace-only steps
+    .array(customString())
+    .transform((steps) => steps.filter((step) => step !== "")) //remove whitespace-only steps
     .default([]),
 });
 

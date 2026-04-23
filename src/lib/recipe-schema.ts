@@ -1,5 +1,10 @@
-// NOTE: Any changes in this file may require changes in the accompanying recipe-schema.ts file
-// AI *must* return either a valid string/number, or null. We then post-process any *string* nulls into "" for easier logic elsewhere.
+// Postel's Law - "Be conservative in what you do, be liberal in what you accept from others."
+// NOTE: Any changes in this file may require changes in the other schema files
+// This schema strictly enforces the shape of the data Gemini produces
+// Numbers must be a valid number for the field or null
+// Strings must be a valid (trimmed) string for the field or null
+// Arrays must not have any rows with only ""
+// We then post-process any *string* nulls into "" for easier logic elsewhere
 
 import { z } from "zod";
 
@@ -41,6 +46,7 @@ export const recipeSchema = z.object({
   name: z
     .string()
     .min(1, "Recipe name is required")
+    .transform((val) => val.trim())
     .describe("The name of the dish"),
 
   description: stringOrNull("A brief description of the dish"),
