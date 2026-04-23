@@ -56,7 +56,7 @@ export async function geminiAnalyzeRecipe(formData: FormData) {
             content: [
               {
                 type: "text",
-                text: "Please parse this recipe into structured JSON.",
+                text: "Please parse this recipe into structured JSON. Fix capitalization, spelling, and/or grammar errors if necessary.",
               },
               filePart,
             ],

@@ -33,7 +33,7 @@ export const recipes = sqliteTable(
     userId: text().notNull(), // Logical foreign key to Clerk
     name: text().notNull(),
     description: text(),
-    servings: integer().notNull().default(1),
+    servings: integer(),
     prepTime: integer(),
     cookTime: integer(),
     categoryId: integer().references(() => categories.id),

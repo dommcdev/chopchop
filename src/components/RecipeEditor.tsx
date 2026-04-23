@@ -36,14 +36,14 @@ import {
   InputGroupTextarea,
 } from "@/components/ui/input-group";
 
-export function RecipeEditor({ existingRecipeData = {} }) {
+export function RecipeEditor({ recipeData = {} }) {
   const form = useForm<EditorFormState, unknown, EditorOutSchema>({
     // What to use to validate data during editing and on submit
     resolver: zodResolver(editorOutSchema),
     mode: "onTouched",
 
     // What to use for initial data (must be RHF safe, i.e. no nulls etc)
-    defaultValues: editorInSchema.parse(existingRecipeData),
+    defaultValues: editorInSchema.parse(recipeData),
   });
 
   const ingredientsArray = useFieldArray({
