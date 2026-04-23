@@ -3,7 +3,6 @@
 ### Todo
   - Pdf printing - finalize layout/styling
   - Tooltips (shadcn tooltip)
-  - Add sonnar toasts for save/error messages (shadcn sonnar, maybe alert?)
   - Add alert dialog to destructive actions (deleting category, recipe, etc)
   - TOS/Privacy Policy pages
   - Add 3-dot dropdown on recipe cards with delete option (+ confirmation + actual deletion logic)

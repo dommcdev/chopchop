@@ -43,11 +43,11 @@ export default function SearchRecipesDialog({
       >
         <MagnifyingGlassIcon className="h-4 w-4 shrink-0" weight="bold" />
 
-        <span className="hidden sm:inline-block text-sm font-medium">
+        <span className="hidden md:inline-block text-sm font-medium">
           Find Recipe
         </span>
 
-        <kbd className="hidden sm:inline-flex ml-4 h-5 items-center rounded-none border border-border bg-muted px-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+        <kbd className="hidden md:inline-flex ml-4 h-5 items-center rounded-none border border-border bg-muted px-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
           Ctrl K
         </kbd>
       </Button>

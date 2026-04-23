@@ -13,9 +13,8 @@ export function RecipeInstructions({
   const [checked, setChecked] = useState<Record<number, boolean>>({});
 
   return (
-    <ul className="space-y-6">
+    <ul className="space-y-5">
       {instructions.map((instruction) => (
-        // Added items-center here to vertically center the checkbox with the text
         <li key={instruction.id} className="group flex items-center gap-4">
           <Checkbox
             id={`instruction-${instruction.id}`}
@@ -23,13 +22,12 @@ export function RecipeInstructions({
             onCheckedChange={(c) =>
               setChecked((prev) => ({ ...prev, [instruction.id]: !!c }))
             }
-            // Removed mt-1 so it doesn't push down artificially
             className="h-4 w-4 shrink-0 rounded-none border-muted-foreground/40 data-[state=checked]:border-primary"
           />
           <label
             htmlFor={`instruction-${instruction.id}`}
             className={cn(
-              "cursor-pointer text-sm leading-none transition-all",
+              "cursor-pointer text-sm leading-relaxed transition-all",
               checked[instruction.id]
                 ? "line-through text-muted-foreground"
                 : "text-foreground",
