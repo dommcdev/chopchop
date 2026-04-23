@@ -37,7 +37,7 @@ import {
 } from "@/components/ui/input-group";
 
 export function RecipeEditor({ existingRecipeData = {} }) {
-  const form = useForm<EditorFormState, any, EditorOutSchema>({
+  const form = useForm<EditorFormState, unknown, EditorOutSchema>({
     // What to use to validate data during editing and on submit
     resolver: zodResolver(editorOutSchema),
     mode: "onTouched",
@@ -46,7 +46,7 @@ export function RecipeEditor({ existingRecipeData = {} }) {
     defaultValues: editorInSchema.parse(existingRecipeData),
   });
 
-  function onSubmit(data: EditorOutSchema) {
+  function saveRecipe(data: EditorOutSchema) {
     console.log("DB-ready data:", data);
     toast("You submitted the following values:", {
       description: (
@@ -57,5 +57,28 @@ export function RecipeEditor({ existingRecipeData = {} }) {
     });
   }
 
-  return <form onSubmit={form.handleSubmit(onSubmit)}></form>;
+  return (
+    <form onSubmit={form.handleSubmit(saveRecipe)}>
+      <Controller
+        name="name"
+        control={form.control}
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel htmlFor={field.name}>Recipe Name</FieldLabel>
+            <Input
+              {...field}
+              id={field.name}
+              aria-invalid={fieldState.invalid}
+              placeholder="e.g., Grandma's Apple Pie"
+            />
+            <FieldDescription>
+              Give your recipe a catchy title.
+            </FieldDescription>
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+      <Button type="submit">Save Recipe</Button>
+    </form>
+  );
 }
