@@ -1,6 +1,5 @@
-//We may need to adjust recipe prompts if it can't handle stuff like "juice of half a lemon" or "3 cloves of garlic, cold-pressed" well.
-//
 //Numbers must have a min and be nullable, strings must have a default("")
+//Names are the only fields that are not nullable/default-able/optional
 
 import { z } from "zod";
 
