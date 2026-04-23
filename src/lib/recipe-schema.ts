@@ -1,6 +1,8 @@
 //Numbers must have a min and be nullable, strings must have a default("")
 //Names are the only fields that are not nullable/default-able/optional
 
+// NOTE: Any changes in this file may require changes in the accompanying form-recipe-schema.ts file
+
 import { z } from "zod";
 
 const MAX_FILE_SIZE = 1 * 1024 * 1024;
