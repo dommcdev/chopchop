@@ -9,13 +9,23 @@
 import { auth } from "@clerk/nextjs/server";
 import { google } from "@ai-sdk/google";
 import { generateText, Output } from "ai";
-import { geminiRecipeSchema, fileUploadSchema } from "@/lib/geminiRecipeSchema";
+import {
+  geminiRecipeSchema,
+  fileUploadSchema,
+  type GeminiRecipeSchema,
+} from "@/lib/geminiRecipeSchema";
 import { GEMINI_API_RETRIES } from "@/lib/constants";
 
-export async function geminiAnalyzeRecipe(formData: FormData) {
+type GeminiAnalyzeRecipeResult =
+  | { success: true; data: GeminiRecipeSchema }
+  | { success: false; error: string };
+
+export async function geminiAnalyzeRecipe(
+  formData: FormData,
+): Promise<GeminiAnalyzeRecipeResult> {
   const { userId } = await auth();
   if (!userId) {
-    return { sucess: false, error: "Unauthorized" };
+    return { success: false, error: "Unauthorized" };
   }
 
   // Unlike .parse(), safeParse() returns a result object and never throws an error
@@ -64,11 +74,11 @@ export async function geminiAnalyzeRecipe(formData: FormData) {
         ],
       });
       return { success: true, data: output }; // Return a structured object
-    } catch (e) {
+    } catch {
       attempt++;
 
       // Give up and send error to ui
-      if (attempt >= 2) {
+      if (attempt >= GEMINI_API_RETRIES) {
         return {
           success: false,
           error:

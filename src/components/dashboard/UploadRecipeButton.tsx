@@ -8,6 +8,7 @@ import { fileUploadSchema } from "@/lib/geminiRecipeSchema";
 import { geminiToRecipeEditorInitialValues } from "@/lib/recipeEditorMappers";
 import { useRecipeUploadStore } from "@/store/useRecipeUploadStore";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export function UploadRecipeButton() {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -16,6 +17,7 @@ export function UploadRecipeButton() {
   const setDraft = useRecipeUploadStore((state) => state.setDraft);
   const isAnalyzing = useRecipeUploadStore((state) => state.isAnalyzing);
   const setAnalyzing = useRecipeUploadStore((state) => state.setAnalyzing);
+  const router = useRouter();
 
   // triggered when the button is clicked
   const handleButtonClick = () => {
@@ -55,12 +57,13 @@ export function UploadRecipeButton() {
         const result = await geminiAnalyzeRecipe(formData);
 
         // Handle result objects from server
-        if (!result.success || !result.data) {
-          throw new Error(result.error || "Failed to parse recipe data.");
+        if (!result.success) {
+          throw new Error(result.error);
         }
 
         // Put data from server in our store
         setDraft(geminiToRecipeEditorInitialValues(result.data));
+        router.push(`/dashboard/r/new`);
         return result.data;
       };
 

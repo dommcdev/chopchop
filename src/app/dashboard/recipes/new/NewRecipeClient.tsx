@@ -33,7 +33,7 @@ export function NewRecipeClient({ categoriesPromise }: NewRecipeClientProps) {
 
       clearStore();
       toast.success("Recipe created.");
-      router.push(`/dashboard/recipes/${result.slug}`);
+      router.push(`/dashboard/r/${result.slug}`);
     } catch (error) {
       console.error(error);
       toast.error("Failed to create recipe.");

@@ -6,7 +6,7 @@ import { z } from "zod";
 
 // Catch null/undefined and guarantee either a number or ""
 const inboundNumber = z
-  .number()
+  .union([z.number(), z.literal("")])
   .nullish()
   .transform((val) => val ?? "");
 

@@ -38,7 +38,7 @@ export function EditRecipeClient({
       }
 
       toast.success("Recipe updated.");
-      router.push(`/dashboard/recipes/${result.slug}`);
+      router.push(`/dashboard/r/${result.slug}`);
     } catch (err) {
       console.error(err);
       toast.error("Failed to update recipe.");
