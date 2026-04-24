@@ -9,7 +9,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { google } from "@ai-sdk/google";
 import { generateText, Output } from "ai";
-import { recipeSchema, fileUploadSchema } from "@/lib/recipe-schema";
+import { geminiRecipeSchema, fileUploadSchema } from "@/lib/geminiRecipeSchema";
 import { GEMINI_API_RETRIES } from "@/lib/constants";
 
 export async function geminiAnalyzeRecipe(formData: FormData) {
@@ -48,7 +48,7 @@ export async function geminiAnalyzeRecipe(formData: FormData) {
       const { output } = await generateText({
         model: google("gemini-3-flash-preview"),
         output: Output.object({
-          schema: recipeSchema,
+          schema: geminiRecipeSchema,
         }),
         messages: [
           {

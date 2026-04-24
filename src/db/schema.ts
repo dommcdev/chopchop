@@ -77,7 +77,7 @@ export const instructions = sqliteTable(
     recipeId: integer()
       .notNull()
       .references(() => recipes.id, { onDelete: "cascade" }),
-    stepNumber: integer().notNull(),
+    displayOrder: integer().notNull(),
     text: text().notNull(),
   },
   (table) => [index("instructions_recipe_id_idx").on(table.recipeId)],

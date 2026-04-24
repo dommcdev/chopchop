@@ -1,12 +1,12 @@
 import { create } from "zustand";
-import { RecipeSchema } from "@/lib/recipe-schema";
+import { GeminiRecipeSchema } from "@/lib/geminiRecipeSchema";
 
 interface RecipeUploadState {
-  analyzedData: RecipeSchema | null;
+  analyzedData: GeminiRecipeSchema | null;
   isAnalyzing: boolean;
 
   // Actions
-  setAnalyzedData: (data: RecipeSchema) => void;
+  setAnalyzedData: (data: GeminiRecipeSchema) => void;
   setAnalyzing: (loading: boolean) => void;
   clearStore: () => void;
 }

@@ -16,7 +16,7 @@ const inboundString = z
   .nullish()
   .transform((val) => val ?? "");
 
-export const editorInSchema = z.object({
+export const hookformSchema = z.object({
   name: inboundString,
   description: inboundString,
 
@@ -41,4 +41,4 @@ export const editorInSchema = z.object({
     .transform((val) => val ?? []),
 });
 
-export type EditorInSchema = z.infer<typeof editorInSchema>;
+export type HookformSchema = z.infer<typeof hookformSchema>;

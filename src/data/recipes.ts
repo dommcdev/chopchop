@@ -77,7 +77,7 @@ async function queryRecipeBlob(userId: string, slug: string) {
         orderBy: (ingredients, { asc }) => [asc(ingredients.id)],
       },
       instructions: {
-        orderBy: (instructions, { asc }) => [asc(instructions.stepNumber)],
+        orderBy: (instructions, { asc }) => [asc(instructions.displayOrder)],
       },
     },
   });

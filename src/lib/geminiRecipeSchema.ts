@@ -41,7 +41,7 @@ const numOrNull = (minVal: number, aiMsg: string) =>
     .nullable()
     .describe(`${aiMsg}. If not present, return null.`);
 
-export const recipeSchema = z.object({
+export const geminiRecipeSchema = z.object({
   // Name is the only field forced to be a non-zero-length string
   name: z
     .string()
@@ -82,4 +82,4 @@ export const recipeSchema = z.object({
 });
 
 // This line extracts the TypeScript type from the Zod schema
-export type RecipeSchema = z.infer<typeof recipeSchema>;
+export type GeminiRecipeSchema = z.infer<typeof geminiRecipeSchema>;

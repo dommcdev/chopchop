@@ -24,7 +24,7 @@ const customString = () =>
     .default("")
     .transform((v) => v.trim());
 
-export const editorOutSchema = z.object({
+export const finalRecipeSchema = z.object({
   name: z.string().min(1, "Recipe name is required"),
   description: customString(),
 
@@ -70,5 +70,5 @@ export const editorOutSchema = z.object({
     .default([]),
 });
 
-export type EditorFormState = z.input<typeof editorOutSchema>;
-export type EditorOutSchema = z.infer<typeof editorOutSchema>;
+export type EditorFormState = z.input<typeof finalRecipeSchema>;
+export type FinalRecipeSchema = z.infer<typeof finalRecipeSchema>;

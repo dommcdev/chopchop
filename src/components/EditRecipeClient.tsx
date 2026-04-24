@@ -3,7 +3,7 @@
 import { use } from "react";
 import { RecipeEditor } from "@/components/RecipeEditor";
 import { useRouter } from "next/navigation";
-import { EditorOutSchema } from "@/lib/editor-out-schema";
+import { FinalRecipeSchema } from "@/lib/finalRecipeSchema";
 import { RecipeBlob } from "@/types";
 import { toast } from "sonner";
 
@@ -19,7 +19,7 @@ export function EditRecipeClient({ recipePromise }: EditRecipeClientProps) {
     return <p>Oops! That recipe does not seem to exist.</p>; //TODO render our error/404 screen here
   }
 
-  const handleSave = async (finalData: EditorOutSchema) => {
+  const handleSave = async (finalData: FinalRecipeSchema) => {
     try {
       // update db
       toast("You submitted the following values (from parent):", {

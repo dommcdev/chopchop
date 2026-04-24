@@ -4,7 +4,7 @@ import { RecipeEditor } from "@/components/RecipeEditor";
 import { useRecipeUploadStore } from "@/store/useRecipeUploadStore";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { EditorOutSchema } from "@/lib/editor-out-schema";
+import { FinalRecipeSchema } from "@/lib/finalRecipeSchema";
 
 export default function NewRecipePage() {
   const router = useRouter();
@@ -12,7 +12,7 @@ export default function NewRecipePage() {
   const isAnalyzing = useRecipeUploadStore((state) => state.isAnalyzing);
   const clearStore = useRecipeUploadStore((state) => state.clearStore);
 
-  const handleSave = async (finalData: EditorOutSchema) => {
+  const handleSave = async (finalData: FinalRecipeSchema) => {
     toast("You submitted the following values (from parent):", {
       description: <code>{JSON.stringify(finalData, null, 2)}</code>,
     });

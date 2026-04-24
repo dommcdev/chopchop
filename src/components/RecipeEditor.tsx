@@ -3,12 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { editorInSchema } from "@/lib/editor-in-schema";
+import { hookformSchema } from "@/lib/hookformSchema";
 import {
-  editorOutSchema,
+  finalRecipeSchema,
   EditorFormState,
-  EditorOutSchema,
-} from "@/lib/editor-out-schema";
+  FinalRecipeSchema,
+} from "@/lib/finalRecipeSchema";
 import { RecipeBlob } from "@/types";
 
 import { Button } from "@/components/ui/button";
@@ -46,13 +46,13 @@ export function RecipeEditor({
   recipeData = {},
   handleSave,
 }: RecipeEditorProps) {
-  const form = useForm<EditorFormState, unknown, EditorOutSchema>({
+  const form = useForm<EditorFormState, unknown, FinalRecipeSchema>({
     // What to use to validate data during editing and on submit
-    resolver: zodResolver(editorOutSchema),
+    resolver: zodResolver(finalRecipeSchema),
     mode: "onTouched",
 
     // What to use for initial data (must be RHF safe, i.e. no nulls etc)
-    defaultValues: editorInSchema.parse(recipeData),
+    defaultValues: hookformSchema.parse(recipeData),
   });
 
   const ingredientsArray = useFieldArray({
@@ -65,7 +65,7 @@ export function RecipeEditor({
     name: "instructions",
   });
 
-  function saveRecipe(data: EditorOutSchema) {
+  function saveRecipe(data: FinalRecipeSchema) {
     console.log("DB-ready data:", data);
     toast("You submitted the following values:", {
       description: (
