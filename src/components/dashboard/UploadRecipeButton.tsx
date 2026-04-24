@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { UploadSimpleIcon } from "@phosphor-icons/react";
 import { geminiAnalyzeRecipe } from "@/actions/geminiAnalyzeRecipe";
 import { fileUploadSchema } from "@/lib/geminiRecipeSchema";
+import { geminiToRecipeEditorInitialValues } from "@/lib/recipeEditorMappers";
 import { useRecipeUploadStore } from "@/store/useRecipeUploadStore";
 import { toast } from "sonner";
 
@@ -12,9 +13,7 @@ export function UploadRecipeButton() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Grab actions from my store
-  const setAnalyzedData = useRecipeUploadStore(
-    (state) => state.setAnalyzedData,
-  );
+  const setDraft = useRecipeUploadStore((state) => state.setDraft);
   const isAnalyzing = useRecipeUploadStore((state) => state.isAnalyzing);
   const setAnalyzing = useRecipeUploadStore((state) => state.setAnalyzing);
 
@@ -61,7 +60,7 @@ export function UploadRecipeButton() {
         }
 
         // Put data from server in our store
-        setAnalyzedData(result.data);
+        setDraft(geminiToRecipeEditorInitialValues(result.data));
         return result.data;
       };
 

@@ -1,21 +1,21 @@
 import { create } from "zustand";
-import { GeminiRecipeSchema } from "@/lib/geminiRecipeSchema";
+import { RecipeEditorInitialValues } from "@/lib/hookformSchema";
 
 interface RecipeUploadState {
-  analyzedData: GeminiRecipeSchema | null;
+  draft: RecipeEditorInitialValues | null;
   isAnalyzing: boolean;
 
   // Actions
-  setAnalyzedData: (data: GeminiRecipeSchema) => void;
+  setDraft: (data: RecipeEditorInitialValues) => void;
   setAnalyzing: (loading: boolean) => void;
   clearStore: () => void;
 }
 
 export const useRecipeUploadStore = create<RecipeUploadState>((set) => ({
-  analyzedData: null,
+  draft: null,
   isAnalyzing: false,
 
-  setAnalyzedData: (data) => set({ analyzedData: data }),
+  setDraft: (data) => set({ draft: data }),
   setAnalyzing: (loading) => set({ isAnalyzing: loading }),
-  clearStore: () => set({ analyzedData: null, isAnalyzing: false }),
+  clearStore: () => set({ draft: null, isAnalyzing: false }),
 }));

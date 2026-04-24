@@ -6,6 +6,7 @@ import { toast } from "sonner";
 
 import { RecipeEditor } from "@/components/RecipeEditor";
 import { FinalRecipeSchema } from "@/lib/finalRecipeSchema";
+import { EMPTY_RECIPE_EDITOR_VALUES } from "@/lib/hookformSchema";
 import { useRecipeUploadStore } from "@/store/useRecipeUploadStore";
 import { CategoryBrief } from "@/types";
 
@@ -15,7 +16,7 @@ interface NewRecipeClientProps {
 
 export function NewRecipeClient({ categoriesPromise }: NewRecipeClientProps) {
   const router = useRouter();
-  const analyzedData = useRecipeUploadStore((state) => state.analyzedData);
+  const draft = useRecipeUploadStore((state) => state.draft);
   const isAnalyzing = useRecipeUploadStore((state) => state.isAnalyzing);
   const clearStore = useRecipeUploadStore((state) => state.clearStore);
   const categories = use(categoriesPromise);
@@ -31,12 +32,11 @@ export function NewRecipeClient({ categoriesPromise }: NewRecipeClientProps) {
 
   if (isAnalyzing) return <p>Analyzing Recipe, please wait...</p>;
 
-  // Use data from zustand store if present, otherwise use empty object (for manual recipe entry)
-  const initialData = analyzedData || {};
+  const initialValues = draft ?? EMPTY_RECIPE_EDITOR_VALUES;
 
   return (
     <RecipeEditor
-      recipeData={initialData}
+      initialValues={initialValues}
       categories={categories}
       handleSave={handleSave}
     />

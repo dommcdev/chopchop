@@ -2,6 +2,7 @@
 
 import { use } from "react";
 import { RecipeEditor } from "@/components/RecipeEditor";
+import { recipeBlobToRecipeEditorInitialValues } from "@/lib/recipeEditorMappers";
 import { useRouter } from "next/navigation";
 import { FinalRecipeSchema } from "@/lib/finalRecipeSchema";
 import { CategoryBrief, RecipeBlob } from "@/types";
@@ -24,6 +25,8 @@ export function EditRecipeClient({
     return <p>Oops! That recipe does not seem to exist.</p>; //TODO render our error/404 screen here
   }
 
+  const initialValues = recipeBlobToRecipeEditorInitialValues(initialData);
+
   const handleSave = async (finalData: FinalRecipeSchema) => {
     try {
       // update db
@@ -38,7 +41,7 @@ export function EditRecipeClient({
 
   return (
     <RecipeEditor
-      recipeData={initialData}
+      initialValues={initialValues}
       categories={categories}
       handleSave={handleSave}
     />

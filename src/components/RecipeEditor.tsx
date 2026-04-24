@@ -3,13 +3,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { hookformSchema } from "@/lib/hookformSchema";
+import { RecipeEditorInitialValues } from "@/lib/hookformSchema";
 import {
   finalRecipeSchema,
   EditorFormState,
   FinalRecipeSchema,
 } from "@/lib/finalRecipeSchema";
-import { CategoryBrief, RecipeBlob } from "@/types";
+import { CategoryBrief } from "@/types";
 import { cn } from "@/lib/utils";
 import {
   Select,
@@ -46,13 +46,13 @@ import {
 } from "@/components/ui/input-group";
 
 interface RecipeEditorProps {
-  recipeData: RecipeBlob | Partial<RecipeBlob>;
-  categories?: CategoryBrief[];
+  initialValues: RecipeEditorInitialValues;
+  categories: CategoryBrief[];
   handleSave: (data: FinalRecipeSchema) => void | Promise<void>;
 }
 
 export function RecipeEditor({
-  recipeData = {},
+  initialValues,
   categories,
   handleSave,
 }: RecipeEditorProps) {
@@ -62,7 +62,7 @@ export function RecipeEditor({
     mode: "onTouched",
 
     // What to use for initial data (must be RHF safe, i.e. no nulls etc)
-    defaultValues: hookformSchema.parse(recipeData),
+    defaultValues: initialValues,
   });
 
   const ingredientsArray = useFieldArray({

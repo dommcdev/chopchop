@@ -45,4 +45,17 @@ export const hookformSchema = z.object({
     .transform((val) => val ?? []),
 });
 
-export type HookformSchema = z.infer<typeof hookformSchema>;
+export type RecipeEditorInitialValues = z.output<typeof hookformSchema>;
+
+export const EMPTY_RECIPE_EDITOR_VALUES: RecipeEditorInitialValues = {
+  name: "",
+  description: "",
+  servings: "",
+  prepTime: "",
+  cookTime: "",
+  categoryId: "",
+  imageUrl: "",
+  imageKey: "",
+  ingredients: [],
+  instructions: [],
+};
