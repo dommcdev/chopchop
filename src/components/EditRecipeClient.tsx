@@ -16,7 +16,7 @@ export function EditRecipeClient({ recipePromise }: EditRecipeClientProps) {
   const initialData = use(recipePromise);
 
   if (!initialData) {
-    return <p>Oops! That recipe doesn't seem to exist.</p>; //TODO render our error/404 screen here
+    return <p>Oops! That recipe does not seem to exist.</p>; //TODO render our error/404 screen here
   }
 
   const handleSave = async (finalData: EditorOutSchema) => {

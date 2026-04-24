@@ -9,7 +9,7 @@ import {
   EditorFormState,
   EditorOutSchema,
 } from "@/lib/editor-out-schema";
-import { RecipeSchema } from "@/lib/recipe-schema";
+import { RecipeBlob } from "@/types";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -38,8 +38,8 @@ import {
 } from "@/components/ui/input-group";
 
 interface RecipeEditorProps {
-  recipeData: RecipeSchema | {};
-  handleSave: (data: RecipeSchema) => void;
+  recipeData: RecipeBlob | Partial<RecipeBlob>;
+  handleSave: (data: RecipeBlob) => void;
 }
 
 export function RecipeEditor({
