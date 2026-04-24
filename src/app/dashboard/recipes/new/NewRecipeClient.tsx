@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import { RecipeEditor } from "@/components/RecipeEditor";
+import { createRecipe } from "@/data/recipesActions";
 import { FinalRecipeSchema } from "@/lib/finalRecipeSchema";
 import { EMPTY_RECIPE_EDITOR_VALUES } from "@/lib/hookformSchema";
 import { useRecipeUploadStore } from "@/store/useRecipeUploadStore";
@@ -22,12 +23,21 @@ export function NewRecipeClient({ categoriesPromise }: NewRecipeClientProps) {
   const categories = use(categoriesPromise);
 
   const handleSave = async (finalData: FinalRecipeSchema) => {
-    toast("You submitted the following values (from parent):", {
-      description: <code>{JSON.stringify(finalData, null, 2)}</code>,
-    });
-    // save data to db here (in a try/catch)
-    clearStore();
-    router.push("/dashboard"); // change this to navigate to actual recipe page
+    try {
+      const result = await createRecipe(finalData);
+
+      if (!result.success) {
+        toast.error(result.error);
+        return;
+      }
+
+      clearStore();
+      toast.success("Recipe created.");
+      router.push(`/dashboard/recipes/${result.slug}`);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to create recipe.");
+    }
   };
 
   if (isAnalyzing) return <p>Analyzing Recipe, please wait...</p>;

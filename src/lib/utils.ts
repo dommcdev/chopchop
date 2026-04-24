@@ -2,6 +2,9 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Recipe, Ingredient, PrintableScaledIngredient } from "@/types";
 
+const PUBLIC_ID_ALPHABET =
+  "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -17,6 +20,19 @@ export function slugify(text: string): string {
     .replace(/\s+/g, "-") // Replace spaces with -
     .replace(/[^\w-]+/g, "") // Remove all non-word chars
     .replace(/--+/g, "-"); // Replace multiple - with single -
+}
+
+export function generateSlug(text: string): string {
+  return slugify(text) || "recipe";
+}
+
+export function generatePublicId(size = 10): string {
+  const randomBytes = crypto.getRandomValues(new Uint8Array(size));
+
+  return Array.from(
+    randomBytes,
+    (byte) => PUBLIC_ID_ALPHABET[byte % PUBLIC_ID_ALPHABET.length],
+  ).join("");
 }
 
 /*

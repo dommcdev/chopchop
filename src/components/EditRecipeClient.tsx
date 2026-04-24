@@ -2,6 +2,7 @@
 
 import { use } from "react";
 import { RecipeEditor } from "@/components/RecipeEditor";
+import { updateRecipe } from "@/data/recipesActions";
 import { recipeBlobToRecipeEditorInitialValues } from "@/lib/recipeEditorMappers";
 import { useRouter } from "next/navigation";
 import { FinalRecipeSchema } from "@/lib/finalRecipeSchema";
@@ -29,13 +30,18 @@ export function EditRecipeClient({
 
   const handleSave = async (finalData: FinalRecipeSchema) => {
     try {
-      // update db
-      toast("You submitted the following values (from parent):", {
-        description: <code>{JSON.stringify(finalData, null, 2)}</code>,
-      });
-      router.push("/dashboard");
+      const result = await updateRecipe(initialData.slug, finalData);
+
+      if (!result.success) {
+        toast.error(result.error);
+        return;
+      }
+
+      toast.success("Recipe updated.");
+      router.push(`/dashboard/recipes/${result.slug}`);
     } catch (err) {
       console.error(err);
+      toast.error("Failed to update recipe.");
     }
   };
 
