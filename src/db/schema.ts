@@ -49,7 +49,7 @@ export const recipes = sqliteTable(
   },
   (table) => [
     index("user_id_idx").on(table.userId),
-    uniqueIndex("recipes_slug_idx").on(table.slug),
+    uniqueIndex("recipes_user_slug_idx").on(table.userId, table.slug),
     uniqueIndex("recipes_public_id_idx").on(table.publicId),
   ],
 );

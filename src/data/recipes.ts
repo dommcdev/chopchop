@@ -15,6 +15,26 @@ import { RecipeSearchItem } from "@/types";
 import { checkAuth } from "./shared";
 import { cacheTag } from "next/cache";
 
+function getRecipeBlocksTag(userId: string) {
+  return `user:${userId}:recipes:blocks`;
+}
+
+function getRecipeSearchTag(userId: string) {
+  return `user:${userId}:recipes:search`;
+}
+
+function getRecipeCountTag(userId: string) {
+  return `user:${userId}:recipes:count`;
+}
+
+function getRecipeSlugTag(userId: string, slug: string) {
+  return `user:${userId}:recipes:slug:${slug}`;
+}
+
+function getPublicRecipeTag(publicId: string) {
+  return `public:recipe:${publicId}`;
+}
+
 // Fetch block of recipes
 async function queryRecipesBlock(
   userId: string,
@@ -22,7 +42,7 @@ async function queryRecipesBlock(
   offset: number,
 ) {
   "use cache";
-  cacheTag(`recipes-${userId}`);
+  cacheTag(getRecipeBlocksTag(userId));
 
   return await db.query.recipes.findMany({
     where: eq(recipes.userId, userId),
@@ -38,7 +58,7 @@ async function queryRecipesBlock(
 // Fetch all recipes for a user, for use in search
 async function querySearchData(userId: string): Promise<RecipeSearchItem[]> {
   "use cache";
-  cacheTag(`recipes-${userId}`);
+  cacheTag(getRecipeSearchTag(userId));
 
   return await db.query.recipes.findMany({
     where: eq(recipes.userId, userId),
@@ -59,7 +79,7 @@ async function querySearchData(userId: string): Promise<RecipeSearchItem[]> {
 
 async function queryRecipeDetailsBySlug(userId: string, slug: string) {
   "use cache";
-  cacheTag(`recipes-${userId}`);
+  cacheTag(getRecipeSlugTag(userId, slug));
 
   return await db.query.recipes.findFirst({
     where: and(eq(recipes.userId, userId), eq(recipes.slug, slug)),
@@ -77,7 +97,7 @@ async function queryRecipeDetailsBySlug(userId: string, slug: string) {
 
 async function queryRecipeDetailsById(publicId: string) {
   "use cache";
-  cacheTag(`recipes-${publicId}`);
+  cacheTag(getPublicRecipeTag(publicId));
 
   return await db.query.recipes.findFirst({
     where: eq(recipes.publicId, publicId),
@@ -95,7 +115,7 @@ async function queryRecipeDetailsById(publicId: string) {
 
 async function queryNumOfPages(userId: string, pageSize: number) {
   "use cache";
-  cacheTag(`recipes-${userId}`);
+  cacheTag(getRecipeCountTag(userId));
 
   const result = await db
     .select({ value: count() })

@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { RecipeEditorInitialValues } from "@/lib/hookformSchema";
 import {
   finalRecipeSchema,
@@ -10,7 +9,6 @@ import {
   FinalRecipeSchema,
 } from "@/lib/finalRecipeSchema";
 import { CategoryBrief } from "@/types";
-import { cn } from "@/lib/utils";
 import {
   Select,
   SelectContent,
@@ -76,14 +74,6 @@ export function RecipeEditor({
   });
 
   async function saveRecipe(data: FinalRecipeSchema) {
-    console.log("DB-ready data:", data);
-    toast("You submitted the following values:", {
-      description: (
-        <pre className="mt-2 w-[320px] overflow-x-auto rounded-md bg-code p-4 text-code-foreground">
-          <code>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
     await handleSave(data);
   }
 

@@ -17,6 +17,26 @@ type SaveRecipeResult =
   | { success: true; slug: string }
   | { success: false; error: string };
 
+function getRecipeBlocksTag(userId: string) {
+  return `user:${userId}:recipes:blocks`;
+}
+
+function getRecipeSearchTag(userId: string) {
+  return `user:${userId}:recipes:search`;
+}
+
+function getRecipeCountTag(userId: string) {
+  return `user:${userId}:recipes:count`;
+}
+
+function getRecipeSlugTag(userId: string, slug: string) {
+  return `user:${userId}:recipes:slug:${slug}`;
+}
+
+function getPublicRecipeTag(publicId: string) {
+  return `public:recipe:${publicId}`;
+}
+
 function buildRecipeWriteData(data: FinalRecipeSchema) {
   return {
     recipe: {
@@ -45,6 +65,7 @@ function buildRecipeWriteData(data: FinalRecipeSchema) {
 }
 
 async function generateUniqueRecipeSlug(
+  userId: string,
   name: string,
   excludeRecipeId?: number,
 ): Promise<string> {
@@ -57,8 +78,12 @@ async function generateUniqueRecipeSlug(
       columns: { id: true },
       where:
         excludeRecipeId === undefined
-          ? eq(recipes.slug, candidate)
-          : and(eq(recipes.slug, candidate), ne(recipes.id, excludeRecipeId)),
+          ? and(eq(recipes.userId, userId), eq(recipes.slug, candidate))
+          : and(
+              eq(recipes.userId, userId),
+              eq(recipes.slug, candidate),
+              ne(recipes.id, excludeRecipeId),
+            ),
     });
 
     if (!existingRecipe) {
@@ -84,9 +109,27 @@ async function generateUniqueRecipePublicId(): Promise<string> {
   }
 }
 
-function invalidateRecipeTags(userId: string, publicId: string) {
-  updateTag(`recipes-${userId}`);
-  updateTag(`recipes-${publicId}`);
+function invalidateRecipeCreationTags(userId: string, publicId: string) {
+  updateTag(getRecipeBlocksTag(userId));
+  updateTag(getRecipeSearchTag(userId));
+  updateTag(getRecipeCountTag(userId));
+  updateTag(getPublicRecipeTag(publicId));
+}
+
+function invalidateRecipeUpdateTags(
+  userId: string,
+  currentSlug: string,
+  nextSlug: string,
+  publicId: string,
+) {
+  updateTag(getRecipeBlocksTag(userId));
+  updateTag(getRecipeSearchTag(userId));
+  updateTag(getRecipeSlugTag(userId, currentSlug));
+  updateTag(getPublicRecipeTag(publicId));
+
+  if (nextSlug !== currentSlug) {
+    updateTag(getRecipeSlugTag(userId, nextSlug));
+  }
 }
 
 export async function createRecipe(
@@ -114,7 +157,7 @@ export async function createRecipe(
   } = buildRecipeWriteData(data);
 
   try {
-    const slug = await generateUniqueRecipeSlug(data.name);
+    const slug = await generateUniqueRecipeSlug(userId, data.name);
     const publicId = await generateUniqueRecipePublicId();
 
     await db.transaction(async (tx) => {
@@ -147,7 +190,7 @@ export async function createRecipe(
       }
     });
 
-    invalidateRecipeTags(userId, publicId);
+    invalidateRecipeCreationTags(userId, publicId);
     return { success: true, slug };
   } catch (error) {
     console.error("Failed to create recipe:", error);
@@ -198,7 +241,7 @@ export async function updateRecipe(
     const nextSlug =
       data.name === existingRecipe.name
         ? existingRecipe.slug
-        : await generateUniqueRecipeSlug(data.name, existingRecipe.id);
+        : await generateUniqueRecipeSlug(userId, data.name, existingRecipe.id);
 
     await db.transaction(async (tx) => {
       await tx
@@ -236,7 +279,12 @@ export async function updateRecipe(
       }
     });
 
-    invalidateRecipeTags(userId, existingRecipe.publicId);
+    invalidateRecipeUpdateTags(
+      userId,
+      currentSlug,
+      nextSlug,
+      existingRecipe.publicId,
+    );
     return { success: true, slug: nextSlug };
   } catch (error) {
     console.error("Failed to update recipe:", error);
