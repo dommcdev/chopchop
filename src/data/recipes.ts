@@ -1,5 +1,10 @@
 /*
  * This file is for all recipe-related functions that involve database reads
+ *
+ * Each function requires both a private cachable version which takes in userId as props and utlizes 'use cache'
+ * and a public version which actually awaits auth then simply calls the private version.
+ *
+ * Naming convention: fetchName for public, queryName for private.
  */
 
 import "server-only";
@@ -23,16 +28,11 @@ async function queryRecipesBlock(
     where: eq(recipes.userId, userId),
     orderBy: (r, { desc: descCol }) => [descCol(r.createdAt)],
     limit,
-    offset, //nota bene - db still reads everything up to this point, but then simply discards most of it (ok but not ideal)
+    offset, //nota bene - db still reads everything up to this point, but then simply discards most of it
     with: {
       category: true,
     },
   });
-}
-
-export async function fetchRecipesBlock(limit: number, offset: number) {
-  const userId = await checkAuth();
-  return queryRecipesBlock(userId, limit, offset);
 }
 
 // Fetch all recipes for a user, for use in search
@@ -57,11 +57,6 @@ async function querySearchData(userId: string): Promise<RecipeSearchItem[]> {
   });
 }
 
-export async function fetchSearchData(): Promise<RecipeSearchItem[]> {
-  const userId = await checkAuth();
-  return querySearchData(userId);
-}
-
 async function queryRecipeBlob(userId: string, slug: string) {
   "use cache";
   cacheTag(`recipes-${userId}`);
@@ -83,14 +78,7 @@ async function queryRecipeBlob(userId: string, slug: string) {
   });
 }
 
-export async function fetchRecipeBlob(slug: string) {
-  const userId = await checkAuth();
-
-  //await new Promise((resolve) => setTimeout(resolve, 1500));
-  return queryRecipeBlob(userId, slug);
-}
-
-async function queryRecipeSlugFromPublicId(publicId: string) {
+export async function getRecipeSlugFromPublicId(publicId: string) {
   "use cache";
   cacheTag(`recipes-${publicId}`);
 
@@ -102,10 +90,6 @@ async function queryRecipeSlugFromPublicId(publicId: string) {
   });
 
   return result?.slug ?? null;
-}
-
-export async function getRecipeSlugFromPublicId(publicId: string) {
-  return queryRecipeSlugFromPublicId(publicId);
 }
 
 async function queryNumOfPages(userId: string, pageSize: number) {
@@ -124,4 +108,20 @@ async function queryNumOfPages(userId: string, pageSize: number) {
 export async function getNumOfPages(pageSize: number) {
   const userId = await checkAuth();
   return queryNumOfPages(userId, pageSize);
+}
+
+export async function fetchRecipeBlob(slug: string) {
+  const userId = await checkAuth();
+  //await new Promise((resolve) => setTimeout(resolve, 1500));
+  return queryRecipeBlob(userId, slug);
+}
+
+export async function fetchRecipesBlock(limit: number, offset: number) {
+  const userId = await checkAuth();
+  return queryRecipesBlock(userId, limit, offset);
+}
+
+export async function fetchSearchData(): Promise<RecipeSearchItem[]> {
+  const userId = await checkAuth();
+  return querySearchData(userId);
 }

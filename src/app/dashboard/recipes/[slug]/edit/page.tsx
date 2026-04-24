@@ -16,5 +16,3 @@ export default async function RecipeEditorPage({
     </Suspense>
   );
 }
-
-//TODO need to handle ordering with displayOrder row

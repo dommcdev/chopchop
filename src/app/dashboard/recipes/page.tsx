@@ -1,6 +1,5 @@
 import { Suspense } from "react";
-import Link from "next/link";
-import { ArrowLeftIcon } from "@phosphor-icons/react/dist/ssr";
+import { DashboardLink } from "@/components/dashboard/DashboardLink";
 import { PaginationBar } from "@/components/PaginationBar";
 import { fetchRecipesBlock, getNumOfPages } from "@/data/recipes";
 import { RECIPES_PAGE_SIZE } from "@/lib/constants";
@@ -25,13 +24,7 @@ export default async function RecipesPage({
   return (
     <main className="mx-auto max-w-screen-3xl p-4 sm:p-6 lg:p-8">
       <div className="mb-8 flex flex-col items-start gap-2.5 md:mb-10">
-        <Link
-          href="/dashboard"
-          className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-        >
-          <ArrowLeftIcon weight="bold" className="h-4 w-4 shrink-0" />
-          Back to Dashboard
-        </Link>
+        <DashboardLink />
         <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
           All Recipes
         </h1>
