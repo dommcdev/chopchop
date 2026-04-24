@@ -39,7 +39,7 @@ import {
 
 interface RecipeEditorProps {
   recipeData: RecipeBlob | Partial<RecipeBlob>;
-  handleSave: (data: RecipeBlob) => void;
+  handleSave: (data: FinalRecipeSchema) => void | Promise<void>;
 }
 
 export function RecipeEditor({
@@ -65,7 +65,7 @@ export function RecipeEditor({
     name: "instructions",
   });
 
-  function saveRecipe(data: FinalRecipeSchema) {
+  async function saveRecipe(data: FinalRecipeSchema) {
     console.log("DB-ready data:", data);
     toast("You submitted the following values:", {
       description: (
@@ -74,7 +74,7 @@ export function RecipeEditor({
         </pre>
       ),
     });
-    handleSave(data);
+    await handleSave(data);
   }
 
   return (
@@ -412,7 +412,7 @@ export function RecipeEditor({
                         type="button"
                         variant="outline"
                         size="sm"
-                        onClick={() => instructionsArray.append({ step: "" })}
+                        onClick={() => instructionsArray.append({ text: "" })}
                       >
                         Add Step
                       </Button>
