@@ -13,7 +13,7 @@ export function PrintableRecipeCard({
   targetServings,
   scaledIngredients,
 }: PrintableRecipeCardProps) {
-  const shareUrl = `https://lechopchop.vercel.app/dashboard/s/${recipe.publicId}`;
+  const shareUrl = `https://lechopchop.vercel.app/s/${recipe.publicId}`;
   return (
     <section className="bg-white p-4 text-black sm:p-8">
       {/* HEADER */}

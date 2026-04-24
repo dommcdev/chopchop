@@ -2,7 +2,7 @@
 
 ### Todo
   - Add 3-dot dropdown on recipe cards with delete option (+ confirmation + actual deletion logic)
-  - Categories carousel button has weird click boundaries
+  - Categories carousel button has weird click boundaries + right button padding
   - Ingredient scaling on recipe viewer
   - Individual recipe-by-category pages
   - Swap sharelinkerror with dialog

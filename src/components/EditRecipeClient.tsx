@@ -33,15 +33,17 @@ export function EditRecipeClient({
       const result = await updateRecipe(initialData.slug, finalData);
 
       if (!result.success) {
-        toast.error(result.error);
-        return;
+        throw new Error(result.error);
       }
 
       toast.success("Recipe updated.");
       router.push(`/dashboard/r/${result.slug}`);
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to update recipe.");
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "An unknown error occurred";
+      toast.error(message);
+      console.error(message);
+      toast.error(message);
     }
   };
 

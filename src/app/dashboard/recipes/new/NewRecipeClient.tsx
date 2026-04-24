@@ -27,16 +27,18 @@ export function NewRecipeClient({ categoriesPromise }: NewRecipeClientProps) {
       const result = await createRecipe(finalData);
 
       if (!result.success) {
-        toast.error(result.error);
-        return;
+        throw new Error(result.error);
       }
 
       clearStore();
       toast.success("Recipe created.");
       router.push(`/dashboard/r/${result.slug}`);
     } catch (error) {
-      console.error(error);
-      toast.error("Failed to create recipe.");
+      const message =
+        error instanceof Error ? error.message : "An unknown error occurred";
+      toast.error(message);
+      console.error(message);
+      toast.error(message);
     }
   };
 
