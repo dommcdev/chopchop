@@ -1,12 +1,12 @@
 "use client";
 
-import { ArrowLeftIcon } from "@phosphor-icons/react";
-import Link from "next/link";
 import { LinkButton } from "@/components/LinkButton";
+import { BackLink } from "@/components/dashboard/BackLink";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -20,17 +20,9 @@ export default function ShareLinkError({
   const loginHref = `/login?redirect_url=${encodedRedirect}`;
 
   return (
-    <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-lg flex-col justify-center gap-6 p-4 sm:p-6 lg:max-w-xl">
-      <Link
-        href="/"
-        className="inline-flex w-fit items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-      >
-        <ArrowLeftIcon weight="bold" className="h-4 w-4" />
-        Back to home
-      </Link>
-
-      <Card className="rounded-none border border-border shadow-sm">
-        <CardHeader className="space-y-2">
+    <main className="flex min-h-[calc(100svh-4rem)] items-center justify-center px-4 py-10 sm:px-6">
+      <Card className="w-full max-w-2xl border border-border shadow-sm">
+        <CardHeader className="gap-3">
           <CardTitle className="text-2xl font-semibold tracking-tight sm:text-3xl">
             Sign in to view this recipe
           </CardTitle>
@@ -43,7 +35,11 @@ export default function ShareLinkError({
         <CardContent>
           <LinkButton href={loginHref}>Sign In</LinkButton>
         </CardContent>
+
+        <CardFooter>
+          <BackLink href="/">Back to home</BackLink>
+        </CardFooter>
       </Card>
-    </div>
+    </main>
   );
 }
