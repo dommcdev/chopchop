@@ -4,16 +4,21 @@ import { use } from "react";
 import { RecipeEditor } from "@/components/RecipeEditor";
 import { useRouter } from "next/navigation";
 import { FinalRecipeSchema } from "@/lib/finalRecipeSchema";
-import { RecipeBlob } from "@/types";
+import { CategoryBrief, RecipeBlob } from "@/types";
 import { toast } from "sonner";
 
 interface EditRecipeClientProps {
   recipePromise: Promise<RecipeBlob | undefined>;
+  categoriesPromise: Promise<CategoryBrief[]>;
 }
 
-export function EditRecipeClient({ recipePromise }: EditRecipeClientProps) {
+export function EditRecipeClient({
+  recipePromise,
+  categoriesPromise,
+}: EditRecipeClientProps) {
   const router = useRouter();
   const initialData = use(recipePromise);
+  const categories = use(categoriesPromise);
 
   if (!initialData) {
     return <p>Oops! That recipe does not seem to exist.</p>; //TODO render our error/404 screen here
@@ -31,5 +36,11 @@ export function EditRecipeClient({ recipePromise }: EditRecipeClientProps) {
     }
   };
 
-  return <RecipeEditor recipeData={initialData} handleSave={handleSave} />;
+  return (
+    <RecipeEditor
+      recipeData={initialData}
+      categories={categories}
+      handleSave={handleSave}
+    />
+  );
 }

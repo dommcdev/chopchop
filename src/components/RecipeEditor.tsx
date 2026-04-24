@@ -9,8 +9,7 @@ import {
   EditorFormState,
   FinalRecipeSchema,
 } from "@/lib/finalRecipeSchema";
-import { RecipeBlob } from "@/types";
-
+import { CategoryBrief, RecipeBlob } from "@/types";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -39,11 +38,13 @@ import {
 
 interface RecipeEditorProps {
   recipeData: RecipeBlob | Partial<RecipeBlob>;
+  categories?: CategoryBrief[];
   handleSave: (data: FinalRecipeSchema) => void | Promise<void>;
 }
 
 export function RecipeEditor({
   recipeData = {},
+  categories,
   handleSave,
 }: RecipeEditorProps) {
   const form = useForm<EditorFormState, unknown, FinalRecipeSchema>({
