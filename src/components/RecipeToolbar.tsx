@@ -20,11 +20,13 @@ const iconClassName = cn(
 type RecipeViewToolbarProps = {
   recipeSlug: string;
   recipePublicId: string;
+  canEdit: boolean;
 };
 
 export function RecipeToolbar({
   recipeSlug,
   recipePublicId,
+  canEdit,
 }: RecipeViewToolbarProps) {
   const [shareNotice, setShareNotice] = useState<"idle" | "copied" | "error">(
     "idle",
@@ -65,14 +67,16 @@ export function RecipeToolbar({
         role="toolbar"
         aria-label="Recipe actions"
       >
-        <Link
-          href={`/dashboard/r/${recipeSlug}/edit`}
-          className={iconClassName}
-          aria-label="Edit recipe"
-          title="Edit recipe"
-        >
-          <PencilSimpleIcon className="h-4 w-4" weight="bold" />
-        </Link>
+        {canEdit ? (
+          <Link
+            href={`/dashboard/r/${recipeSlug}/edit`}
+            className={iconClassName}
+            aria-label="Edit recipe"
+            title="Edit recipe"
+          >
+            <PencilSimpleIcon className="h-4 w-4" weight="bold" />
+          </Link>
+        ) : null}
         <Button
           type="button"
           variant="ghost"

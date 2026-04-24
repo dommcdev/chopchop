@@ -5,16 +5,15 @@ import { RecipeInstructions } from "./RecipeInstructions";
 import { RecipeIngredients } from "./RecipeIngredients";
 import { calculateScaleFactor, getScaledIngredients } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
-import { fetchRecipeBlob } from "@/data/recipes";
-import { notFound } from "next/navigation";
+import { RecipeBlob } from "@/types";
 
-export async function RecipeViewer({ slug }: { slug: string }) {
-  const recipe = await fetchRecipeBlob(slug);
-
-  if (!recipe) {
-    notFound();
-  }
-
+export function RecipeViewer({
+  recipe,
+  canEdit,
+}: {
+  recipe: RecipeBlob;
+  canEdit: boolean;
+}) {
   const scaleFactor = calculateScaleFactor(recipe.servings, recipe.servings);
   const scaledIngredients = getScaledIngredients(
     recipe.ingredients,
@@ -46,6 +45,7 @@ export async function RecipeViewer({ slug }: { slug: string }) {
                 <RecipeToolbar
                   recipeSlug={recipe.slug}
                   recipePublicId={recipe.publicId}
+                  canEdit={canEdit}
                 />
               </div>
             </div>

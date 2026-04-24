@@ -1,6 +1,6 @@
 import { EditRecipeClient } from "@/components/EditRecipeClient";
 import { fetchCategories } from "@/data/categories";
-import { fetchRecipeBlob } from "@/data/recipes";
+import { getRecipeDetailsBySlug } from "@/data/recipes";
 import { Suspense } from "react";
 
 export default async function RecipeEditorPage({
@@ -9,7 +9,7 @@ export default async function RecipeEditorPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const recipePromise = fetchRecipeBlob(slug);
+  const recipePromise = getRecipeDetailsBySlug(slug);
   const categoriesPromise = fetchCategories();
 
   return (

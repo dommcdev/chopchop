@@ -10,7 +10,7 @@
 import "server-only";
 import { db } from "@/db";
 import { recipes } from "@/db/schema";
-import { and, or, eq, count } from "drizzle-orm";
+import { and, eq, count } from "drizzle-orm";
 import { RecipeSearchItem } from "@/types";
 import { checkAuth } from "./shared";
 import { cacheTag } from "next/cache";
@@ -57,15 +57,12 @@ async function querySearchData(userId: string): Promise<RecipeSearchItem[]> {
   });
 }
 
-async function queryRecipeBlob(userId: string, slug: string) {
+async function queryRecipeDetailsBySlug(userId: string, slug: string) {
   "use cache";
   cacheTag(`recipes-${userId}`);
 
   return await db.query.recipes.findFirst({
-    where: and(
-      eq(recipes.userId, userId),
-      or(eq(recipes.slug, slug), eq(recipes.publicId, slug)),
-    ),
+    where: and(eq(recipes.userId, userId), eq(recipes.slug, slug)),
     with: {
       category: true,
       ingredients: {
@@ -78,18 +75,22 @@ async function queryRecipeBlob(userId: string, slug: string) {
   });
 }
 
-export async function getRecipeSlugFromPublicId(publicId: string) {
+async function queryRecipeDetailsById(publicId: string) {
   "use cache";
   cacheTag(`recipes-${publicId}`);
 
-  const result = await db.query.recipes.findFirst({
-    columns: {
-      slug: true,
-    },
+  return await db.query.recipes.findFirst({
     where: eq(recipes.publicId, publicId),
+    with: {
+      category: true,
+      ingredients: {
+        orderBy: (ingredients, { asc }) => [asc(ingredients.id)],
+      },
+      instructions: {
+        orderBy: (instructions, { asc }) => [asc(instructions.displayOrder)],
+      },
+    },
   });
-
-  return result?.slug ?? null;
 }
 
 async function queryNumOfPages(userId: string, pageSize: number) {
@@ -110,10 +111,13 @@ export async function getNumOfPages(pageSize: number) {
   return queryNumOfPages(userId, pageSize);
 }
 
-export async function fetchRecipeBlob(slug: string) {
+export async function getRecipeDetailsBySlug(slug: string) {
   const userId = await checkAuth();
-  //await new Promise((resolve) => setTimeout(resolve, 1500));
-  return queryRecipeBlob(userId, slug);
+  return queryRecipeDetailsBySlug(userId, slug);
+}
+
+export async function getRecipeDetailsById(publicId: string) {
+  return queryRecipeDetailsById(publicId);
 }
 
 export async function fetchRecipesBlock(limit: number, offset: number) {
