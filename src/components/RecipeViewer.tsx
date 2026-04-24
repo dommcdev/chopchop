@@ -3,7 +3,11 @@ import { PrintableRecipeCard } from "./PrintableRecipeCard";
 import { RecipeToolbar } from "./RecipeToolbar";
 import { RecipeInstructions } from "./RecipeInstructions";
 import { RecipeIngredients } from "./RecipeIngredients";
-import { calculateScaleFactor, getScaledIngredients } from "@/lib/utils";
+import {
+  calculateScaleFactor,
+  formatMinutes,
+  getScaledIngredients,
+} from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { RecipeBlob } from "@/types";
 
@@ -14,7 +18,10 @@ export function RecipeViewer({
   recipe: RecipeBlob;
   canEdit: boolean;
 }) {
-  const scaleFactor = calculateScaleFactor(recipe.servings, recipe.servings);
+  const scaleFactor = calculateScaleFactor(
+    recipe.servings ?? 1,
+    recipe.servings,
+  );
   const scaledIngredients = getScaledIngredients(
     recipe.ingredients,
     scaleFactor,
@@ -58,13 +65,17 @@ export function RecipeViewer({
               {recipe.prepTime != null && recipe.prepTime > 0 && (
                 <div className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground">
                   <span>Prep:</span>
-                  <span className="text-foreground">{recipe.prepTime} min</span>
+                  <span className="text-foreground">
+                    {formatMinutes(recipe.prepTime)}
+                  </span>
                 </div>
               )}
               {recipe.cookTime != null && recipe.cookTime > 0 && (
                 <div className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground">
                   <span>Cook:</span>
-                  <span className="text-foreground">{recipe.cookTime} min</span>
+                  <span className="text-foreground">
+                    {formatMinutes(recipe.cookTime)}
+                  </span>
                 </div>
               )}
             </div>

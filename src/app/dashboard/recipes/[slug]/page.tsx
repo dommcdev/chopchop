@@ -1,7 +1,8 @@
 import { DashboardLink } from "@/components/dashboard/DashboardLink";
-import { RecipeViewer } from "@/components/RecipeViewer";
+import { RecipeViewer, RecipeViewerSkeleton } from "@/components/RecipeViewer";
 import { getRecipeDetailsBySlug } from "@/data/recipes";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 export default async function RecipePage({
   params,
@@ -9,11 +10,7 @@ export default async function RecipePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const recipe = await getRecipeDetailsBySlug(slug);
-
-  if (!recipe) {
-    notFound();
-  }
+  const recipePromise = getRecipeDetailsBySlug(slug);
 
   return (
     <div className="mx-auto max-w-4xl p-4 sm:p-6 lg:max-w-5xl lg:p-8">
@@ -21,7 +18,23 @@ export default async function RecipePage({
         <DashboardLink />
       </div>
 
-      <RecipeViewer recipe={recipe} canEdit />
+      <Suspense fallback={<RecipeViewerSkeleton />}>
+        <RecipeViewerContent recipePromise={recipePromise} />
+      </Suspense>
     </div>
   );
+}
+
+async function RecipeViewerContent({
+  recipePromise,
+}: {
+  recipePromise: ReturnType<typeof getRecipeDetailsBySlug>;
+}) {
+  const recipe = await recipePromise;
+
+  if (!recipe) {
+    notFound();
+  }
+
+  return <RecipeViewer recipe={recipe} canEdit />;
 }

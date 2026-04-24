@@ -4,7 +4,7 @@ import { QRCodeSVG } from "qrcode.react";
 
 interface PrintableRecipeCardProps {
   recipe: PrintableRecipe;
-  targetServings: number;
+  targetServings: number | null;
   scaledIngredients: PrintableScaledIngredient[];
 }
 

@@ -49,6 +49,15 @@ export function totalCookMinutes(
   return (recipe.prepTime ?? 0) + (recipe.cookTime ?? 0);
 }
 
+export function formatMinutes(minutes: number): string {
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+
+  if (hours === 0) return `${remainingMinutes} min`;
+  if (remainingMinutes === 0) return `${hours} hr`;
+  return `${hours} hr ${remainingMinutes} min`;
+}
+
 /*
  * Calculates how much to multiply ingredients by.
  * Defaults to 1 if servings are missing or invalid.

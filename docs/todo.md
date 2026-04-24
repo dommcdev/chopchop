@@ -6,8 +6,6 @@
   - Ingredient scaling on recipe viewer
   - Individual recipe-by-category pages
   - Swap sharelinkerror with dialog
-  - Error.tsx page
-  - On viewer page convert mins into hour+min
   - Investiate use cache more
   - Delete recipe button in viewer (w/ confirmatin dialog)
   - Add delete/rename ui to cards (+ confirmation dialog + remove category from recipes logic)
@@ -43,3 +41,4 @@
 - Add sorting/groups to recipes page
 - Ability to create categories from edit page
 - Infinite scroll with virtualization
+- Add 'copy recipe to account' button
