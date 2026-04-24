@@ -24,6 +24,10 @@ export const hookformSchema = z.object({
   prepTime: inboundNumber,
   cookTime: inboundNumber,
 
+  categoryId: inboundNumber,
+  imageUrl: inboundString,
+  imageKey: inboundString,
+
   ingredients: z
     .array(
       z.object({

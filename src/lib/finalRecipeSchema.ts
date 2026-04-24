@@ -18,6 +18,18 @@ const nullableFormNumber = (minVal: number, errorMsg?: string) =>
         .nullable(),
     );
 
+const nullableFormInt = (minVal: number, errorMsg?: string) =>
+  z
+    .union([z.string(), z.number()])
+    .transform((val) => (val === "" ? null : Number(val)))
+    .pipe(
+      z
+        .number({ message: "Must be a valid number" })
+        .int(errorMsg ?? "Must be a whole number")
+        .min(minVal, errorMsg)
+        .nullable(),
+    );
+
 const customString = () =>
   z
     .string()
@@ -31,6 +43,11 @@ export const finalRecipeSchema = z.object({
   servings: nullableFormNumber(1, "Servings must be at least 1"),
   prepTime: nullableFormNumber(0, "Prep time cannot be negative"),
   cookTime: nullableFormNumber(0, "Cook time cannot be negative"),
+
+  categoryId: nullableFormInt(1, "Please select a category"),
+
+  imageUrl: customString(),
+  imageKey: customString(),
 
   ingredients: z
     .array(
