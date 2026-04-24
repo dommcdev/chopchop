@@ -10,6 +10,15 @@ import {
   FinalRecipeSchema,
 } from "@/lib/finalRecipeSchema";
 import { CategoryBrief, RecipeBlob } from "@/types";
+import { cn } from "@/lib/utils";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -217,6 +226,112 @@ export function RecipeEditor({
                   )}
                 />
               </div>
+
+              <FieldSet className="gap-3">
+                <FieldLegend variant="label">Category &amp; Image</FieldLegend>
+                <FieldDescription>
+                  Pick a category and upload an image (wiring test UI for now).
+                </FieldDescription>
+
+                <FieldGroup className="gap-4">
+                  <Controller
+                    name="categoryId"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor={field.name}>Category</FieldLabel>
+                        <Select
+                          value={
+                            field.value === "" ? null : String(field.value)
+                          }
+                          onValueChange={(val) => field.onChange(val ?? "")}
+                          disabled={!categories}
+                        >
+                          <SelectTrigger aria-invalid={fieldState.invalid}>
+                            <SelectValue placeholder="Select a category" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              {(categories ?? []).map((cat) => (
+                                <SelectItem key={cat.id} value={String(cat.id)}>
+                                  {cat.name}
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </Field>
+                    )}
+                  />
+
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <Controller
+                      name="imageUrl"
+                      control={form.control}
+                      render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                          <FieldLabel htmlFor={field.name}>
+                            Image URL
+                          </FieldLabel>
+                          <Input
+                            {...field}
+                            id={field.name}
+                            aria-invalid={fieldState.invalid}
+                            placeholder="(set by uploadthing)"
+                          />
+                          {fieldState.invalid && (
+                            <FieldError errors={[fieldState.error]} />
+                          )}
+                        </Field>
+                      )}
+                    />
+
+                    <Controller
+                      name="imageKey"
+                      control={form.control}
+                      render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                          <FieldLabel htmlFor={field.name}>
+                            Image Key
+                          </FieldLabel>
+                          <Input
+                            {...field}
+                            id={field.name}
+                            aria-invalid={fieldState.invalid}
+                            placeholder="(set by uploadthing)"
+                          />
+                          {fieldState.invalid && (
+                            <FieldError errors={[fieldState.error]} />
+                          )}
+                        </Field>
+                      )}
+                    />
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        form.setValue(
+                          "imageUrl",
+                          "https://example.com/test-image.jpg",
+                          { shouldDirty: true },
+                        );
+                        form.setValue("imageKey", "test-image-key", {
+                          shouldDirty: true,
+                        });
+                      }}
+                    >
+                      Mock set image values
+                    </Button>
+                  </div>
+                </FieldGroup>
+              </FieldSet>
             </FieldGroup>
           </div>
 
