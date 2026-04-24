@@ -14,11 +14,7 @@ export default function NewRecipePage() {
 
   const handleSave = async (finalData: EditorOutSchema) => {
     toast("You submitted the following values (from parent):", {
-      description: (
-        <pre className="mt-2 w-[320px] overflow-x-auto rounded-md bg-code p-4 text-code-foreground">
-          <code>{JSON.stringify(finalData, null, 2)}</code>
-        </pre>
-      ),
+      description: <code>{JSON.stringify(finalData, null, 2)}</code>,
     });
     //save data to db here (in a try/catch)
     clearStore();

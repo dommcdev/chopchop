@@ -62,7 +62,6 @@ export async function fetchSearchData(): Promise<RecipeSearchItem[]> {
   return querySearchData(userId);
 }
 
-//TODO why do we have the or stuff here
 async function queryRecipeBlob(userId: string, slug: string) {
   "use cache";
   cacheTag(`recipes-${userId}`);

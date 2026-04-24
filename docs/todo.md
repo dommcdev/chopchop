@@ -22,7 +22,6 @@
   - General layout (editable fields, draggable steps, etc)
   - Image selector for recipe image (use uploadthing's w/dragable zone)
   - Create server action to take json input and update db
-  - Call said server action (& refresh cache/ui/state/etc?)
 
 - Categories
   - Add delete/rename ui to cards (+ confirmation dialog)
