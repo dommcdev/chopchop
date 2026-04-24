@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { DashboardLink } from "@/components/dashboard/DashboardLink";
+import { BackLink } from "@/components/dashboard/BackLink";
 import CategoryCard, {
   CategoryCardSkeleton,
 } from "@/components/dashboard/CategoryCard";
@@ -10,7 +10,7 @@ export default function CategoriesPage() {
   return (
     <main className="mx-auto max-w-screen-2xl p-4 sm:p-6 lg:p-8">
       <div className="mb-6 flex flex-col items-start gap-2.5 md:mb-8">
-        <DashboardLink />
+        <BackLink href="/dashboard">Back to Dashboard</BackLink>
 
         <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
           All Categories

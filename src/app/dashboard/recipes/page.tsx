@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { DashboardLink } from "@/components/dashboard/DashboardLink";
+import { BackLink } from "@/components/dashboard/BackLink";
 import { PaginationBar } from "@/components/PaginationBar";
 import { fetchRecipesBlock, getNumOfPages } from "@/data/recipes";
 import { RECIPES_PAGE_SIZE } from "@/lib/constants";
@@ -24,7 +24,7 @@ export default async function RecipesPage({
   return (
     <main className="mx-auto max-w-screen-3xl p-4 sm:p-6 lg:p-8">
       <div className="mb-8 flex flex-col items-start gap-2.5 md:mb-10">
-        <DashboardLink />
+        <BackLink href="/dashboard">Back to Dashboard</BackLink>
         <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
           All Recipes
         </h1>
