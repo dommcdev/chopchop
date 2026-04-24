@@ -74,10 +74,10 @@ export const geminiRecipeSchema = z.object({
     .default([]),
 
   instructions: z
-    .array(z.object({ step: stringOrNull("A single instruction step") }))
+    .array(z.object({ text: stringOrNull("A single instruction step") }))
     .nullable()
     .describe("Step-by-step instructions. If none are found, return null.")
-    .transform((steps) => (steps ?? []).filter((item) => item.step !== "")) //remove whitespace-only steps
+    .transform((steps) => (steps ?? []).filter((item) => item.text !== "")) //remove whitespace-only steps
     .default([]),
 });
 

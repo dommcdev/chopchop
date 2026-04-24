@@ -17,4 +17,4 @@ export default async function RecipeEditorPage({
   );
 }
 
-// TODO Some sort of naming mismatch with instructions table. We also need to handle or delete the stepNumber entry.
+//TODO need to handle ordering with displayOrder row

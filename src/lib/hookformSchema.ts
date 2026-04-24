@@ -36,7 +36,7 @@ export const hookformSchema = z.object({
     .transform((val) => val ?? []),
 
   instructions: z
-    .array(z.object({ step: inboundString }))
+    .array(z.object({ text: inboundString }))
     .nullish()
     .transform((val) => val ?? []),
 });

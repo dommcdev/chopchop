@@ -65,8 +65,8 @@ export const finalRecipeSchema = z.object({
     .default([]),
 
   instructions: z
-    .array(z.object({ step: customString() }))
-    .transform((steps) => steps.filter((item) => item.step !== "")) //remove whitespace-only steps
+    .array(z.object({ text: customString() }))
+    .transform((steps) => steps.filter((item) => item.text !== "")) //remove whitespace-only steps
     .default([]),
 });
 

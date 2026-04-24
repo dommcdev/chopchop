@@ -365,7 +365,7 @@ export function RecipeEditor({
                     {instructionsArray.fields.map((row, index) => (
                       <Controller
                         key={row.id}
-                        name={`instructions.${index}.step`}
+                        name={`instructions.${index}.text`}
                         control={form.control}
                         render={({ field, fieldState }) => (
                           <Field data-invalid={fieldState.invalid}>
