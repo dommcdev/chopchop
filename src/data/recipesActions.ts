@@ -132,6 +132,18 @@ function invalidateRecipeUpdateTags(
   }
 }
 
+function invalidateRecipeDeleteTags(
+  userId: string,
+  slug: string,
+  publicId: string,
+) {
+  updateTag(getRecipeBlocksTag(userId));
+  updateTag(getRecipeSearchTag(userId));
+  updateTag(getRecipeCountTag(userId));
+  updateTag(getRecipeSlugTag(userId, slug));
+  updateTag(getPublicRecipeTag(publicId));
+}
+
 export async function createRecipe(
   rawData: FinalRecipeSchema,
 ): Promise<SaveRecipeResult> {
@@ -289,5 +301,38 @@ export async function updateRecipe(
   } catch (error) {
     console.error("Failed to update recipe:", error);
     return { success: false, error: "Failed to update recipe." };
+  }
+}
+
+export async function deleteRecipe(
+  slug: string,
+): Promise<{ success: true } | { success: false; error: string }> {
+  let userId: string;
+
+  try {
+    userId = await checkAuth();
+  } catch {
+    return { success: false, error: "Unauthorized" };
+  }
+
+  const existingRecipe = await db.query.recipes.findFirst({
+    columns: {
+      id: true,
+      publicId: true,
+    },
+    where: and(eq(recipes.userId, userId), eq(recipes.slug, slug)),
+  });
+
+  if (!existingRecipe) {
+    return { success: false, error: "Recipe not found." };
+  }
+
+  try {
+    await db.delete(recipes).where(eq(recipes.id, existingRecipe.id));
+    invalidateRecipeDeleteTags(userId, slug, existingRecipe.publicId);
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to delete recipe:", error);
+    return { success: false, error: "Failed to delete recipe." };
   }
 }

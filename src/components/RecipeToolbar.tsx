@@ -7,9 +7,11 @@ import {
   PencilSimpleIcon,
   PrinterIcon,
   LinkIcon,
+  TrashIcon,
 } from "@phosphor-icons/react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
+import { RecipeDeleteDialog } from "@/components/RecipeDeleteDialog";
 import { cn } from "@/lib/utils";
 
 const iconClassName = cn(
@@ -68,14 +70,30 @@ export function RecipeToolbar({
         aria-label="Recipe actions"
       >
         {canEdit ? (
-          <Link
-            href={`/dashboard/r/${recipeSlug}/edit`}
-            className={iconClassName}
-            aria-label="Edit recipe"
-            title="Edit recipe"
-          >
-            <PencilSimpleIcon className="h-4 w-4" weight="bold" />
-          </Link>
+          <>
+            <Link
+              href={`/dashboard/r/${recipeSlug}/edit`}
+              className={iconClassName}
+              aria-label="Edit recipe"
+              title="Edit recipe"
+            >
+              <PencilSimpleIcon className="h-4 w-4" weight="bold" />
+            </Link>
+            <RecipeDeleteDialog
+              recipeSlug={recipeSlug}
+              trigger={
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  className="text-muted-foreground hover:text-destructive"
+                  aria-label="Delete recipe"
+                  title="Delete recipe"
+                >
+                  <TrashIcon className="h-4 w-4" weight="bold" />
+                </Button>
+              }
+            />
+          </>
         ) : null}
         <Button
           type="button"

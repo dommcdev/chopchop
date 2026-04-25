@@ -5,8 +5,6 @@
   - Categories carousel button has weird click boundaries + right button padding
   - Ingredient scaling on recipe viewer
   - Individual recipe-by-category pages
-  - Investiate use cache more
-  - Delete recipe button in viewer (w/ confirmatin dialog)
   - Add delete/rename ui to cards (+ confirmation dialog + remove category from recipes logic)
   - Add create category ui
 
@@ -17,7 +15,6 @@
 - Recipe editor
   - Layout + styling
   - UploadThing image selector
-
 
 - Low Priority
   - Upload recipe dialog
