@@ -21,15 +21,17 @@ import { toast } from "sonner";
 type RecipeDeleteDialogProps = {
   recipeSlug: string;
   trigger: React.ReactElement;
+  triggerNativeButton?: boolean;
   redirectTo?: string | null;
-  onDeleted?: () => void;
+  onDeletedAction?: () => void;
 };
 
 export function RecipeDeleteDialog({
   recipeSlug,
   trigger,
+  triggerNativeButton = true,
   redirectTo = "/dashboard",
-  onDeleted,
+  onDeletedAction,
 }: RecipeDeleteDialogProps) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -50,7 +52,7 @@ export function RecipeDeleteDialog({
       }
 
       setOpen(false);
-      onDeleted?.();
+      onDeletedAction?.();
 
       if (redirectTo) {
         router.push(redirectTo);
@@ -67,7 +69,10 @@ export function RecipeDeleteDialog({
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger render={trigger} />
+      <AlertDialogTrigger
+        render={trigger}
+        nativeButton={triggerNativeButton}
+      />
       <AlertDialogContent size="sm">
         <AlertDialogHeader>
           <AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">

@@ -11,6 +11,8 @@
   - Right now categories in editor display id rather than name (in field)
   - Fix image lazy-to-eager rendering on dashboard recipe cards
   - Use actual nano-id for recipe ids
+  - Weird validation errors in editor
+  - Definitely need create recipe button
 
 - Search dialog
   - Support category & incredient filters (ui bubbles)

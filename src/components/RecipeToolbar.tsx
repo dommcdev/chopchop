@@ -82,15 +82,21 @@ export function RecipeToolbar({
             <RecipeDeleteDialog
               recipeSlug={recipeSlug}
               trigger={
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  className="text-muted-foreground hover:text-destructive"
+                <button
+                  type="button"
+                  className={cn(
+                    buttonVariants({
+                      variant: "ghost",
+                      size: "icon-sm",
+                    }),
+                    "text-muted-foreground hover:text-destructive",
+                  )}
+                  data-slot="button"
                   aria-label="Delete recipe"
                   title="Delete recipe"
                 >
                   <TrashIcon className="h-4 w-4" weight="bold" />
-                </Button>
+                </button>
               }
             />
           </>

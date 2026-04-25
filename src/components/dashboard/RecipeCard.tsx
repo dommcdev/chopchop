@@ -19,11 +19,11 @@ export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
 
   return (
     <Card className="group flex h-full flex-col overflow-hidden rounded-none pt-0 transition-colors hover:bg-muted/40 hover:shadow-sm">
-      <Link
-        href={`/dashboard/r/${recipe.slug}`}
-        className="block outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-      >
-        <div className="relative aspect-video w-full overflow-hidden bg-muted">
+      <div className="relative aspect-video w-full overflow-hidden bg-muted">
+        <Link
+          href={`/dashboard/r/${recipe.slug}`}
+          className="block h-full outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
           {recipe.imageUrl ? (
             <Image
               src={recipe.imageUrl}
@@ -37,8 +37,11 @@ export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
               <FileImageIcon className="size-10" aria-hidden="true" />
             </div>
           )}
+        </Link>
+        <div className="absolute right-2 top-2 z-10">
+          <RecipeCardMenu recipeSlug={recipe.slug} />
         </div>
-      </Link>
+      </div>
 
       <CardHeader>
         <div className="flex min-w-0 flex-col gap-1">
@@ -58,13 +61,12 @@ export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
           ) : null}
         </div>
 
-        <CardAction className="flex items-start gap-1">
+        <CardAction>
           {totalMin > 0 ? (
             <span className="translate-y-1 inline-flex items-center rounded-none bg-secondary py-0.5 pl-2 pr-1.5 text-[10px] font-bold uppercase tracking-wider text-secondary-foreground">
               {totalMin} min
             </span>
           ) : null}
-          <RecipeCardMenu recipeSlug={recipe.slug} />
         </CardAction>
       </CardHeader>
 

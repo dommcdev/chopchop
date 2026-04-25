@@ -31,9 +31,9 @@ export function RecipeCardMenu({ recipeSlug }: RecipeCardMenuProps) {
         render={
           <Button
             type="button"
-            variant="ghost"
+            variant="outline"
             size="icon-sm"
-            className="text-muted-foreground hover:text-foreground"
+            className="border-border/80 bg-card/90 text-foreground shadow-sm backdrop-blur-sm hover:bg-card"
             aria-label="Recipe actions"
             title="Recipe actions"
           />
@@ -41,23 +41,21 @@ export function RecipeCardMenu({ recipeSlug }: RecipeCardMenuProps) {
       >
         <DotsThreeVerticalIcon weight="bold" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-36">
+      <DropdownMenuContent align="start" className="w-36">
         <DropdownMenuGroup>
           <DropdownMenuItem
             render={<Link href={`/dashboard/r/${recipeSlug}/edit`} />}
           >
             <PencilSimpleIcon weight="bold" />
-            Edit
+            Rename
           </DropdownMenuItem>
           <RecipeDeleteDialog
             recipeSlug={recipeSlug}
+            triggerNativeButton={false}
             redirectTo={null}
-            onDeleted={() => router.refresh()}
+            onDeletedAction={() => router.refresh()}
             trigger={
-              <DropdownMenuItem
-                variant="destructive"
-                onSelect={(event) => event.preventDefault()}
-              >
+              <DropdownMenuItem variant="destructive" closeOnClick={false}>
                 <TrashIcon weight="bold" />
                 Delete
               </DropdownMenuItem>
