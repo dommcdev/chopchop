@@ -17,6 +17,7 @@
   - Add recipe editor skeleton for suspenses
   - BUG - clear editor after adding new recipe (old values stick around now)
   - New recipe button should be same shape as other cards
+  - Update recipeingredients tag thing on recipe update if we aren't
 
 
 - Low Priority
@@ -28,10 +29,11 @@
   - Random food icons as image placeholders
   - Tighten up schema (min/max lengths, add category one, etc)
   - Display more data in each search result (category, trunc desc, etc)
+  - Button with translucent color/border when hovered
 
 ### Future features (?)
 - Better error handling + help page
-- More stuff on landing page
+- Redo landing page (more stuff)
 - Bulk recipe json exporter/importer
 - Bulk recipe ingest/queuing
 - Rate limiting, private links
