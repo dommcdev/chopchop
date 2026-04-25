@@ -12,6 +12,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Suspense } from "react";
+import { CreateCategoryDialog } from "./CreateCategoryDialog";
 
 export default async function DashboardCategories() {
   return (
@@ -27,9 +28,13 @@ export default async function DashboardCategories() {
         <Carousel className="w-full">
           <CarouselContent className="-ml-1">
             <CarouselItem className="pl-2 basis-54">
-              <div className="p-1">
-                <CategoryCardCreate />
-              </div>
+              <CreateCategoryDialog
+                trigger={
+                  <button type="button" className="w-full p-1 text-left">
+                    <CategoryCardCreate />
+                  </button>
+                }
+              />
             </CarouselItem>
             <Suspense
               fallback={Array.from({ length: 12 }).map((_, i) => (
@@ -54,7 +59,7 @@ export default async function DashboardCategories() {
 async function DashboardCategoriesList() {
   const allCategories = await fetchCategories();
 
-  if (allCategories.length === 0) return [];
+  if (allCategories.length === 0) return null;
 
   return (
     <>

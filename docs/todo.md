@@ -6,9 +6,12 @@
   - Ingredient scaling on recipe viewer
   - Individual recipe-by-category pages
   - Add delete/rename ui to cards (+ confirmation dialog + remove category from recipes logic)
-  - Add create category ui
-  - Build error due to error test page
   - Suspense needed for smth on share page
+  - Resizable grid sizes stuff to big when there are only a few items
+  - Clicking anywhere on category card should trigger link, not just text
+  - Right now categories in editor display id rather than name (in field)
+  - Fix image lazy-to-eager rendering on dashboard recipe cards
+  - Use actual nano-id for recipe ids
 
 - Search dialog
   - Support category & incredient filters (ui bubbles)
