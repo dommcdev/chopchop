@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { fetchCategories } from "@/data/categories";
-import CategoryCard, { CategoryCardSkeleton } from "./CategoryCard";
+import CategoryCard, {
+  CategoryCardCreate,
+  CategoryCardSkeleton,
+} from "./CategoryCard";
 import {
   Carousel,
   CarouselContent,
@@ -23,6 +26,11 @@ export default async function DashboardCategories() {
       <div className="px-12">
         <Carousel className="w-full">
           <CarouselContent className="-ml-1">
+            <CarouselItem className="pl-2 basis-54">
+              <div className="p-1">
+                <CategoryCardCreate />
+              </div>
+            </CarouselItem>
             <Suspense
               fallback={Array.from({ length: 12 }).map((_, i) => (
                 <CarouselItem key={i} className="pl-2 basis-54">
@@ -46,7 +54,6 @@ export default async function DashboardCategories() {
 async function DashboardCategoriesList() {
   const allCategories = await fetchCategories();
 
-  //Create category button here
   if (allCategories.length === 0) return [];
 
   return (

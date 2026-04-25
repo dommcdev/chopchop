@@ -7,6 +7,8 @@
   - Individual recipe-by-category pages
   - Add delete/rename ui to cards (+ confirmation dialog + remove category from recipes logic)
   - Add create category ui
+  - Build error due to error test page
+  - Suspense needed for smth on share page
 
 - Search dialog
   - Support category & incredient filters (ui bubbles)

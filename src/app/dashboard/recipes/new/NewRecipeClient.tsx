@@ -36,7 +36,6 @@ export function NewRecipeClient({ categoriesPromise }: NewRecipeClientProps) {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "An unknown error occurred";
-      toast.error(message);
       console.error(message);
       toast.error(message);
     }
