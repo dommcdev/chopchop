@@ -1,15 +1,15 @@
 "use client";
 
-import { LinkButton } from "@/components/LinkButton";
-import { BackLink } from "@/components/dashboard/BackLink";
+import Link from "next/link";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export default function ShareLinkError({
   redirectUrl,
@@ -20,26 +20,22 @@ export default function ShareLinkError({
   const loginHref = `/login?redirect_url=${encodedRedirect}`;
 
   return (
-    <main className="flex min-h-[calc(100svh-4rem)] items-center justify-center px-4 py-10 sm:px-6">
-      <Card className="w-full max-w-2xl border border-border shadow-sm">
-        <CardHeader className="gap-3">
-          <CardTitle className="text-2xl font-semibold tracking-tight sm:text-3xl">
-            Sign in to view this recipe
-          </CardTitle>
-          <CardDescription className="text-sm leading-relaxed sm:text-base">
+    <AlertDialog open>
+      <AlertDialogContent size="default">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Sign in to view this recipe</AlertDialogTitle>
+          <AlertDialogDescription>
             You have access to this recipe, but will need to sign in or create
             an account to view it.
-          </CardDescription>
-        </CardHeader>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
 
-        <CardContent>
-          <LinkButton href={loginHref}>Sign In</LinkButton>
-        </CardContent>
-
-        <CardFooter>
-          <BackLink href="/">Back to home</BackLink>
-        </CardFooter>
-      </Card>
-    </main>
+        <AlertDialogFooter className="">
+          <AlertDialogAction render={<Link href={loginHref} />}>
+            Sign In
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
