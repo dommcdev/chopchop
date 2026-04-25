@@ -14,6 +14,9 @@
   - Add delete button to categories
   - Recipe editor layout/styling (add cancel button)
   - Add Uploadthing image upload area to editor
+  - Add recipe editor skeleton for suspenses
+  - BUG - clear editor after adding new recipe (old values stick around now)
+  - New recipe button should be same shape as other cards
 
 
 - Low Priority

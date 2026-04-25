@@ -40,10 +40,7 @@ export function RecipeDeleteDialog({
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger
-        render={trigger}
-        nativeButton={triggerNativeButton}
-      />
+      <AlertDialogTrigger render={trigger} nativeButton={triggerNativeButton} />
       <AlertDialogContent size="sm">
         <AlertDialogHeader>
           <AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">

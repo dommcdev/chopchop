@@ -3,7 +3,7 @@ import { fetchRecipesBlock } from "@/data/recipes";
 import Link from "next/link";
 import { RECIPES_PAGE_SIZE } from "@/lib/constants";
 import ResponsiveGrid from "./ResponsiveGrid";
-import { RecipeCardSkeleton } from "./RecipeCard";
+import { RecipeCardCreate, RecipeCardSkeleton } from "./RecipeCard";
 import RecipesList from "./RecipesList";
 
 export default async function DashboardRecipes() {
@@ -21,6 +21,12 @@ export default async function DashboardRecipes() {
         <Suspense
           fallback={
             <ResponsiveGrid>
+              <Link
+                href="/dashboard/r/new"
+                className="block h-full outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                <RecipeCardCreate />
+              </Link>
               {Array.from({ length: RECIPES_PAGE_SIZE }).map((_, index) => (
                 <RecipeCardSkeleton key={index} />
               ))}
@@ -28,6 +34,12 @@ export default async function DashboardRecipes() {
           }
         >
           <ResponsiveGrid>
+            <Link
+              href="/dashboard/r/new"
+              className="block h-full outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              <RecipeCardCreate />
+            </Link>
             <RecipesList recipesPromise={recipesPromise} />
           </ResponsiveGrid>
         </Suspense>

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FileImageIcon } from "@phosphor-icons/react/dist/ssr";
+import { PlusIcon } from "@phosphor-icons/react/dist/ssr";
 import { RecipeWithCategory } from "@/types";
 import { totalCookMinutes } from "@/lib/utils";
 import { RecipeCardMenu } from "@/components/dashboard/RecipeCardMenu";
@@ -49,7 +50,9 @@ export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
             href={`/dashboard/r/${recipe.slug}`}
             className="outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
-            <CardTitle className="line-clamp-1 text-xl">{recipe.name}</CardTitle>
+            <CardTitle className="line-clamp-1 text-xl">
+              {recipe.name}
+            </CardTitle>
           </Link>
           {recipe.category ? (
             <Link
@@ -102,6 +105,19 @@ export function RecipeCardSkeleton() {
       <CardContent className="flex-1 space-y-2">
         <Skeleton className="h-4 w-full rounded-none" />
         <Skeleton className="h-4 w-4/5 rounded-none" />
+      </CardContent>
+    </Card>
+  );
+}
+
+export function RecipeCardCreate() {
+  return (
+    <Card isHoverable className="shadow-sm">
+      <CardContent className="flex h-full min-h-28 flex-col items-center justify-center gap-2 p-6 text-center">
+        <PlusIcon className="size-8 text-muted-foreground" aria-hidden="true" />
+        <span className="text-base font-semibold leading-tight">
+          New Recipe
+        </span>
       </CardContent>
     </Card>
   );

@@ -15,6 +15,7 @@ interface NewRecipeClientProps {
   categoriesPromise: Promise<CategoryBrief[]>;
 }
 
+//TODO could we refactor this and EditRecipeClient into one component?
 export function NewRecipeClient({ categoriesPromise }: NewRecipeClientProps) {
   const router = useRouter();
   const draft = useRecipeUploadStore((state) => state.draft);
