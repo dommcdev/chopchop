@@ -21,7 +21,7 @@ import { toast } from "sonner";
 type RecipeDeleteDialogProps = {
   recipeSlug: string;
   trigger: React.ReactElement;
-  redirectTo?: string;
+  redirectTo?: string | null;
   onDeleted?: () => void;
 };
 
@@ -51,7 +51,10 @@ export function RecipeDeleteDialog({
 
       setOpen(false);
       onDeleted?.();
-      router.push(redirectTo);
+
+      if (redirectTo) {
+        router.push(redirectTo);
+      }
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "An unknown error occurred";

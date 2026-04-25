@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FileImageIcon } from "@phosphor-icons/react/dist/ssr";
 import { RecipeWithCategory } from "@/types";
 import { totalCookMinutes } from "@/lib/utils";
+import { RecipeCardMenu } from "@/components/dashboard/RecipeCardMenu";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Card,
@@ -17,11 +18,11 @@ export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
   const totalMin = totalCookMinutes(recipe);
 
   return (
-    <Link
-      href={`/dashboard/r/${recipe.slug}`}
-      className="group block h-full outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-    >
-      <Card className="flex h-full flex-col overflow-hidden rounded-none pt-0 transition-colors hover:bg-muted/40 hover:shadow-sm">
+    <Card className="group flex h-full flex-col overflow-hidden rounded-none pt-0 transition-colors hover:bg-muted/40 hover:shadow-sm">
+      <Link
+        href={`/dashboard/r/${recipe.slug}`}
+        className="block outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+      >
         <div className="relative aspect-video w-full overflow-hidden bg-muted">
           {recipe.imageUrl ? (
             <Image
@@ -37,29 +38,47 @@ export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
             </div>
           )}
         </div>
+      </Link>
 
-        <CardHeader>
-          <CardTitle className="line-clamp-1 text-xl">{recipe.name}</CardTitle>
+      <CardHeader>
+        <div className="flex min-w-0 flex-col gap-1">
+          <Link
+            href={`/dashboard/r/${recipe.slug}`}
+            className="outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          >
+            <CardTitle className="line-clamp-1 text-xl">{recipe.name}</CardTitle>
+          </Link>
           {recipe.category ? (
-            <CardDescription>{recipe.category.name}</CardDescription>
+            <Link
+              href={`/dashboard/r/${recipe.slug}`}
+              className="outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              <CardDescription>{recipe.category.name}</CardDescription>
+            </Link>
           ) : null}
+        </div>
 
+        <CardAction className="flex items-start gap-1">
           {totalMin > 0 ? (
-            <CardAction>
-              <span className="translate-y-1 inline-flex items-center rounded-none bg-secondary pl-2 pr-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-secondary-foreground">
-                {totalMin} min
-              </span>
-            </CardAction>
+            <span className="translate-y-1 inline-flex items-center rounded-none bg-secondary py-0.5 pl-2 pr-1.5 text-[10px] font-bold uppercase tracking-wider text-secondary-foreground">
+              {totalMin} min
+            </span>
           ) : null}
-        </CardHeader>
+          <RecipeCardMenu recipeSlug={recipe.slug} />
+        </CardAction>
+      </CardHeader>
 
-        <CardContent className="flex-1">
+      <CardContent className="flex-1">
+        <Link
+          href={`/dashboard/r/${recipe.slug}`}
+          className="block outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
           <p className="line-clamp-2 text-sm text-muted-foreground">
             {recipe.description || "No description provided yet."}
           </p>
-        </CardContent>
-      </Card>
-    </Link>
+        </Link>
+      </CardContent>
+    </Card>
   );
 }
 

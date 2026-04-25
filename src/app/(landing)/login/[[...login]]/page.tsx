@@ -22,6 +22,7 @@ export default function Page() {
                 fill
                 sizes="(min-width: 768px) 400px, 100vw"
                 className="object-cover dark:brightness-[0.7]"
+                loading="eager"
               />
             </div>
           </div>

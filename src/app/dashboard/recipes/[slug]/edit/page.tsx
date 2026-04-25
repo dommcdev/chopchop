@@ -1,3 +1,4 @@
+import { BackLink } from "@/components/dashboard/BackLink";
 import { EditRecipeClient } from "@/components/EditRecipeClient";
 import { fetchCategories } from "@/data/categories";
 import { getRecipeDetailsBySlug } from "@/data/recipes";
@@ -13,11 +14,18 @@ export default async function RecipeEditorPage({
   const categoriesPromise = fetchCategories();
 
   return (
-    <Suspense fallback={<p>Loading recipe data...</p>}>
-      <EditRecipeClient
-        recipePromise={recipePromise}
-        categoriesPromise={categoriesPromise}
-      />
-    </Suspense>
+    <>
+      <div className="mx-auto max-w-4xl p-4 sm:p-6 lg:max-w-5xl lg:p-8">
+        <div className="print:hidden mb-6 flex flex-wrap items-center justify-between gap-4">
+          <BackLink href="/dashboard">Back to Dashboard</BackLink>
+        </div>
+        <Suspense fallback={<p>Loading recipe data...</p>}>
+          <EditRecipeClient
+            recipePromise={recipePromise}
+            categoriesPromise={categoriesPromise}
+          />
+        </Suspense>
+      </div>
+    </>
   );
 }
