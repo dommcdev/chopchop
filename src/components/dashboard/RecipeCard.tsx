@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { FileImageIcon } from "@phosphor-icons/react/dist/ssr";
 import { RecipeWithCategory } from "@/types";
 import { totalCookMinutes } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -20,7 +21,7 @@ export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
       href={`/dashboard/r/${recipe.slug}`}
       className="group block h-full outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
     >
-      <Card className="flex h-full flex-col overflow-hidden rounded-none transition-colors hover:bg-muted/40 hover:shadow-sm">
+      <Card className="flex h-full flex-col overflow-hidden rounded-none pt-0 transition-colors hover:bg-muted/40 hover:shadow-sm">
         <div className="relative aspect-video w-full overflow-hidden bg-muted">
           {recipe.imageUrl ? (
             <Image
@@ -30,7 +31,11 @@ export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
               sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
               className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
-          ) : null}
+          ) : (
+            <div className="flex h-full items-center justify-center text-muted-foreground">
+              <FileImageIcon className="size-10" aria-hidden="true" />
+            </div>
+          )}
         </div>
 
         <CardHeader>
@@ -41,7 +46,7 @@ export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
 
           {totalMin > 0 ? (
             <CardAction>
-              <span className="translate-y-1 inline-flex items-center rounded-none bg-secondary px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-secondary-foreground">
+              <span className="translate-y-1 inline-flex items-center rounded-none bg-secondary pl-2 pr-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-secondary-foreground">
                 {totalMin} min
               </span>
             </CardAction>
@@ -60,7 +65,7 @@ export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
 
 export function RecipeCardSkeleton() {
   return (
-    <Card className="flex h-full flex-col overflow-hidden rounded-none">
+    <Card className="flex h-full flex-col overflow-hidden rounded-none pt-0">
       <div className="relative aspect-video w-full bg-muted">
         <Skeleton className="absolute inset-0 rounded-none" />
       </div>
