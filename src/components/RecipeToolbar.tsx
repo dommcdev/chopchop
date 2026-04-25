@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   CopySimpleIcon,
   PencilSimpleIcon,
@@ -12,6 +13,7 @@ import {
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { RecipeDeleteDialog } from "@/components/RecipeDeleteDialog";
+import { useRecipeDelete } from "@/hooks/useRecipeDelete";
 import { cn } from "@/lib/utils";
 
 const iconClassName = cn(
@@ -30,6 +32,8 @@ export function RecipeToolbar({
   recipePublicId,
   canEdit,
 }: RecipeViewToolbarProps) {
+  const router = useRouter();
+  const { runDelete, isDeleting } = useRecipeDelete(recipeSlug);
   const [shareNotice, setShareNotice] = useState<"idle" | "copied" | "error">(
     "idle",
   );
@@ -80,7 +84,16 @@ export function RecipeToolbar({
               <PencilSimpleIcon className="h-4 w-4" weight="bold" />
             </Link>
             <RecipeDeleteDialog
-              recipeSlug={recipeSlug}
+              isDeleting={isDeleting}
+              onConfirm={async () => {
+                const deleted = await runDelete();
+
+                if (deleted) {
+                  router.push("/dashboard");
+                }
+
+                return deleted;
+              }}
               trigger={
                 <button
                   type="button"

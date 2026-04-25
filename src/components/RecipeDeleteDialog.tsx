@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { type ReactElement, useState } from "react";
 import { TrashIcon } from "@phosphor-icons/react";
 import {
   AlertDialog,
@@ -15,55 +14,27 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { deleteRecipe } from "@/data/recipesActions";
-import { toast } from "sonner";
 
 type RecipeDeleteDialogProps = {
-  recipeSlug: string;
-  trigger: React.ReactElement;
+  trigger: ReactElement;
   triggerNativeButton?: boolean;
-  redirectTo?: string | null;
-  onDeletedAction?: () => void;
+  isDeleting: boolean;
+  onConfirm: () => Promise<boolean>;
 };
 
 export function RecipeDeleteDialog({
-  recipeSlug,
   trigger,
   triggerNativeButton = true,
-  redirectTo = "/dashboard",
-  onDeletedAction,
+  isDeleting,
+  onConfirm,
 }: RecipeDeleteDialogProps) {
-  const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
 
-  const handleDelete = async () => {
-    if (isDeleting) {
-      return;
-    }
+  const handleConfirm = async () => {
+    const deleted = await onConfirm();
 
-    setIsDeleting(true);
-
-    try {
-      const result = await deleteRecipe(recipeSlug);
-
-      if (!result.success) {
-        throw new Error(result.error);
-      }
-
+    if (deleted) {
       setOpen(false);
-      onDeletedAction?.();
-
-      if (redirectTo) {
-        router.push(redirectTo);
-      }
-    } catch (error) {
-      const message =
-        error instanceof Error ? error.message : "An unknown error occurred";
-      console.error(message);
-      toast.error(message);
-    } finally {
-      setIsDeleting(false);
     }
   };
 
@@ -90,7 +61,7 @@ export function RecipeDeleteDialog({
           </AlertDialogCancel>
           <AlertDialogAction
             variant="destructive"
-            onClick={handleDelete}
+            onClick={handleConfirm}
             disabled={isDeleting}
           >
             {isDeleting ? "Deleting..." : "Delete"}

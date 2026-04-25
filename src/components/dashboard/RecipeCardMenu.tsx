@@ -17,6 +17,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRecipeDelete } from "@/hooks/useRecipeDelete";
 
 type RecipeCardMenuProps = {
   recipeSlug: string;
@@ -24,6 +25,7 @@ type RecipeCardMenuProps = {
 
 export function RecipeCardMenu({ recipeSlug }: RecipeCardMenuProps) {
   const router = useRouter();
+  const { runDelete, isDeleting } = useRecipeDelete(recipeSlug);
 
   return (
     <DropdownMenu>
@@ -50,10 +52,17 @@ export function RecipeCardMenu({ recipeSlug }: RecipeCardMenuProps) {
             Rename
           </DropdownMenuItem>
           <RecipeDeleteDialog
-            recipeSlug={recipeSlug}
             triggerNativeButton={false}
-            redirectTo={null}
-            onDeletedAction={() => router.refresh()}
+            isDeleting={isDeleting}
+            onConfirm={async () => {
+              const deleted = await runDelete();
+
+              if (deleted) {
+                router.refresh();
+              }
+
+              return deleted;
+            }}
             trigger={
               <DropdownMenuItem variant="destructive" closeOnClick={false}>
                 <TrashIcon weight="bold" />
