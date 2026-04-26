@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { RecipeEditorInitialValues } from "@/lib/hookformSchema";
@@ -62,6 +63,10 @@ export function RecipeEditor({
     // What to use for initial data (must be RHF safe, i.e. no nulls etc)
     defaultValues: initialValues,
   });
+
+  useEffect(() => {
+    form.reset(initialValues);
+  }, [form, initialValues]);
 
   const ingredientsArray = useFieldArray({
     control: form.control,

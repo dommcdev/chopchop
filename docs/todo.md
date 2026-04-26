@@ -12,10 +12,9 @@
   - Weird validation errors in editor
   - Definitely need create recipe button
   - Add delete button to categories
-  - Recipe editor layout/styling (add cancel button)
+  - Recipe editor layout/styling (add cancel button, rename reset to clear)
   - Add Uploadthing image upload area to editor
   - Add recipe editor skeleton for suspenses
-  - BUG - clear editor after adding new recipe (old values stick around now)
   - New recipe button should be same shape as other cards
   - Update recipeingredients tag thing on recipe update if we aren't
 
