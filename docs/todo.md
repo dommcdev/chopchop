@@ -9,17 +9,16 @@
   - Right now categories in editor display id rather than name (in field)
   - Fix image lazy-to-eager rendering on dashboard recipe cards
   - Use actual nano-id for recipe ids
-  - Definitely need create recipe button
   - Add delete button to categories
   - Recipe editor layout/styling (add cancel button, rename reset to clear)
   - Add Uploadthing image upload area to editor
   - Add recipe editor skeleton for suspenses
   - New recipe button should be same shape as other cards
-  - Update recipeingredients tag thing on recipe update if we aren't
-  - `use cache` tsx rather than ts?
+  - Update recipeingredients tag thing on recipe update if we aren't already
 
 
 - Low Priority
+  - `use cache` tsx rather than ts?
   - Search dialog - support category & incredient filters (ui bubbles + shortcut hints)
   - Upload recipe dialog
   - Pdf printing - finalize layout/styling
