@@ -9,7 +9,6 @@
   - Right now categories in editor display id rather than name (in field)
   - Fix image lazy-to-eager rendering on dashboard recipe cards
   - Use actual nano-id for recipe ids
-  - Weird validation errors in editor
   - Definitely need create recipe button
   - Add delete button to categories
   - Recipe editor layout/styling (add cancel button, rename reset to clear)
@@ -17,6 +16,7 @@
   - Add recipe editor skeleton for suspenses
   - New recipe button should be same shape as other cards
   - Update recipeingredients tag thing on recipe update if we aren't
+  - `use cache` tsx rather than ts?
 
 
 - Low Priority
@@ -26,7 +26,7 @@
   - Tooltips (shadcn tooltip)
   - TOS/Privacy Policy pages
   - Random food icons as image placeholders
-  - Tighten up schema (min/max lengths, add category one, etc)
+  - Tighten up schemas (min/max lengths, add category name schema, server double-validation, etc)
   - Display more data in each search result (category, trunc desc, etc)
   - Button with translucent color/border when hovered
 
@@ -43,3 +43,4 @@
 - Ability to create categories from edit page
 - Infinite scroll with virtualization
 - Add 'copy recipe to account' button
+

@@ -9,7 +9,7 @@ import { and, eq, ne, sql } from "drizzle-orm";
 import { updateTag } from "next/cache";
 import { db } from "@/db";
 import { ingredients, instructions, recipes } from "@/db/schema";
-import { finalRecipeSchema, FinalRecipeSchema } from "@/lib/finalRecipeSchema";
+import { FinalRecipeSchema } from "@/lib/finalRecipeSchema";
 import { generatePublicId, generateSlug } from "@/lib/utils";
 import { checkAuth } from "./shared";
 
@@ -155,13 +155,7 @@ export async function createRecipe(
     return { success: false, error: "Unauthorized" };
   }
 
-  const validation = finalRecipeSchema.safeParse(rawData);
-
-  if (!validation.success) {
-    return { success: false, error: validation.error.issues[0].message };
-  }
-
-  const data = validation.data;
+  const data = rawData;
   const {
     recipe,
     ingredients: ingredientRows,
@@ -222,12 +216,6 @@ export async function updateRecipe(
     return { success: false, error: "Unauthorized" };
   }
 
-  const validation = finalRecipeSchema.safeParse(rawData);
-
-  if (!validation.success) {
-    return { success: false, error: validation.error.issues[0].message };
-  }
-
   const existingRecipe = await db.query.recipes.findFirst({
     columns: {
       id: true,
@@ -242,7 +230,7 @@ export async function updateRecipe(
     return { success: false, error: "Recipe not found." };
   }
 
-  const data = validation.data;
+  const data = rawData;
   const {
     recipe,
     ingredients: ingredientRows,

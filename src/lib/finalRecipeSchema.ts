@@ -57,19 +57,12 @@ export const finalRecipeSchema = z.object({
         unit: customString(),
       }),
     )
-    // STAGE 1: Silently remove rows where EVERYTHING is empty
-    .transform((ings) =>
-      ings.filter((ing) => {
-        const hasName = ing.name.trim() !== "";
-        const hasQuantity = ing.quantity !== null;
-        const hasUnit = ing.unit.trim() !== "";
-        return hasName || hasQuantity || hasUnit; // Keep if ANY field has data
-      }),
-    )
-    // STAGE 2: Validate that remaining rows have a name
     .superRefine((ings, ctx) => {
       ings.forEach((ing, index) => {
-        if (ing.name.trim() === "") {
+        const hasQuantity = ing.quantity !== null;
+        const hasUnit = ing.unit.trim() !== "";
+
+        if ((hasQuantity || hasUnit) && ing.name.trim() === "") {
           ctx.addIssue({
             code: "custom",
             message:
@@ -79,6 +72,15 @@ export const finalRecipeSchema = z.object({
         }
       });
     })
+    // Silently remove rows where EVERYTHING is empty after validation paths are set.
+    .transform((ings) =>
+      ings.filter((ing) => {
+        const hasName = ing.name.trim() !== "";
+        const hasQuantity = ing.quantity !== null;
+        const hasUnit = ing.unit.trim() !== "";
+        return hasName || hasQuantity || hasUnit;
+      }),
+    )
     .default([]),
 
   instructions: z
