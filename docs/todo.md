@@ -9,7 +9,6 @@
   - Use actual nano-id for recipe ids
   - Add delete/rename button to categories
   - Add recipe editor skeleton for suspenses
-  - uploadthing button helper suspense thing
   - make recipe viewer use card for consistency with editor
   - in viewer ingredient text should be black, with amounts gray
   - chose file big button not working (plus needs to be smaller)

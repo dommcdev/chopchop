@@ -8,6 +8,19 @@ import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
+// For UploadThing button not having loading state
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { extractRouterConfig } from "uploadthing/server";
+import { ourFileRouter } from "./api/uploadthing/core";
+import { connection } from "next/server";
+import { Suspense } from "react";
+
+async function UploadThingSSR() {
+  await connection();
+
+  return <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />;
+}
+
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const fontMono = Geist_Mono({
@@ -37,6 +50,9 @@ export default function RootLayout({
       )}
     >
       <body>
+        <Suspense>
+          <UploadThingSSR />
+        </Suspense>
         <ThemeProvider>
           <ClerkProvider appearance={{ theme: shadcn }}>
             <div className="flex min-h-screen flex-col">
@@ -51,4 +67,4 @@ export default function RootLayout({
   );
 }
 
-//Nota bene - <ThemeProvider> needs to be wraped in suspense (loading.tsx)
+//Nota bene - <ThemeProvider> needs to be wraped in suspense/loading.tsx
