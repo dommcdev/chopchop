@@ -16,7 +16,7 @@ export default async function RecipeEditorPage({
   return (
     <>
       <div className="mx-auto max-w-4xl p-4 sm:p-6 lg:max-w-5xl lg:p-8">
-        <div className="print:hidden mb-6 flex flex-wrap items-center justify-between gap-4">
+        <div className="print:hidden mb-5">
           <BackLink href="/dashboard">Back to Dashboard</BackLink>
         </div>
         <Suspense fallback={<p>Loading recipe data...</p>}>
