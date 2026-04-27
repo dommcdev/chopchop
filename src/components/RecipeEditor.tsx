@@ -49,12 +49,14 @@ interface RecipeEditorProps {
   initialValues: RecipeEditorInitialValues;
   categories: CategoryBrief[];
   handleSave: (data: FinalRecipeSchema) => void | Promise<void>;
+  handleCancel: () => void;
 }
 
 export function RecipeEditor({
   initialValues,
   categories,
   handleSave,
+  handleCancel,
 }: RecipeEditorProps) {
   const [isImageUploading, setIsImageUploading] = useState(false);
 
@@ -496,12 +498,30 @@ export function RecipeEditor({
         </CardContent>
 
         <CardFooter className="flex items-center justify-between gap-2 py-4">
-          <Button type="button" variant="outline" onClick={() => form.reset()}>
-            Reset
+          <Button
+            type="button"
+            variant="outline"
+            className="border border-primary"
+            onClick={() => form.reset()}
+          >
+            Clear
           </Button>
-          <Button type="submit" disabled={isImageUploading}>
-            {isImageUploading ? "Processing..." : "Save Recipe"}
-          </Button>
+          <div className="flex gap-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleCancel}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              className="border border-primary"
+              disabled={isImageUploading}
+            >
+              {isImageUploading ? "Processing..." : "Save Recipe"}
+            </Button>
+          </div>
         </CardFooter>
       </Card>
     </form>

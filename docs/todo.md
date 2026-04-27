@@ -10,11 +10,11 @@
   - Fix image lazy-to-eager rendering on dashboard recipe cards
   - Use actual nano-id for recipe ids
   - Add delete button to categories
-  - Recipe editor layout/styling (add cancel button, rename reset to clear)
-  - Add Uploadthing image upload area to editor
+  - Recipe editor layout/styling
   - Add recipe editor skeleton for suspenses
   - New recipe button should be same shape as other cards
   - Update recipeingredients tag thing on recipe update if we aren't already
+  - test flash 3.1 lite model (+ handeling if user uploads random image?)
 
 
 - Low Priority
@@ -27,19 +27,22 @@
   - Random food icons as image placeholders
   - Tighten up schemas (min/max lengths, add category name schema, server double-validation, etc)
   - Display more data in each search result (category, trunc desc, etc)
-  - Button with translucent color/border when hovered
 
 ### Future features (?)
-- Better error handling + help page
 - Redo landing page (more stuff)
 - Bulk recipe json exporter/importer
 - Bulk recipe ingest/queuing
 - Rate limiting, private links
 - Advanced search page
 - Preferences
-- Add to schema: Nutritional info, difficulty, rating
+- Help page
+- Add nutritional info, difficulty, rating
 - Add sorting/groups to recipes page
-- Ability to create categories from edit page
 - Infinite scroll with virtualization
+
+
+### Behavior tweaks
+- Skeletons should be less detailed and not over-promise fields/cards
+- Ability to create categories from edit page
 - Add 'copy recipe to account' button
 

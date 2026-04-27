@@ -46,11 +46,16 @@ export function EditRecipeClient({
     }
   };
 
+  const handleCancel = () => {
+    router.back();
+  };
+
   return (
     <RecipeEditor
       initialValues={initialValues}
       categories={categories}
       handleSave={handleSave}
+      handleCancel={handleCancel}
     />
   );
 }

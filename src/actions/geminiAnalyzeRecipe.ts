@@ -56,7 +56,7 @@ export async function geminiAnalyzeRecipe(
   while (attempt < GEMINI_API_RETRIES) {
     try {
       const { output } = await generateText({
-        model: google("gemini-3-flash-preview"),
+        model: google("gemini-3.1-flash-lite-preview"),
         output: Output.object({
           schema: geminiRecipeSchema,
         }),

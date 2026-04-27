@@ -81,6 +81,7 @@ export function UploadRecipeButton() {
       const message =
         error instanceof Error ? error.message : "An unknown error occurred";
       toast.error(message);
+      console.error(message);
     } finally {
       if (fileInputRef.current) {
         fileInputRef.current.value = "";

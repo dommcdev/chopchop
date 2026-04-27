@@ -42,6 +42,11 @@ export function NewRecipeClient({ categoriesPromise }: NewRecipeClientProps) {
     }
   };
 
+  const handleCancel = () => {
+    clearStore();
+    router.back();
+  };
+
   if (isAnalyzing) return <p>Analyzing Recipe, please wait...</p>;
 
   const initialValues = draft ?? EMPTY_RECIPE_EDITOR_VALUES;
@@ -51,6 +56,7 @@ export function NewRecipeClient({ categoriesPromise }: NewRecipeClientProps) {
       initialValues={initialValues}
       categories={categories}
       handleSave={handleSave}
+      handleCancel={handleCancel}
     />
   );
 }
