@@ -38,11 +38,7 @@ export function RecipeIngredients({
                 {ingredient.quantity} {ingredient.unit}{" "}
               </span>
             )}
-            <span
-              className={cn(!checked[ingredient.id] && "text-muted-foreground")}
-            >
-              {ingredient.name}
-            </span>
+            <span>{ingredient.name}</span>
           </label>
         </li>
       ))}

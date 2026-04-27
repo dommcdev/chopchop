@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { FileImageIcon } from "@phosphor-icons/react/dist/ssr";
 import { PrintableRecipeCard } from "./PrintableRecipeCard";
 import { RecipeToolbar } from "./RecipeToolbar";
 import { RecipeInstructions } from "./RecipeInstructions";
@@ -100,10 +101,8 @@ export function RecipeViewer({
                   priority
                 />
               ) : (
-                <div className="flex h-full min-h-[16rem] items-center justify-center md:min-h-full">
-                  <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground/50">
-                    No Photo
-                  </span>
+                <div className="flex h-full min-h-[16rem] items-center justify-center text-muted-foreground md:min-h-full">
+                  <FileImageIcon className="size-12" aria-hidden="true" />
                 </div>
               )}
             </div>
