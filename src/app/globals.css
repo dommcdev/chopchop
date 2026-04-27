@@ -132,6 +132,8 @@
   }
   html {
     @apply font-sans;
+    scrollbar-width: thin;
+    scrollbar-color: gray transparent;
   }
   button:not(:disabled),
   [role="button"]:not(:disabled) {
