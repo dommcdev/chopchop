@@ -36,7 +36,7 @@ export default function FilePickerUploader({
           type="button"
           variant="outline"
           size="icon-sm"
-          className="border-border/80 bg-card/90 text-foreground absolute right-3 top-3 z-10 cursor-pointer shadow-sm hover:bg-background hover:text-destructive"
+          className="absolute right-3 top-3 z-10 cursor-pointer border-white/30 bg-white/70 text-foreground shadow-sm supports-backdrop-filter:bg-white/45 supports-backdrop-filter:backdrop-blur-md hover:bg-white/80 hover:text-destructive"
           aria-label="Remove uploaded image"
           onClick={onImageClear}
         >
