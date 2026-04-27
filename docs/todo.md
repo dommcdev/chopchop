@@ -1,7 +1,6 @@
 ## Project Tasks
 
 ### Todo
-  - Recipe editor layout/styling
   - Ingredient scaling on recipe viewer
 
 
@@ -10,7 +9,8 @@
   - Use actual nano-id for recipe ids
   - Add delete/rename button to categories
   - Add recipe editor skeleton for suspenses
-  - recipecard hover animation glitch
+  - uploadthing button helper suspense thing
+  - make recipe viewer use card for consistency with editor
 
 
 - Low Priority
@@ -35,6 +35,7 @@
 - Add sorting/groups to recipes page
 - Infinite scroll with virtualization
 - Food icons as image placeholders
+- Change instruction order via dragable elements
 
 
 ### Behavior tweaks

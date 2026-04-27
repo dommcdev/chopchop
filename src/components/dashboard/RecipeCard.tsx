@@ -19,7 +19,7 @@ export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
   const totalMin = totalCookMinutes(recipe);
 
   return (
-    <Card className="group flex h-full flex-col overflow-hidden rounded-none pt-0 transition-colors hover:bg-muted/40 hover:shadow-sm">
+    <Card className="group flex h-full flex-col overflow-hidden rounded-none pt-0 transition-all duration-300 ease-in-out hover:bg-muted/40 hover:shadow-sm will-change-transform">
       <div className="relative aspect-video w-full overflow-hidden bg-muted">
         <Link
           href={`/dashboard/r/${recipe.slug}`}
