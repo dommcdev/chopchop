@@ -1,18 +1,49 @@
 "use client";
 
+import Image from "next/image";
+import { TrashIcon } from "@phosphor-icons/react";
 import { UploadDropzone } from "@/lib/uploadthing";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
 interface FilePickerUploaderProps {
+  imageUrl?: string;
+  imageAlt?: string;
   onImageReady?: (file: { imageUrl: string; imageKey: string }) => void;
+  onImageClear?: () => void;
   onUploadingChange?: (isUploading: boolean) => void;
 }
 
 export default function FilePickerUploader({
+  imageUrl,
+  imageAlt = "Uploaded recipe image",
   onImageReady,
+  onImageClear,
   onUploadingChange,
 }: FilePickerUploaderProps) {
+  if (imageUrl) {
+    return (
+      <div className="border-border bg-card relative mt-2 h-[244px] w-full overflow-hidden rounded-none border border-dashed">
+        <Image
+          src={imageUrl}
+          alt={imageAlt}
+          fill
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          className="object-cover object-left"
+        />
+
+        <button
+          type="button"
+          aria-label="Remove uploaded image"
+          className="text-foreground absolute right-3 top-3 z-10 cursor-pointer transition-colors hover:text-destructive"
+          onClick={onImageClear}
+        >
+          <TrashIcon className="size-5" weight="bold" />
+        </button>
+      </div>
+    );
+  }
+
   return (
     <UploadDropzone
       endpoint="imageUploader"
@@ -46,7 +77,10 @@ export default function FilePickerUploader({
         const uploadedFile = res[0]?.serverData;
 
         onUploadingChange?.(false);
-        onImageReady?.(uploadedFile);
+
+        if (uploadedFile) {
+          onImageReady?.(uploadedFile);
+        }
       }}
       onUploadError={(error: Error) => {
         onUploadingChange?.(false);

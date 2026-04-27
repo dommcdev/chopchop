@@ -13,6 +13,7 @@
   - make recipe viewer use card for consistency with editor
   - File upload picker display file name and/or confirmation?
   - in viewer ingredient text should be black, with amounts gray
+  - chose file big button not working (plus needs to be smaller)
 
 
 - Low Priority
@@ -33,7 +34,7 @@
 - Advanced search page
 - Preferences
 - Help page
-- Add nutritional info, difficulty, rating
+- Add nutritional info, difficulty, rating, og source
 - Add sorting/groups to recipes page
 - Infinite scroll with virtualization
 - Food icons as image placeholders

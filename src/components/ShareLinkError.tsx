@@ -31,7 +31,10 @@ export default function ShareLinkError({
         </AlertDialogHeader>
 
         <AlertDialogFooter className="">
-          <AlertDialogAction render={<Link href={loginHref} />}>
+          <AlertDialogAction
+            nativeButton={false}
+            render={<Link href={loginHref} />}
+          >
             Sign In
           </AlertDialogAction>
         </AlertDialogFooter>

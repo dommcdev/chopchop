@@ -94,6 +94,10 @@ export function RecipeEditor({
     form.reset(initialValues);
   }, [form, initialValues]);
 
+  const imageUrl = form.watch("imageUrl");
+  const imageKey = form.watch("imageKey");
+  const recipeName = form.watch("name");
+
   const ingredientsArray = useFieldArray({
     control: form.control,
     name: "ingredients",
@@ -508,6 +512,8 @@ export function RecipeEditor({
                 <input type="hidden" {...form.register("imageKey")} />
 
                 <FilePickerUploader
+                  imageUrl={imageUrl || undefined}
+                  imageAlt={recipeName || "Uploaded recipe image"}
                   onUploadingChange={setIsImageUploading}
                   onImageReady={({ imageUrl, imageKey }) => {
                     form.setValue("imageUrl", imageUrl, {
@@ -515,6 +521,20 @@ export function RecipeEditor({
                       shouldTouch: true,
                     });
                     form.setValue("imageKey", imageKey, {
+                      shouldDirty: true,
+                      shouldTouch: true,
+                    });
+                  }}
+                  onImageClear={() => {
+                    if (!imageUrl && !imageKey) {
+                      return;
+                    }
+
+                    form.setValue("imageUrl", "", {
+                      shouldDirty: true,
+                      shouldTouch: true,
+                    });
+                    form.setValue("imageKey", "", {
                       shouldDirty: true,
                       shouldTouch: true,
                     });
