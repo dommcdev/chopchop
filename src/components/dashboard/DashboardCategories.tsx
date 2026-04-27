@@ -24,34 +24,36 @@ export default async function DashboardCategories() {
         </Link>
       </div>
 
-      <div className="px-12">
-        <Carousel className="w-full">
-          <CarouselContent className="-ml-1">
-            <CarouselItem className="pl-2 basis-54">
-              <CreateCategoryDialog
-                trigger={
-                  <button type="button" className="w-full p-1 text-left">
-                    <CategoryCardCreate />
-                  </button>
-                }
-              />
-            </CarouselItem>
-            <Suspense
-              fallback={Array.from({ length: 12 }).map((_, i) => (
-                <CarouselItem key={i} className="pl-2 basis-54">
-                  <div className="p-1">
-                    <CategoryCardSkeleton />
-                  </div>
-                </CarouselItem>
-              ))}
-            >
-              <DashboardCategoriesList />
-            </Suspense>
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
-      </div>
+      <Carousel className="w-full px-12">
+        <CarouselContent>
+          <CarouselItem className="basis-54">
+            <CreateCategoryDialog
+              trigger={
+                <button type="button" className="w-full p-1 text-left">
+                  <CategoryCardCreate />
+                </button>
+              }
+            />
+          </CarouselItem>
+          <Suspense
+            fallback={Array.from({ length: 12 }).map((_, i) => (
+              <CarouselItem key={i} className="basis-54">
+                <div className="p-1">
+                  <CategoryCardSkeleton />
+                </div>
+              </CarouselItem>
+            ))}
+          >
+            <DashboardCategoriesList />
+          </Suspense>
+        </CarouselContent>
+        <div className="absolute top-1/2 left-0 z-10 -translate-y-1/2">
+          <CarouselPrevious className="relative top-0 left-0 translate-x-0 translate-y-0 hover:translate-x-0 hover:bg-primary/90" />
+        </div>
+        <div className="absolute top-1/2 right-0 z-10 -translate-y-1/2">
+          <CarouselNext className="relative top-0 right-0 translate-x-0 translate-y-0 hover:translate-x-0 hover:bg-primary/90" />
+        </div>
+      </Carousel>
     </div>
   );
 }
@@ -64,7 +66,7 @@ async function DashboardCategoriesList() {
   return (
     <>
       {allCategories.map((category) => (
-        <CarouselItem key={category.id} className="pl-2 basis-54">
+        <CarouselItem key={category.id} className="basis-54">
           <div className="p-1">
             <CategoryCard category={category} />
           </div>

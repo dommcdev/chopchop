@@ -112,7 +112,7 @@ export function RecipeCardSkeleton() {
 
 export function RecipeCardCreate() {
   return (
-    <Card isHoverable className="shadow-sm">
+    <Card isHoverable className="flex h-full shadow-sm">
       <CardContent className="flex h-full min-h-28 flex-col items-center justify-center gap-2 p-6 text-center">
         <PlusIcon className="size-8 text-muted-foreground" aria-hidden="true" />
         <span className="text-base font-semibold leading-tight">
