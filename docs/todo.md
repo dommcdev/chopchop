@@ -11,7 +11,6 @@
   - Add recipe editor skeleton for suspenses
   - uploadthing button helper suspense thing
   - make recipe viewer use card for consistency with editor
-  - File upload picker display file name and/or confirmation?
   - in viewer ingredient text should be black, with amounts gray
   - chose file big button not working (plus needs to be smaller)
 

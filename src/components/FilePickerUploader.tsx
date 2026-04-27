@@ -32,16 +32,14 @@ export default function FilePickerUploader({
           sizes="(max-width: 1024px) 100vw, 50vw"
           className="object-cover object-left"
         />
-        <Button
+        <button
           type="button"
-          variant="outline"
-          size="icon-sm"
-          className="absolute right-3 top-3 z-10 cursor-pointer border-white/30 bg-white/70 text-foreground shadow-sm supports-backdrop-filter:bg-white/45 supports-backdrop-filter:backdrop-blur-md hover:bg-white/80 hover:text-destructive"
+          className="absolute right-3 top-3 z-10 cursor-pointer text-white hover:text-destructive drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)] transition-all"
           aria-label="Remove uploaded image"
           onClick={onImageClear}
         >
-          <TrashIcon className="size-5" weight="bold" />
-        </Button>
+          <TrashIcon className="size-5" weight="fill" />
+        </button>
       </div>
     );
   }
