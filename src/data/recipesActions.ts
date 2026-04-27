@@ -124,6 +124,7 @@ function invalidateRecipeUpdateTags(
 ) {
   updateTag(getRecipeBlocksTag(userId));
   updateTag(getRecipeSearchTag(userId));
+  updateTag(getRecipeCountTag(userId));
   updateTag(getRecipeSlugTag(userId, currentSlug));
   updateTag(getPublicRecipeTag(publicId));
 

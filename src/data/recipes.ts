@@ -9,7 +9,7 @@
 
 import "server-only";
 import { db } from "@/db";
-import { recipes } from "@/db/schema";
+import { categories, recipes } from "@/db/schema";
 import { and, eq, count } from "drizzle-orm";
 import { RecipeSearchItem } from "@/types";
 import { checkAuth } from "./shared";
@@ -49,6 +49,36 @@ async function queryRecipesBlock(
     orderBy: (r, { desc: descCol }) => [descCol(r.createdAt)],
     limit,
     offset, //nota bene - db still reads everything up to this point, but then simply discards most of it
+    with: {
+      category: true,
+    },
+  });
+}
+
+async function queryRecipesByCategoryBlock(
+  userId: string,
+  slug: string,
+  limit: number,
+  offset: number,
+) {
+  "use cache";
+  cacheTag(getRecipeBlocksTag(userId));
+  cacheTag(getRecipeCountTag(userId));
+
+  const category = await db.query.categories.findFirst({
+    columns: { id: true },
+    where: and(eq(categories.userId, userId), eq(categories.slug, slug)),
+  });
+
+  if (!category) {
+    return [];
+  }
+
+  return await db.query.recipes.findMany({
+    where: and(eq(recipes.userId, userId), eq(recipes.categoryId, category.id)),
+    orderBy: (r, { desc: descCol }) => [descCol(r.createdAt)],
+    limit,
+    offset,
     with: {
       category: true,
     },
@@ -126,23 +156,69 @@ async function queryNumOfPages(userId: string, pageSize: number) {
   return Math.ceil(totalCount / pageSize);
 }
 
+async function queryNumOfPagesByCategory(
+  userId: string,
+  slug: string,
+  pageSize: number,
+) {
+  "use cache";
+  cacheTag(getRecipeBlocksTag(userId));
+  cacheTag(getRecipeCountTag(userId));
+
+  const category = await db.query.categories.findFirst({
+    columns: { id: true },
+    where: and(eq(categories.userId, userId), eq(categories.slug, slug)),
+  });
+
+  if (!category) {
+    return 0;
+  }
+
+  const result = await db
+    .select({ value: count() })
+    .from(recipes)
+    .where(
+      and(eq(recipes.userId, userId), eq(recipes.categoryId, category.id)),
+    );
+
+  const totalCount = result[0].value;
+  return Math.ceil(totalCount / pageSize);
+}
+
 export async function getNumOfPages(pageSize: number) {
   const userId = await checkAuth();
   return queryNumOfPages(userId, pageSize);
 }
 
-export async function getRecipeDetailsBySlug(slug: string) {
+export async function fetchNumOfPagesByCategory(
+  slug: string,
+  pageSize: number,
+) {
+  const userId = await checkAuth();
+  return queryNumOfPagesByCategory(userId, slug, pageSize);
+}
+
+export async function fetchRecipeDetailsBySlug(slug: string) {
   const userId = await checkAuth();
   return queryRecipeDetailsBySlug(userId, slug);
 }
 
-export async function getRecipeDetailsById(publicId: string) {
+export async function fetchRecipeDetailsById(publicId: string) {
   return queryRecipeDetailsById(publicId);
 }
 
 export async function fetchRecipesBlock(limit: number, offset: number) {
   const userId = await checkAuth();
   return queryRecipesBlock(userId, limit, offset);
+}
+
+export async function fetchRecipesByCategoryBlock(
+  slug: string,
+  limit: number,
+  offset: number,
+) {
+  const userId = await checkAuth();
+  return queryRecipesByCategoryBlock(userId, slug, limit, offset);
 }
 
 export async function fetchSearchData(): Promise<RecipeSearchItem[]> {
