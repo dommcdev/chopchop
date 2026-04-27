@@ -36,7 +36,7 @@ export function BackLink({
       href={href}
       className={cn(
         buttonVariants({ variant: "outline", size: "sm" }),
-        "w-fit gap-1.5 px-3 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground",
+        "w-fit gap-1.5 px-3 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground hover:text-muted-foreground",
         className,
       )}
     >

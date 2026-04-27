@@ -13,6 +13,7 @@
   - Add recipe editor skeleton for suspenses
   - New recipe button should be same shape as other cards
   - Update recipeingredients tag thing on recipe update if we aren't already
+  - recipecard hover animation glitch
 
 
 - Low Priority
