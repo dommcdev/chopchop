@@ -5,6 +5,13 @@ import { RecipeToolbar } from "./RecipeToolbar";
 import { RecipeInstructions } from "./RecipeInstructions";
 import { RecipeIngredients } from "./RecipeIngredients";
 import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
   calculateScaleFactor,
   formatMinutes,
   getScaledIngredients,
@@ -31,8 +38,8 @@ export function RecipeViewer({
   return (
     <>
       <div className="print:hidden">
-        <div className="overflow-hidden border border-border bg-card shadow-sm">
-          <div className="border-b border-border p-5 sm:p-6">
+        <Card className="gap-0 py-0 shadow-sm">
+          <CardHeader className="border-b p-5 sm:p-6">
             <div className="flex items-start justify-between gap-4">
               <div className="min-w-0 flex-1">
                 {recipe.category && (
@@ -40,13 +47,13 @@ export function RecipeViewer({
                     {recipe.category.name}
                   </span>
                 )}
-                <h1 className="mb-2 text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl">
+                <CardTitle className="mb-2 text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl">
                   {recipe.name}
-                </h1>
+                </CardTitle>
                 {recipe.description && (
-                  <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
+                  <CardDescription className="text-sm md:text-base">
                     {recipe.description}
-                  </p>
+                  </CardDescription>
                 )}
               </div>
               <div className="shrink-0 print:hidden">
@@ -80,13 +87,13 @@ export function RecipeViewer({
                 </div>
               )}
             </div>
-          </div>
+          </CardHeader>
 
-          <div className="grid grid-cols-1 border-b border-border md:grid-cols-2">
+          <CardContent className="grid border-b px-0 md:grid-cols-2">
             <div className="order-2 p-5 sm:p-6 md:order-1 md:border-r md:border-border">
-              <h2 className="mb-4 text-lg font-semibold tracking-tight md:text-xl">
+              <CardTitle className="mb-4 text-lg font-semibold tracking-tight md:text-xl">
                 Ingredients
-              </h2>
+              </CardTitle>
               <RecipeIngredients ingredients={recipe.ingredients} />
             </div>
 
@@ -106,15 +113,15 @@ export function RecipeViewer({
                 </div>
               )}
             </div>
-          </div>
+          </CardContent>
 
-          <div className="p-5 sm:p-6">
-            <h2 className="mb-5 text-lg font-semibold tracking-tight md:text-xl">
+          <CardContent className="p-5 sm:p-6">
+            <CardTitle className="mb-5 text-lg font-semibold tracking-tight md:text-xl">
               Instructions
-            </h2>
+            </CardTitle>
             <RecipeInstructions instructions={recipe.instructions} />
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
 
       <div className="hidden print:block">
@@ -130,10 +137,10 @@ export function RecipeViewer({
 
 export function RecipeViewerSkeleton() {
   return (
-    <div className="print:hidden overflow-hidden border border-border bg-card shadow-sm">
+    <Card className="print:hidden gap-0 py-0 shadow-sm">
       {/* Header Section: */}
-      <div className="border-b border-border p-5 sm:p-6">
-        <div className="space-y-3">
+      <CardHeader className="border-b p-5 sm:p-6">
+        <div className="flex flex-col gap-3">
           <Skeleton className="h-3 w-20" /> {/* Category */}
           <Skeleton className="h-9 w-2/3" /> {/* Title */}
           <Skeleton className="h-5 w-full" /> {/* Description line 1 */}
@@ -143,13 +150,13 @@ export function RecipeViewerSkeleton() {
           <Skeleton className="h-5 w-24" />
           <Skeleton className="h-5 w-24" />
         </div>
-      </div>
+      </CardHeader>
 
-      <div className="grid grid-cols-1 border-b border-border md:grid-cols-2">
+      <CardContent className="grid border-b px-0 md:grid-cols-2">
         {/* Ingredients Column */}
         <div className="order-2 p-5 sm:p-6 md:order-1 md:border-r md:border-border">
           <Skeleton className="mb-4 h-7 w-32" />
-          <div className="space-y-3">
+          <div className="flex flex-col gap-3">
             {[...Array(6)].map((_, i) => (
               <Skeleton key={i} className="h-5 w-full" />
             ))}
@@ -160,17 +167,17 @@ export function RecipeViewerSkeleton() {
         <div className="relative order-1 min-h-[16rem] w-full bg-muted md:order-2 md:h-full">
           <Skeleton className="absolute inset-0 h-full w-full rounded-none" />
         </div>
-      </div>
+      </CardContent>
 
       {/* Instructions Section */}
-      <div className="p-5 sm:p-6">
+      <CardContent className="p-5 sm:p-6">
         <Skeleton className="mb-5 h-5 w-32" />
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
           {[...Array(2)].map((_, i) => (
             <Skeleton key={i} className="h-15 w-full" />
           ))}
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }

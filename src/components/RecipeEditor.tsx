@@ -119,7 +119,7 @@ export function RecipeEditor({
 
   return (
     <form onSubmit={form.handleSubmit(saveRecipe)}>
-      <Card>
+      <Card className="shadow-sm">
         <CardHeader className="py-4">
           <CardTitle className="text-base">Recipe Editor</CardTitle>
           <CardDescription>
