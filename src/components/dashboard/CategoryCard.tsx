@@ -10,13 +10,15 @@ export default function CategoryCard({
   category: CategoryBrief;
 }) {
   return (
-    <Card isHoverable className="shadow-sm">
-      <CardContent className="flex h-28 items-center justify-center p-6">
-        <span className="text-xl font-semibold text-wrap text-center">
-          <Link href={`/dashboard/c/${category.slug}`}>{category.name}</Link>
-        </span>
-      </CardContent>
-    </Card>
+    <Link href={`/dashboard/c/${category.slug}`} className="block">
+      <Card isHoverable className="shadow-sm">
+        <CardContent className="flex h-28 items-center justify-center p-6">
+          <span className="text-xl font-semibold text-wrap text-center">
+            {category.name}
+          </span>
+        </CardContent>
+      </Card>
+    </Link>
   );
 }
 
