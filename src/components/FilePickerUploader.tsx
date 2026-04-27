@@ -27,7 +27,8 @@ export default function FilePickerUploader({
             isDragActive && "border-primary bg-muted/50",
           ),
         uploadIcon: "text-muted-foreground",
-        label: "cursor-pointer font-medium text-muted-foreground",
+        label:
+          "cursor-pointer font-medium data-[state=readying]:text-primary data-[state=uploading]:text-primary data-[state=ready]:text-primary data-[state=ready]:hover:text-primary/70",
         allowedContent: "text-muted-foreground",
         button: ({ isUploading }) =>
           cn(
