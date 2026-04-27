@@ -137,7 +137,7 @@ export function RecipeViewer({
 
 export function RecipeViewerSkeleton() {
   return (
-    <Card className="print:hidden gap-0 py-0 shadow-sm">
+    <Card className="gap-0 py-0 shadow-sm">
       {/* Header Section: */}
       <CardHeader className="border-b p-5 sm:p-6">
         <div className="flex flex-col gap-3">

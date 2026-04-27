@@ -43,7 +43,9 @@ export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
 
           <CardHeader>
             <div className="flex min-w-0 flex-col gap-1">
-              <CardTitle className="line-clamp-1 text-xl">{recipe.name}</CardTitle>
+              <CardTitle className="line-clamp-1 text-xl">
+                {recipe.name}
+              </CardTitle>
               {recipe.category ? (
                 <CardDescription>{recipe.category.name}</CardDescription>
               ) : null}
