@@ -407,7 +407,7 @@ export function RecipeEditor({
                           type="button"
                           variant="outline"
                           size="icon-sm"
-                          className="text-muted-foreground hover:bg-muted hover:text-destructive"
+                          className="text-foreground hover:bg-muted hover:text-destructive"
                           aria-label={`Remove ingredient ${index + 1}`}
                           onClick={() => ingredientsArray.remove(index)}
                         >
@@ -472,7 +472,7 @@ export function RecipeEditor({
                                 variant="ghost"
                                 size="icon-xs"
                                 aria-label={`Remove step ${index + 1}`}
-                                className="text-muted-foreground hover:bg-transparent hover:text-destructive"
+                                className="text-foreground hover:bg-transparent hover:text-destructive"
                                 onClick={() => instructionsArray.remove(index)}
                               >
                                 <TrashIcon weight="bold" />

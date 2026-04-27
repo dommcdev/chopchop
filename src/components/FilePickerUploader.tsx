@@ -5,6 +5,7 @@ import { TrashIcon } from "@phosphor-icons/react";
 import { UploadDropzone } from "@/lib/uploadthing";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { Button } from "./ui/button";
 
 interface FilePickerUploaderProps {
   imageUrl?: string;
@@ -31,15 +32,16 @@ export default function FilePickerUploader({
           sizes="(max-width: 1024px) 100vw, 50vw"
           className="object-cover object-left"
         />
-
-        <button
+        <Button
           type="button"
+          variant="outline"
+          size="icon-sm"
+          className="border-border/80 bg-card/90 text-foreground absolute right-3 top-3 z-10 cursor-pointer shadow-sm hover:bg-background hover:text-destructive"
           aria-label="Remove uploaded image"
-          className="text-foreground absolute right-3 top-3 z-10 cursor-pointer transition-colors hover:text-destructive"
           onClick={onImageClear}
         >
           <TrashIcon className="size-5" weight="bold" />
-        </button>
+        </Button>
       </div>
     );
   }
