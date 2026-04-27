@@ -27,15 +27,13 @@ export default function FilePickerUploader({
             isDragActive && "border-primary bg-muted/50",
           ),
         uploadIcon: "text-muted-foreground",
-        label:
-          "cursor-pointer font-medium text-muted-foreground hover:text-primary/80 data-[state=ready]:text-primary data-[state=ready]:hover:text-primary/80",
-        allowedContent:
-          "text-muted-foreground",
+        label: "cursor-pointer font-medium text-muted-foreground",
+        allowedContent: "text-muted-foreground",
         button: ({ isUploading }) =>
           cn(
-            "cursor-pointer rounded-none bg-primary text-primary-foreground after:bg-primary/80 focus-within:ring-1 focus-within:ring-ring/50 focus-within:ring-offset-0 hover:bg-primary/80",
-            "data-[state=disabled]:bg-primary data-[state=disabled]:text-primary-foreground data-[state=disabled]:opacity-100",
-            "data-[state=ready]:bg-primary data-[state=ready]:text-primary-foreground data-[state=ready]:hover:bg-primary/80",
+            "cursor-pointer rounded-none bg-primary text-primary-foreground after:bg-primary/80 focus-within:ring-1 focus-within:ring-ring/50 focus-within:ring-offset-0",
+            "disabled:pointer-events-auto data-[state=disabled]:cursor-pointer data-[state=disabled]:bg-primary data-[state=disabled]:text-primary-foreground data-[state=disabled]:opacity-100",
+            "data-[state=ready]:bg-primary data-[state=ready]:text-primary-foreground",
             "data-[state=readying]:bg-primary data-[state=uploading]:bg-primary",
             isUploading && "cursor-wait",
           ),
