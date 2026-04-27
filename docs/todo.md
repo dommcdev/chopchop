@@ -3,7 +3,6 @@
 ### Todo
   - Categories carousel button has weird click boundaries + right button padding
   - Ingredient scaling on recipe viewer
-  - Individual recipe-by-category pages
   - Suspense needed for smth on share page
   - Clicking anywhere on category card should trigger link, not just text
   - Right now categories in editor display id rather than name (in field)

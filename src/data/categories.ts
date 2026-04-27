@@ -10,13 +10,17 @@
 import "server-only";
 import { db } from "@/db";
 import { categories } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { checkAuth } from "./shared";
 import { cacheTag } from "next/cache";
 
+function getCategoriesTag(userId: string) {
+  return `categories-${userId}`;
+}
+
 async function queryCategories(userId: string) {
   "use cache";
-  cacheTag(`categories-${userId}`);
+  cacheTag(getCategoriesTag(userId));
 
   //  await new Promise((resolve) => setTimeout(resolve, 1500));
   return await db
@@ -29,7 +33,26 @@ async function queryCategories(userId: string) {
     .where(eq(categories.userId, userId));
 }
 
+async function queryCategoryNameFromSlug(userId: string, slug: string) {
+  "use cache";
+  cacheTag(getCategoriesTag(userId));
+
+  const category = await db.query.categories.findFirst({
+    columns: {
+      name: true,
+    },
+    where: and(eq(categories.userId, userId), eq(categories.slug, slug)),
+  });
+
+  return category?.name ?? null;
+}
+
 export async function fetchCategories() {
   const userId = await checkAuth();
   return queryCategories(userId);
+}
+
+export async function fetchCategoryNameFromSlug(slug: string) {
+  const userId = await checkAuth();
+  return queryCategoryNameFromSlug(userId, slug);
 }

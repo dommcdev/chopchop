@@ -1,6 +1,6 @@
 import { BackLink } from "@/components/dashboard/BackLink";
 import { RecipeViewer, RecipeViewerSkeleton } from "@/components/RecipeViewer";
-import { getRecipeDetailsBySlug } from "@/data/recipes";
+import { fetchRecipeDetailsBySlug } from "@/data/recipes";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
@@ -10,7 +10,7 @@ export default async function RecipePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const recipePromise = getRecipeDetailsBySlug(slug);
+  const recipePromise = fetchRecipeDetailsBySlug(slug);
 
   return (
     <div className="mx-auto max-w-4xl p-4 sm:p-6 lg:max-w-5xl lg:p-8">
@@ -28,7 +28,7 @@ export default async function RecipePage({
 async function RecipeViewerContent({
   recipePromise,
 }: {
-  recipePromise: ReturnType<typeof getRecipeDetailsBySlug>;
+  recipePromise: ReturnType<typeof fetchRecipeDetailsBySlug>;
 }) {
   const recipe = await recipePromise;
 

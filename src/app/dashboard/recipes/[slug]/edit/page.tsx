@@ -1,7 +1,7 @@
 import { BackLink } from "@/components/dashboard/BackLink";
 import { EditRecipeClient } from "@/components/EditRecipeClient";
 import { fetchCategories } from "@/data/categories";
-import { getRecipeDetailsBySlug } from "@/data/recipes";
+import { fetchRecipeDetailsBySlug } from "@/data/recipes";
 import { Suspense } from "react";
 
 export default async function RecipeEditorPage({
@@ -10,7 +10,7 @@ export default async function RecipeEditorPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const recipePromise = getRecipeDetailsBySlug(slug);
+  const recipePromise = fetchRecipeDetailsBySlug(slug);
   const categoriesPromise = fetchCategories();
 
   return (

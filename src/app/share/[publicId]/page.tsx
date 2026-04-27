@@ -2,7 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 import ShareLinkError from "@/components/ShareLinkError";
 import { RecipeViewer, RecipeViewerSkeleton } from "@/components/RecipeViewer";
-import { getRecipeDetailsById } from "@/data/recipes";
+import { fetchRecipeDetailsById } from "@/data/recipes";
 import { Suspense } from "react";
 
 export default async function ShareRecipePage({
@@ -11,7 +11,7 @@ export default async function ShareRecipePage({
   params: Promise<{ publicId: string }>;
 }) {
   const { publicId } = await params;
-  const recipePromise = getRecipeDetailsById(publicId);
+  const recipePromise = fetchRecipeDetailsById(publicId);
   const { userId } = await auth();
   const redirectUrl = `/s/${publicId}`;
 
@@ -33,7 +33,7 @@ async function SharedRecipeViewerContent({
   recipePromise,
   userId,
 }: {
-  recipePromise: ReturnType<typeof getRecipeDetailsById>;
+  recipePromise: ReturnType<typeof fetchRecipeDetailsById>;
   userId: string;
 }) {
   const recipe = await recipePromise;

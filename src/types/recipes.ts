@@ -1,12 +1,12 @@
 import { Recipe, Category, Ingredient } from "@/db/schema";
-import { getRecipeDetailsBySlug, fetchRecipesBlock } from "@/data/recipes";
+import { fetchRecipeDetailsBySlug, fetchRecipesBlock } from "@/data/recipes";
 
 export type RecipeWithCategory = Awaited<
   ReturnType<typeof fetchRecipesBlock>
 >[number];
 
 export type RecipeBlob = NonNullable<
-  Awaited<ReturnType<typeof getRecipeDetailsBySlug>>
+  Awaited<ReturnType<typeof fetchRecipeDetailsBySlug>>
 >;
 
 export type PrintableRecipe = Pick<
