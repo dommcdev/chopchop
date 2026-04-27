@@ -11,7 +11,6 @@
   - Add recipe editor skeleton for suspenses
   - make recipe viewer use card for consistency with editor
   - in viewer ingredient text should be black, with amounts gray
-  - chose file big button not working (plus needs to be smaller)
 
 
 - Low Priority

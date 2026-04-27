@@ -5,7 +5,6 @@ import { TrashIcon } from "@phosphor-icons/react";
 import { UploadDropzone } from "@/lib/uploadthing";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { Button } from "./ui/button";
 
 interface FilePickerUploaderProps {
   imageUrl?: string;
@@ -59,14 +58,14 @@ export default function FilePickerUploader({
           ),
         uploadIcon: "text-muted-foreground",
         label:
-          "cursor-pointer font-medium data-[state=readying]:text-primary data-[state=uploading]:text-primary data-[state=ready]:text-primary data-[state=ready]:hover:text-primary/70",
+          "cursor-pointer font-large data-[state=readying]:text-primary data-[state=uploading]:text-primary data-[state=ready]:text-primary data-[state=ready]:hover:text-primary/70",
         allowedContent: "text-muted-foreground",
         button: ({ isUploading }) =>
           cn(
-            "cursor-pointer rounded-none bg-primary text-primary-foreground after:bg-primary/80 focus-within:ring-1 focus-within:ring-ring/50 focus-within:ring-offset-0",
-            "disabled:pointer-events-auto data-[state=disabled]:cursor-pointer data-[state=disabled]:bg-primary data-[state=disabled]:text-primary-foreground data-[state=disabled]:opacity-100",
+            "h-8 w-28 text-sm rounded-none text-primary-foreground focus-within:ring-1 focus-within:ring-ring/50 focus-within:ring-offset-0 after:bg-primary",
+            "data-[state=disabled]:bg-primary/75 data-[state=disabled]:text-primary-foreground data-[state=disabled]:opacity-100",
             "data-[state=ready]:bg-primary data-[state=ready]:text-primary-foreground",
-            "data-[state=readying]:bg-primary data-[state=uploading]:bg-primary",
+            "data-[state=readying]:bg-primary/75 data-[state=uploading]:bg-primary/55",
             isUploading && "cursor-wait",
           ),
       }}
