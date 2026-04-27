@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import FilePickerUploader from "@/components/FilePickerUploader";
@@ -56,6 +56,8 @@ export function RecipeEditor({
   categories,
   handleSave,
 }: RecipeEditorProps) {
+  const [isImageUploading, setIsImageUploading] = useState(false);
+
   const form = useForm<EditorFormState, unknown, FinalRecipeSchema>({
     // What to use to validate data during editing and on submit
     resolver: zodResolver(finalRecipeSchema),
@@ -269,6 +271,7 @@ export function RecipeEditor({
                   <Field>
                     <FieldLabel>Recipe Image</FieldLabel>
                     <FilePickerUploader
+                      onUploadingChange={setIsImageUploading}
                       onImageReady={({ imageUrl, imageKey }) => {
                         form.setValue("imageUrl", imageUrl, {
                           shouldDirty: true,
@@ -496,7 +499,9 @@ export function RecipeEditor({
           <Button type="button" variant="outline" onClick={() => form.reset()}>
             Reset
           </Button>
-          <Button type="submit">Save Recipe</Button>
+          <Button type="submit" disabled={isImageUploading}>
+            {isImageUploading ? "Processing..." : "Save Recipe"}
+          </Button>
         </CardFooter>
       </Card>
     </form>
