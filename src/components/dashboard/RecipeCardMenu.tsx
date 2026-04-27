@@ -49,7 +49,7 @@ export function RecipeCardMenu({ recipeSlug }: RecipeCardMenuProps) {
             render={<Link href={`/dashboard/r/${recipeSlug}/edit`} />}
           >
             <PencilSimpleIcon weight="bold" />
-            Rename
+            Edit
           </DropdownMenuItem>
           <RecipeDeleteDialog
             triggerNativeButton={false}
