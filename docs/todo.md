@@ -11,6 +11,7 @@
   - Add recipe editor skeleton for suspenses
   - uploadthing button helper suspense thing
   - make recipe viewer use card for consistency with editor
+  - Add dialog confirm to editor form clear button
 
 
 - Low Priority

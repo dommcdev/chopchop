@@ -94,8 +94,8 @@ export function RecipeEditor({
         <CardHeader className="py-4">
           <CardTitle className="text-base">Recipe Editor</CardTitle>
           <CardDescription>
-            Complete the recipe details below, then save when everything is
-            ready to publish.
+            Complete and/or verify the recipe details below, then save to add
+            the recipe to your cookbook.
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-6">
@@ -112,11 +112,8 @@ export function RecipeEditor({
                         {...field}
                         id={field.name}
                         aria-invalid={fieldState.invalid}
-                        placeholder="e.g. Grandma’s apple pie"
+                        placeholder="e.g. Grandma’s Apple Pie"
                       />
-                      <FieldDescription>
-                        Choose a clear title people will recognize at a glance.
-                      </FieldDescription>
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
                       )}
@@ -139,9 +136,6 @@ export function RecipeEditor({
                           className="min-h-[96px]"
                         />
                       </InputGroup>
-                      <FieldDescription>
-                        Summarize the dish in one or two concise sentences.
-                      </FieldDescription>
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
                       )}
@@ -164,10 +158,10 @@ export function RecipeEditor({
                           type="number"
                           step="any"
                           min={1}
-                          placeholder="4"
+                          placeholder="1"
                         />
                         <FieldDescription>
-                          Number of portions this recipe makes.
+                          Number of portions this recipe produces.
                         </FieldDescription>
                         {fieldState.invalid && (
                           <FieldError errors={[fieldState.error]} />
@@ -198,7 +192,7 @@ export function RecipeEditor({
                           />
                         </InputGroup>
                         <FieldDescription>
-                          Hands-on time before cooking begins.
+                          Hands-on time (in minutes) before cooking begins.
                         </FieldDescription>
                         {fieldState.invalid && (
                           <FieldError errors={[fieldState.error]} />
@@ -229,7 +223,7 @@ export function RecipeEditor({
                           />
                         </InputGroup>
                         <FieldDescription>
-                          Time the recipe spends actively cooking.
+                          Time (in minutes) the recipe spends actively cooking.
                         </FieldDescription>
                         {fieldState.invalid && (
                           <FieldError errors={[fieldState.error]} />
@@ -265,7 +259,7 @@ export function RecipeEditor({
                           </SelectContent>
                         </Select>
                         <FieldDescription>
-                          Select the section this recipe belongs in.
+                          Select a category to place this recipe in.
                         </FieldDescription>
                         {fieldState.invalid && (
                           <FieldError errors={[fieldState.error]} />
@@ -281,8 +275,8 @@ export function RecipeEditor({
               <FieldSet className="gap-3">
                 <FieldLegend variant="label">Ingredients</FieldLegend>
                 <FieldDescription>
-                  Add one ingredient per line. Blank rows will be ignored when
-                  you save.
+                  Add one ingredient per line. Blank rows will be ignored on
+                  save.
                 </FieldDescription>
 
                 <FieldGroup className="gap-2">
@@ -409,8 +403,7 @@ export function RecipeEditor({
               <FieldSet className="gap-3">
                 <FieldLegend variant="label">Instructions</FieldLegend>
                 <FieldDescription>
-                  List the method in order, with each step kept short and
-                  actionable.
+                  List recipe instructions in order
                 </FieldDescription>
 
                 <FieldGroup className="gap-2">
@@ -432,7 +425,7 @@ export function RecipeEditor({
                               {...field}
                               id={field.name}
                               aria-invalid={fieldState.invalid}
-                              placeholder="Describe the step…"
+                              placeholder="Describe the step"
                               className="min-h-[56px]"
                             />
                             <InputGroupAddon align="inline-end">
@@ -472,8 +465,7 @@ export function RecipeEditor({
               <FieldSet className="gap-3">
                 <FieldLegend variant="label">Recipe image</FieldLegend>
                 <FieldDescription>
-                  Upload a clean, well-lit photo so the finished recipe is easy
-                  to identify.
+                  Upload a photo of the finished dish.
                 </FieldDescription>
 
                 <input type="hidden" {...form.register("imageUrl")} />
@@ -481,7 +473,6 @@ export function RecipeEditor({
 
                 <FieldGroup className="gap-4">
                   <Field>
-                    <FieldLabel>Image</FieldLabel>
                     <FilePickerUploader
                       onUploadingChange={setIsImageUploading}
                       onImageReady={({ imageUrl, imageKey }) => {
@@ -495,10 +486,6 @@ export function RecipeEditor({
                         });
                       }}
                     />
-                    <FieldDescription>
-                      Landscape or square images usually frame best in cards and
-                      lists.
-                    </FieldDescription>
                   </Field>
                 </FieldGroup>
               </FieldSet>
@@ -509,8 +496,7 @@ export function RecipeEditor({
         <CardFooter className="flex items-center justify-between gap-2 py-4">
           <Button
             type="button"
-            variant="outline"
-            className="border border-primary"
+            variant="destructive"
             onClick={() => form.reset()}
           >
             Clear
