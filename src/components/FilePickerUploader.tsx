@@ -3,17 +3,22 @@
 import { UploadDropzone } from "@/lib/uploadthing";
 import { toast } from "sonner";
 
-export default function FilePickerUploader() {
+interface FilePickerUploaderProps {
+  onImageReady?: (file: { imageUrl: string; imageKey: string }) => void;
+}
+
+export default function FilePickerUploader({
+  onImageReady,
+}: FilePickerUploaderProps) {
   return (
     <UploadDropzone
       endpoint="imageUploader"
       onClientUploadComplete={(res) => {
-        // Do something with the response
-        console.log("Files: ", res);
-        toast.success("Upload Completed");
+        const uploadedFile = res[0]?.serverData;
+
+        onImageReady?.(uploadedFile);
       }}
       onUploadError={(error: Error) => {
-        // Do something with the error.
         toast.error(`Error: ${error.message}`);
       }}
     />

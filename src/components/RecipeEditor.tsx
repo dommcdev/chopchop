@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
+import FilePickerUploader from "@/components/FilePickerUploader";
 import { RecipeEditorInitialValues } from "@/lib/hookformSchema";
 import {
   finalRecipeSchema,
@@ -228,6 +229,9 @@ export function RecipeEditor({
                   Pick a category and upload an image (wiring test UI for now).
                 </FieldDescription>
 
+                <input type="hidden" {...form.register("imageUrl")} />
+                <input type="hidden" {...form.register("imageKey")} />
+
                 <FieldGroup className="gap-4">
                   <Controller
                     name="categoryId"
@@ -262,69 +266,22 @@ export function RecipeEditor({
                     )}
                   />
 
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    <Controller
-                      name="imageUrl"
-                      control={form.control}
-                      render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                          <FieldLabel htmlFor={field.name}>
-                            Image URL
-                          </FieldLabel>
-                          <Input
-                            {...field}
-                            id={field.name}
-                            aria-invalid={fieldState.invalid}
-                            placeholder="(set by uploadthing)"
-                          />
-                          {fieldState.invalid && (
-                            <FieldError errors={[fieldState.error]} />
-                          )}
-                        </Field>
-                      )}
-                    />
-
-                    <Controller
-                      name="imageKey"
-                      control={form.control}
-                      render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                          <FieldLabel htmlFor={field.name}>
-                            Image Key
-                          </FieldLabel>
-                          <Input
-                            {...field}
-                            id={field.name}
-                            aria-invalid={fieldState.invalid}
-                            placeholder="(set by uploadthing)"
-                          />
-                          {fieldState.invalid && (
-                            <FieldError errors={[fieldState.error]} />
-                          )}
-                        </Field>
-                      )}
-                    />
-                  </div>
-
-                  <div className="flex flex-wrap items-center gap-2">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        form.setValue(
-                          "imageUrl",
-                          "https://example.com/test-image.jpg",
-                          { shouldDirty: true },
-                        );
-                        form.setValue("imageKey", "test-image-key", {
+                  <Field>
+                    <FieldLabel>Recipe Image</FieldLabel>
+                    <FilePickerUploader
+                      onImageReady={({ imageUrl, imageKey }) => {
+                        form.setValue("imageUrl", imageUrl, {
                           shouldDirty: true,
+                          shouldTouch: true,
+                        });
+                        form.setValue("imageKey", imageKey, {
+                          shouldDirty: true,
+                          shouldTouch: true,
                         });
                       }}
-                    >
-                      Mock set image values
-                    </Button>
-                  </div>
+                    />
+                    <FieldDescription>An image of the dish</FieldDescription>
+                  </Field>
                 </FieldGroup>
               </FieldSet>
             </FieldGroup>
