@@ -51,38 +51,70 @@ export async function geminiAnalyzeRecipe(
           mediaType: file.type,
         };
 
+  const promptText =
+    "Please parse this recipe into structured JSON. Fix capitalization, spelling, and/or grammar errors if necessary.";
+
   // Call Gemini API with some exponential backoff for when Google's servers are on fire
   let attempt = 0;
   while (attempt < GEMINI_API_RETRIES) {
     try {
-      const { output } = await generateText({
-        model: google("gemini-3.1-flash-lite-preview"),
-        output: Output.object({
-          schema: geminiRecipeSchema,
-        }),
-        messages: [
-          {
-            role: "user",
-            content: [
-              {
-                type: "text",
-                text: "Please parse this recipe into structured JSON. Fix capitalization, spelling, and/or grammar errors if necessary.",
-              },
-              filePart,
-            ],
-          },
-        ],
+      console.log("[geminiAnalyzeRecipe] sending request", {
+        attempt: attempt + 1,
+        model: "gemini-3.1-flash-lite-preview",
+        file: {
+          name: file.name,
+          type: file.type,
+          size: file.size,
+        },
+        prompt: promptText,
       });
+
+      const { output, response, finishReason, usage, providerMetadata } =
+        await generateText({
+          model: google("gemini-3.1-flash-lite-preview"),
+          //model: google("gemini-3-flash-preview"),
+          output: Output.object({
+            schema: geminiRecipeSchema,
+          }),
+          messages: [
+            {
+              role: "user",
+              content: [
+                {
+                  type: "text",
+                  text: promptText,
+                },
+                filePart,
+              ],
+            },
+          ],
+        });
+
+      console.log("[geminiAnalyzeRecipe] received response", {
+        attempt: attempt + 1,
+        finishReason,
+        usage,
+        providerMetadata,
+        responseMessages: response.messages,
+        parsedOutput: output,
+      });
+
       return { success: true, data: output }; // Return a structured object
-    } catch {
+    } catch (error) {
       attempt++;
+
+      console.error("[geminiAnalyzeRecipe] request failed", {
+        attempt,
+        retriesRemaining: GEMINI_API_RETRIES - attempt,
+        error,
+      });
 
       // Give up and send error to ui
       if (attempt >= GEMINI_API_RETRIES) {
         return {
           success: false,
           error:
-            "The AI service is currently busy or couldn't read the file. Please try again.",
+            "The AI service is currently busy or couldn't read the file. Please wait and try again.",
         };
       }
 

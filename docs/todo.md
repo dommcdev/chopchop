@@ -14,7 +14,6 @@
   - Add recipe editor skeleton for suspenses
   - New recipe button should be same shape as other cards
   - Update recipeingredients tag thing on recipe update if we aren't already
-  - test flash 3.1 lite model (+ handeling if user uploads random image?)
 
 
 - Low Priority
