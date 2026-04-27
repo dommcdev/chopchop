@@ -11,7 +11,8 @@
   - Add recipe editor skeleton for suspenses
   - uploadthing button helper suspense thing
   - make recipe viewer use card for consistency with editor
-  - Add dialog confirm to editor form clear button
+  - File upload picker display file name and/or confirmation?
+  - in viewer ingredient text should be black, with amounts gray
 
 
 - Low Priority
@@ -37,6 +38,7 @@
 - Infinite scroll with virtualization
 - Food icons as image placeholders
 - Change instruction order via dragable elements
+- Welcome flow (default categories + example recipes)
 
 
 ### Behavior tweaks
@@ -44,4 +46,5 @@
 - Skeletons should be less detailed and not over-promise fields/cards
 - Ability to create categories from edit page
 - Add 'copy recipe to account' button
+- Add uncategoried category
 

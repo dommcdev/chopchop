@@ -1,10 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { TrashIcon } from "@phosphor-icons/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import FilePickerUploader from "@/components/FilePickerUploader";
-import { RecipeEditorInitialValues } from "@/lib/hookformSchema";
+import {
+  EMPTY_RECIPE_EDITOR_VALUES,
+  RecipeEditorInitialValues,
+} from "@/lib/hookformSchema";
 import {
   finalRecipeSchema,
   EditorFormState,
@@ -20,6 +24,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogMedia,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import {
   Card,
   CardContent,
@@ -42,9 +58,12 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
+  InputGroupButton,
   InputGroupText,
   InputGroupTextarea,
 } from "@/components/ui/input-group";
+
+const EMPTY_CATEGORY_VALUE = "__none__";
 
 interface RecipeEditorProps {
   initialValues: RecipeEditorInitialValues;
@@ -59,6 +78,7 @@ export function RecipeEditor({
   handleSave,
   handleCancel,
 }: RecipeEditorProps) {
+  const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
   const [isImageUploading, setIsImageUploading] = useState(false);
 
   const form = useForm<EditorFormState, unknown, FinalRecipeSchema>({
@@ -86,6 +106,11 @@ export function RecipeEditor({
 
   async function saveRecipe(data: FinalRecipeSchema) {
     await handleSave(data);
+  }
+
+  function clearRecipeForm() {
+    form.reset(EMPTY_RECIPE_EDITOR_VALUES);
+    setIsClearDialogOpen(false);
   }
 
   return (
@@ -242,7 +267,11 @@ export function RecipeEditor({
                           value={
                             field.value === "" ? null : String(field.value)
                           }
-                          onValueChange={(val) => field.onChange(val ?? "")}
+                          onValueChange={(val) =>
+                            field.onChange(
+                              !val || val === EMPTY_CATEGORY_VALUE ? "" : val,
+                            )
+                          }
                           disabled={!categories}
                         >
                           <SelectTrigger aria-invalid={fieldState.invalid}>
@@ -250,6 +279,9 @@ export function RecipeEditor({
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup>
+                              <SelectItem value={EMPTY_CATEGORY_VALUE}>
+                                Select…
+                              </SelectItem>
                               {(categories ?? []).map((cat) => (
                                 <SelectItem key={cat.id} value={String(cat.id)}>
                                   {cat.name}
@@ -271,7 +303,7 @@ export function RecipeEditor({
               </FieldGroup>
             </div>
 
-            <div className="min-w-0 lg:row-span-2">
+            <div className="min-w-0">
               <FieldSet className="gap-3">
                 <FieldLegend variant="label">Ingredients</FieldLegend>
                 <FieldDescription>
@@ -370,10 +402,12 @@ export function RecipeEditor({
                         <Button
                           type="button"
                           variant="outline"
-                          size="sm"
+                          size="icon-sm"
+                          className="text-muted-foreground hover:bg-muted hover:text-destructive"
+                          aria-label={`Remove ingredient ${index + 1}`}
                           onClick={() => ingredientsArray.remove(index)}
                         >
-                          Remove
+                          <TrashIcon weight="bold" />
                         </Button>
                       </div>
                     </div>
@@ -429,14 +463,16 @@ export function RecipeEditor({
                               className="min-h-[56px]"
                             />
                             <InputGroupAddon align="inline-end">
-                              <Button
+                              <InputGroupButton
                                 type="button"
-                                variant="outline"
-                                size="sm"
+                                variant="ghost"
+                                size="icon-xs"
+                                aria-label={`Remove step ${index + 1}`}
+                                className="text-muted-foreground hover:bg-transparent hover:text-destructive"
                                 onClick={() => instructionsArray.remove(index)}
                               >
-                                Remove
-                              </Button>
+                                <TrashIcon weight="bold" />
+                              </InputGroupButton>
                             </InputGroupAddon>
                           </InputGroup>
                           {fieldState.invalid && (
@@ -461,8 +497,8 @@ export function RecipeEditor({
               </FieldSet>
             </div>
 
-            <div className="min-w-0 lg:col-start-1 lg:row-start-2">
-              <FieldSet className="gap-3">
+            <div className="min-w-0 lg:col-span-2">
+              <FieldSet className="gap-2">
                 <FieldLegend variant="label">Recipe image</FieldLegend>
                 <FieldDescription>
                   Upload a photo of the finished dish.
@@ -471,36 +507,58 @@ export function RecipeEditor({
                 <input type="hidden" {...form.register("imageUrl")} />
                 <input type="hidden" {...form.register("imageKey")} />
 
-                <FieldGroup className="gap-4">
-                  <Field>
-                    <FilePickerUploader
-                      onUploadingChange={setIsImageUploading}
-                      onImageReady={({ imageUrl, imageKey }) => {
-                        form.setValue("imageUrl", imageUrl, {
-                          shouldDirty: true,
-                          shouldTouch: true,
-                        });
-                        form.setValue("imageKey", imageKey, {
-                          shouldDirty: true,
-                          shouldTouch: true,
-                        });
-                      }}
-                    />
-                  </Field>
-                </FieldGroup>
+                <FilePickerUploader
+                  onUploadingChange={setIsImageUploading}
+                  onImageReady={({ imageUrl, imageKey }) => {
+                    form.setValue("imageUrl", imageUrl, {
+                      shouldDirty: true,
+                      shouldTouch: true,
+                    });
+                    form.setValue("imageKey", imageKey, {
+                      shouldDirty: true,
+                      shouldTouch: true,
+                    });
+                  }}
+                />
               </FieldSet>
             </div>
           </div>
         </CardContent>
 
         <CardFooter className="flex items-center justify-between gap-2 py-4">
-          <Button
-            type="button"
-            variant="destructive"
-            onClick={() => form.reset()}
+          <AlertDialog
+            open={isClearDialogOpen}
+            onOpenChange={setIsClearDialogOpen}
           >
-            Clear
-          </Button>
+            <AlertDialogTrigger
+              render={
+                <Button type="button" variant="destructive">
+                  Clear
+                </Button>
+              }
+            />
+            <AlertDialogContent size="sm">
+              <AlertDialogHeader>
+                <AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
+                  <TrashIcon weight="bold" />
+                </AlertDialogMedia>
+                <AlertDialogTitle>Clear recipe form?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This will remove all unsaved changes from the editor and
+                  restore the form to its starting values.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  variant="destructive"
+                  onClick={clearRecipeForm}
+                >
+                  Clear form
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
           <div className="flex gap-4">
             <Button type="button" variant="outline" onClick={handleCancel}>
               Cancel
