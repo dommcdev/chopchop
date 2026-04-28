@@ -6,6 +6,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
 // For UploadThing button not having loading state
@@ -55,11 +56,13 @@ export default function RootLayout({
         </Suspense>
         <ThemeProvider>
           <ClerkProvider appearance={{ theme: shadcn }}>
-            <div className="flex min-h-screen flex-col">
-              <main className="flex-1">{children}</main>
-              <Toaster richColors duration={3000} />
-              <SiteFooter />
-            </div>
+            <TooltipProvider>
+              <div className="flex min-h-screen flex-col">
+                <main className="flex-1">{children}</main>
+                <Toaster richColors duration={3000} />
+                <SiteFooter />
+              </div>
+            </TooltipProvider>
           </ClerkProvider>
         </ThemeProvider>
       </body>

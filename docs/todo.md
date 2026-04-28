@@ -3,13 +3,13 @@
 ### Todo
   - Right now categories in editor display id rather than name (in field)
   - Fix image lazy-to-eager rendering on dashboard recipe cards
-  - Use actual nano-id for recipe ids
   - Add delete/rename button to categories
   - Add recipe editor skeleton for suspenses
   - Better new recipe button styling/positioning
   - `use cache` tsx rather than ts?
   - TOS/Privacy Policy pages
   - Redo landing page (more stuff)
+  - Tweak 3-dot-dropdown button + scaler modified/reset ui
 
 
 - Low Priority
