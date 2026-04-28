@@ -14,7 +14,7 @@ export function LegalDocument({
       <div className="mx-auto w-full max-w-4xl">
         <div className="border border-border bg-card shadow-sm">
           <div className="border-b border-border px-6 py-8 sm:px-10">
-            <h1 className="mt-1 text-3xl font-black tracking-tight text-foreground sm:text-4xl">
+            <h1 className="mt-1 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
               {title}
             </h1>
             <p className="mt-3 text-sm text-muted-foreground">

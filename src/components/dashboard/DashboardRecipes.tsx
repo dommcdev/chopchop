@@ -12,8 +12,8 @@ export default async function DashboardRecipes() {
     <>
       <section className="m-4 flex flex-col gap-2 md:m-6">
         <div className="flex flex-row justify-between items-center">
-          <h2 className="text-xl font-bold">Recent Recipes</h2>
-          <Link href="/dashboard/r" className="underline">
+          <h2 className="text-xl font-semibold tracking-tight">Recent Recipes</h2>
+          <Link href="/dashboard/r" className="text-muted-foreground underline underline-offset-2 transition-colors hover:text-foreground">
             View all recipes
           </Link>
         </div>
