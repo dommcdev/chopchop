@@ -2,10 +2,9 @@
 
 ### Todo
 - Search dialog - support category & incredient filters (ui bubbles + shortcut hints)
- - Upload recipe dialog
- - Display more data in each search result (category, trunc desc, etc)
- - Bulk recipe json exporter/importer
- - Handle deleting images from uploadthing (both on recipe delete + editor swap image)
+- Display more data in each search result (category, trunc desc, etc)
+- Upload recipe dialog
+- Handle deleting images from uploadthing (both on recipe delete + editor swap image)
 
 
 ### Future features
@@ -16,6 +15,7 @@
 - Infinite scroll with virtualization
 - Change instruction order via dragable elements
 - Welcome flow (default categories + example recipes)
+- Bulk recipe injest and/or import form json
 
 ### Behavior tweaks
 - Tighten up schemas (min/max lengths, add category name schema, server double-validation, etc)

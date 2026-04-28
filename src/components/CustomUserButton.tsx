@@ -2,11 +2,18 @@
 
 import * as React from "react";
 import { UserButton } from "@clerk/nextjs";
-import { MoonIcon, SunIcon, UserCircleIcon } from "@phosphor-icons/react";
+import {
+  ArchiveIcon,
+  MoonIcon,
+  SunIcon,
+  UserCircleIcon,
+} from "@phosphor-icons/react";
 import { useTheme } from "next-themes";
+import { useRecipesExport } from "@/hooks/useRecipesExport";
 
 const CustomUserButton = () => {
   const { resolvedTheme, setTheme } = useTheme();
+  const { runExport, isExporting } = useRecipesExport();
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
@@ -23,6 +30,11 @@ const CustomUserButton = () => {
         }
       >
         <UserButton.MenuItems>
+          <UserButton.Action
+            labelIcon={<ArchiveIcon weight="bold" className="size-4" />}
+            onClick={runExport}
+            label={isExporting ? "Exporting..." : "Export data"}
+          />
           <UserButton.Action
             labelIcon={
               isDark ? (
