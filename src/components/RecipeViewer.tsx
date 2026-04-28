@@ -149,22 +149,15 @@ export function RecipeViewer({
                       </InputGroupAddon>
                     </InputGroup>
                     {isScaled && (
-                      <Tooltip delay={2000}>
-                        <TooltipTrigger asChild>
-                          <Button
-                            variant="outline"
-                            size="icon-sm"
-                            aria-label="Reset servings"
-                            className="text-foreground"
-                            onClick={resetTargetServings}
-                          >
-                            <ArrowCounterClockwiseIcon className="size-3.5" />
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          Reset servings & ingredient amounts to default values
-                        </TooltipContent>
-                      </Tooltip>
+                      <Button
+                        variant="outline"
+                        size="icon-sm"
+                        aria-label="Reset servings"
+                        className="text-foreground"
+                        onClick={resetTargetServings}
+                      >
+                        <ArrowCounterClockwiseIcon className="size-3.5" />
+                      </Button>
                     )}
                   </>
                 ) : (
