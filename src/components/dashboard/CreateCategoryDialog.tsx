@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent, type ReactElement } from "react";
 import { useRouter } from "next/navigation";
-import { StackPlusIcon } from "@phosphor-icons/react";
+import { PencilSimpleIcon, StackPlusIcon } from "@phosphor-icons/react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -23,28 +23,106 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { createCategory } from "@/data/categoriesActions";
+import { createCategory, renameCategory } from "@/data/categoriesActions";
 
 type CreateCategoryDialogProps = {
   trigger: ReactElement;
 };
 
+type RenameCategoryDialogProps = {
+  trigger: ReactElement;
+  categorySlug: string;
+  currentName: string;
+};
+
 export function CreateCategoryDialog({ trigger }: CreateCategoryDialogProps) {
+  return (
+    <CategoryNameDialog
+      trigger={trigger}
+      title="Create category"
+      description="Add a new category to organize recipes."
+      placeholder="e.g. Desserts"
+      fieldDescription="Enter a unique name for this category"
+      submitLabel="Create category"
+      submittingLabel="Creating..."
+      submitIcon={<StackPlusIcon data-icon="inline-start" weight="bold" />}
+      onSubmit={async (name) => {
+        const result = await createCategory(name);
+        if (!result.success) throw new Error(result.error);
+        return { slug: result.slug, toastMessage: "Category created." };
+      }}
+      navigateOnSuccess={(slug) => `/dashboard/categories/${slug}`}
+    />
+  );
+}
+
+export function RenameCategoryDialog({
+  trigger,
+  categorySlug,
+  currentName,
+}: RenameCategoryDialogProps) {
+  return (
+    <CategoryNameDialog
+      trigger={trigger}
+      title="Rename category"
+      description="Give this category a new name."
+      placeholder="e.g. Desserts"
+      fieldDescription="Enter a new name for this category"
+      initialName={currentName}
+      submitLabel="Rename"
+      submittingLabel="Renaming..."
+      submitIcon={<PencilSimpleIcon data-icon="inline-start" weight="bold" />}
+      onSubmit={async (name) => {
+        const result = await renameCategory(categorySlug, name);
+        if (!result.success) throw new Error(result.error);
+        return { slug: result.slug, toastMessage: "Category renamed." };
+      }}
+    />
+  );
+}
+
+type CategoryNameDialogProps = {
+  trigger: ReactElement;
+  title: string;
+  description: string;
+  placeholder: string;
+  fieldDescription: string;
+  initialName?: string;
+  submitLabel: string;
+  submittingLabel: string;
+  submitIcon: ReactElement;
+  onSubmit: (name: string) => Promise<{ slug: string; toastMessage: string }>;
+  navigateOnSuccess?: (slug: string) => string;
+};
+
+function CategoryNameDialog({
+  trigger,
+  title,
+  description,
+  placeholder,
+  fieldDescription,
+  initialName = "",
+  submitLabel,
+  submittingLabel,
+  submitIcon,
+  onSubmit,
+  navigateOnSuccess,
+}: CategoryNameDialogProps) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState("");
+  const [name, setName] = useState(initialName);
   const [error, setError] = useState<string | null>(null);
-  const [isCreating, setIsCreating] = useState(false);
+  const [isPending, setIsPending] = useState(false);
 
   const handleOpenChange = (nextOpen: boolean) => {
-    if (!nextOpen && isCreating) {
+    if (!nextOpen && isPending) {
       return;
     }
 
     setOpen(nextOpen);
 
     if (!nextOpen) {
-      setName("");
+      setName(initialName);
       setError(null);
     }
   };
@@ -52,24 +130,24 @@ export function CreateCategoryDialog({ trigger }: CreateCategoryDialogProps) {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (isCreating) {
+    if (isPending) {
       return;
     }
 
-    setIsCreating(true);
+    setIsPending(true);
     setError(null);
 
     try {
-      const result = await createCategory(name);
-
-      if (!result.success) {
-        throw new Error(result.error);
-      }
+      const { slug, toastMessage } = await onSubmit(name);
 
       setOpen(false);
-      setName("");
-      toast.success("Category created.");
-      router.push(`/dashboard/categories/${result.slug}`);
+      setName(initialName);
+      toast.success(toastMessage);
+
+      if (navigateOnSuccess) {
+        router.push(navigateOnSuccess(slug));
+      }
+
       router.refresh();
     } catch (error) {
       const message =
@@ -79,7 +157,7 @@ export function CreateCategoryDialog({ trigger }: CreateCategoryDialogProps) {
       setError(message);
       toast.error(message);
     } finally {
-      setIsCreating(false);
+      setIsPending(false);
     }
   };
 
@@ -88,10 +166,8 @@ export function CreateCategoryDialog({ trigger }: CreateCategoryDialogProps) {
       <DialogTrigger render={trigger} />
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create category</DialogTitle>
-          <DialogDescription>
-            Add a new category to organize recipes.
-          </DialogDescription>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -103,15 +179,13 @@ export function CreateCategoryDialog({ trigger }: CreateCategoryDialogProps) {
                 name="name"
                 value={name}
                 onChange={(event) => setName(event.target.value)}
-                placeholder="e.g. Desserts"
+                placeholder={placeholder}
                 autoFocus
-                disabled={isCreating}
+                disabled={isPending}
                 aria-invalid={error ? true : undefined}
               />
               {error ? null : (
-                <FieldDescription>
-                  Enter a unique name for this category
-                </FieldDescription>
+                <FieldDescription>{fieldDescription}</FieldDescription>
               )}
               <FieldError aria-live="polite">{error}</FieldError>
             </Field>
@@ -122,13 +196,13 @@ export function CreateCategoryDialog({ trigger }: CreateCategoryDialogProps) {
               type="button"
               variant="outline"
               onClick={() => setOpen(false)}
-              disabled={isCreating}
+              disabled={isPending}
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={isCreating}>
-              <StackPlusIcon data-icon="inline-start" weight="bold" />
-              {isCreating ? "Creating..." : "Create category"}
+            <Button type="submit" disabled={isPending}>
+              {submitIcon}
+              {isPending ? submittingLabel : submitLabel}
             </Button>
           </DialogFooter>
         </form>
@@ -136,5 +210,3 @@ export function CreateCategoryDialog({ trigger }: CreateCategoryDialogProps) {
     </Dialog>
   );
 }
-
-//TODO review code
