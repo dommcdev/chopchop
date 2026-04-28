@@ -10,7 +10,7 @@ export default function CategoriesPage() {
   return (
     <main className="mx-auto max-w-screen-3xl p-4 sm:p-6 lg:p-8">
       <div className="mb-4 border-b border-border/60 pb-5 sm:pb-6">
-        <BackLink href="/dashboard" variant="button" className="mb-3">
+        <BackLink href="/dashboard" className="mb-3">
           Back to Dashboard
         </BackLink>
         <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
