@@ -89,6 +89,7 @@ export default function HomePage() {
             <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Link
                 href="/dashboard"
+                prefetch={false}
                 className="group inline-flex items-center justify-center gap-2.5 bg-primary px-7 py-3.5 text-sm font-bold tracking-wide text-primary-foreground uppercase transition-all hover:bg-primary/90"
               >
                 Get started
@@ -99,6 +100,7 @@ export default function HomePage() {
               </Link>
               <Link
                 href="/login"
+                prefetch={false}
                 className="inline-flex items-center justify-center border border-border bg-background px-7 py-3.5 text-sm font-bold tracking-wide uppercase transition-colors hover:bg-muted"
               >
                 Sign in
@@ -225,6 +227,7 @@ export default function HomePage() {
               <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <Link
                   href="/dashboard"
+                  prefetch={false}
                   className="group inline-flex items-center justify-center gap-2.5 bg-primary px-8 py-3.5 text-sm font-bold tracking-wide text-primary-foreground uppercase transition-all hover:bg-primary/90"
                 >
                   Open dashboard

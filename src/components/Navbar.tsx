@@ -13,9 +13,6 @@ export function Navbar() {
         </Link>
         <div className="flex items-center gap-4">
           <ThemeToggleButton />
-          <Show when="signed-in">
-            <CustomUserButton />
-          </Show>
         </div>
       </nav>
     </header>
