@@ -61,7 +61,7 @@ export default function HomePage() {
       {/* ── Hero ─────────────────────────────────────────── */}
       <section className="relative mx-auto min-h-[calc(100svh-4rem)] w-full max-w-screen-3xl overflow-hidden px-4 sm:px-6 lg:px-9">
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.035] dark:opacity-[0.07]"
+          className="pointer-events-none absolute inset-0 opacity-[0.06] dark:opacity-[0.08]"
           style={{
             backgroundImage:
               "radial-gradient(var(--foreground) 1px, transparent 1px)",
@@ -70,7 +70,7 @@ export default function HomePage() {
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
 
-        <div className="pointer-events-none absolute -top-40 right-0 h-[600px] w-[600px] bg-primary/[0.03] blur-[120px] dark:bg-primary/[0.06]" />
+        <div className="pointer-events-none absolute -top-40 right-0 h-[600px] w-[600px] bg-primary/[0.05] blur-[120px] dark:bg-primary/[0.08]" />
 
         <div className="relative flex min-h-[calc(100svh-4rem)] flex-col justify-center pb-28 lg:pb-32">
           <div className="lg:flex lg:items-stretch lg:justify-center lg:gap-12 xl:gap-16">
