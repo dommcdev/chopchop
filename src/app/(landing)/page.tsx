@@ -10,13 +10,13 @@ const features = [
   {
     title: "Scan & digitize",
     description:
-      "Point your camera at a cookbook page, handwritten card, or printed recipe. OCR extracts every ingredient and step into structured, editable data.",
+      "Point your camera at a cookbook page, handwritten card, or printed recipe. Every ingredient and step gets converted into structured, editable data.",
     icon: CameraIcon,
   },
   {
     title: "Scale portions",
     description:
-      "Adjust serving sizes with a single input. Quantities recalculate automatically\u2009—\u2009no mental math, no conversion mistakes.",
+      "Adjust serving sizes with a single input. Quantities recalculate automatically, so there's no mental math and no conversion mistakes.",
     icon: ScalesIcon,
   },
   {
@@ -38,7 +38,7 @@ const steps = [
     number: "02",
     title: "Refine",
     description:
-      "Fix any OCR quirks\u2009—\u2009a misspelled ingredient, a missing quantity. Save the clean version once and never redo it.",
+      "Fix any small quirks like a misspelled ingredient or a missing quantity. Save the clean version once and never redo it.",
   },
   {
     number: "03",
@@ -136,10 +136,6 @@ export default function HomePage() {
                 <br className="hidden sm:block" /> actually exist.
               </h2>
             </div>
-            <p className="max-w-md text-sm leading-relaxed text-muted-foreground lg:text-right">
-              Most recipes don&apos;t start in an app. They start as a page, a
-              screenshot, or a text from your mom. ChopChop handles that.
-            </p>
           </div>
 
           <div className="grid gap-px border border-border bg-border/50 lg:grid-cols-3">
@@ -186,7 +182,7 @@ export default function HomePage() {
                 {i < steps.length - 1 && (
                   <div className="absolute top-0 right-0 hidden h-full w-px bg-border/60 lg:block" />
                 )}
-                <span className="font-mono text-6xl font-bold text-primary/10 select-none">
+                <span className="font-mono text-6xl font-bold text-primary/45 select-none">
                   {step.number}
                 </span>
                 <h3 className="mt-4 text-xl font-semibold tracking-tight">

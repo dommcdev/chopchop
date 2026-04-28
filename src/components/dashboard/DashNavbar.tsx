@@ -8,7 +8,7 @@ export function DashNavbar() {
   return (
     <header className="sticky top-0 z-50 w-full bg-background shadow-sm border-b border-foreground/5 print:hidden">
       <nav className="mx-auto flex max-w-screen-3xl items-center justify-between px-3 py-3 md:px-9">
-        <Link href="/dashboard" className="flex items-center gap-3 group">
+        <Link href="/" className="flex items-center gap-3 group">
           <Logo />
         </Link>
         <div className="flex items-center gap-4 sm:gap-6">
