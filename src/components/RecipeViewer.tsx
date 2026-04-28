@@ -1,9 +1,13 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import { FileImageIcon } from "@phosphor-icons/react/dist/ssr";
 import { PrintableRecipeCard } from "./PrintableRecipeCard";
 import { RecipeToolbar } from "./RecipeToolbar";
 import { RecipeInstructions } from "./RecipeInstructions";
 import { RecipeIngredients } from "./RecipeIngredients";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -12,28 +16,58 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  calculateScaleFactor,
-  formatMinutes,
-  getScaledIngredients,
-} from "@/lib/utils";
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { calculateScaleFactor, formatMinutes } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
-import { RecipeBlob } from "@/types";
+import { RecipeDetails } from "@/types";
+
+function parseTargetServings(value: string): number | null {
+  if (!/^\d+$/.test(value)) return null;
+
+  const parsed = Number(value);
+  return Number.isInteger(parsed) && parsed > 0 ? parsed : null;
+}
 
 export function RecipeViewer({
   recipe,
   canEdit,
 }: {
-  recipe: RecipeBlob;
+  recipe: RecipeDetails;
   canEdit: boolean;
 }) {
-  const scaleFactor = calculateScaleFactor(
-    recipe.servings ?? 1,
-    recipe.servings,
+  const baseServings = recipe.servings;
+  const hasServings = baseServings != null;
+  const [targetServingsInput, setTargetServingsInput] = useState(
+    hasServings ? String(baseServings) : "",
   );
-  const scaledIngredients = getScaledIngredients(
-    recipe.ingredients,
-    scaleFactor,
-  );
+  const parsedTargetServings = parseTargetServings(targetServingsInput);
+  const targetServings = hasServings
+    ? (parsedTargetServings ?? baseServings)
+    : null;
+  const scaleFactor =
+    hasServings && targetServings != null
+      ? calculateScaleFactor(targetServings, baseServings)
+      : 1;
+  const isScaled = hasServings && targetServings !== baseServings;
+
+  function stepTargetServings(step: number) {
+    if (!hasServings || targetServings == null) return;
+    setTargetServingsInput(String(Math.max(1, targetServings + step)));
+  }
+
+  function resetTargetServings() {
+    if (!hasServings) return;
+    setTargetServingsInput(String(baseServings));
+  }
+
+  function normalizeTargetServings() {
+    if (!hasServings || targetServings == null) return;
+    setTargetServingsInput(String(targetServings));
+  }
 
   return (
     <>
@@ -66,11 +100,60 @@ export function RecipeViewer({
             </div>
 
             <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
-              <div className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground">
+              <div className="flex flex-wrap items-center gap-2 text-sm font-medium text-muted-foreground">
                 <span>Servings:</span>
-                <span className="text-foreground">{recipe.servings}</span>
+                {hasServings ? (
+                  <InputGroup className="w-32 bg-background">
+                    <InputGroupAddon align="inline-start">
+                      <InputGroupButton
+                        aria-label="Decrease servings"
+                        onClick={() => stepTargetServings(-1)}
+                      >
+                        -
+                      </InputGroupButton>
+                    </InputGroupAddon>
+                    <InputGroupInput
+                      aria-label="Target servings"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      value={targetServingsInput}
+                      onChange={(event) => {
+                        const nextValue = event.target.value;
+                        if (/^\d*$/.test(nextValue)) {
+                          setTargetServingsInput(nextValue);
+                        }
+                      }}
+                      onBlur={normalizeTargetServings}
+                      className="text-center text-sm font-medium text-foreground"
+                    />
+                    <InputGroupAddon align="inline-end">
+                      <InputGroupButton
+                        aria-label="Increase servings"
+                        onClick={() => stepTargetServings(1)}
+                      >
+                        +
+                      </InputGroupButton>
+                    </InputGroupAddon>
+                  </InputGroup>
+                ) : (
+                  <span className="text-foreground">n/a</span>
+                )}
+                {isScaled && (
+                  <>
+                    <span className="inline-flex items-center rounded-none border border-border bg-muted px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-foreground">
+                      Modified
+                    </span>
+                    <Button
+                      variant="ghost"
+                      size="xs"
+                      onClick={resetTargetServings}
+                    >
+                      Reset
+                    </Button>
+                  </>
+                )}
               </div>
-              {recipe.prepTime != null && recipe.prepTime > 0 && (
+              {recipe.prepTime != null && (
                 <div className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground">
                   <span>Prep:</span>
                   <span className="text-foreground">
@@ -78,7 +161,7 @@ export function RecipeViewer({
                   </span>
                 </div>
               )}
-              {recipe.cookTime != null && recipe.cookTime > 0 && (
+              {recipe.cookTime != null && (
                 <div className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground">
                   <span>Cook:</span>
                   <span className="text-foreground">
@@ -94,7 +177,10 @@ export function RecipeViewer({
               <CardTitle className="mb-4 text-lg font-semibold tracking-tight md:text-xl">
                 Ingredients
               </CardTitle>
-              <RecipeIngredients ingredients={recipe.ingredients} />
+              <RecipeIngredients
+                ingredients={recipe.ingredients}
+                scaleFactor={scaleFactor}
+              />
             </div>
 
             <div className="relative order-1 min-h-[16rem] w-full overflow-hidden border-b border-border bg-muted md:order-2 md:h-full md:border-b-0">
@@ -125,11 +211,7 @@ export function RecipeViewer({
       </div>
 
       <div className="hidden print:block">
-        <PrintableRecipeCard
-          recipe={recipe}
-          targetServings={recipe.servings}
-          scaledIngredients={scaledIngredients}
-        />
+        <PrintableRecipeCard recipe={recipe} targetServings={targetServings} />
       </div>
     </>
   );

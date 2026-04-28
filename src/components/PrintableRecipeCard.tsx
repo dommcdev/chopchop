@@ -4,7 +4,7 @@ import { QRCodeSVG } from "qrcode.react";
 
 interface PrintableRecipeCardProps {
   recipe: PrintableRecipe;
-  targetServings: number;
+  targetServings: number | null;
 }
 
 export function PrintableRecipeCard({
@@ -12,10 +12,16 @@ export function PrintableRecipeCard({
   targetServings,
 }: PrintableRecipeCardProps) {
   const shareUrl = `https://lechopchop.vercel.app/s/${recipe.publicId}`;
-  const baseServings = recipe.servings ?? 1;
-  const scaleFactor = calculateScaleFactor(targetServings, baseServings);
+  const baseServings = recipe.servings;
+  const hasServings = baseServings != null;
+  const scaleFactor =
+    hasServings && targetServings != null
+      ? calculateScaleFactor(targetServings, baseServings)
+      : 1;
   const servingsLabel =
-    targetServings === baseServings ? "Servings" : "Servings (scaled)";
+    hasServings && targetServings !== baseServings
+      ? "Servings (scaled)"
+      : "Servings";
 
   return (
     <section className="bg-white p-4 text-black sm:p-8">
@@ -38,7 +44,10 @@ export function PrintableRecipeCard({
             </span>
           )}
           <span>
-            {servingsLabel}: <span className="text-black">{targetServings}</span>
+            {servingsLabel}:{" "}
+            <span className="text-black">
+              {hasServings ? targetServings : "n/a"}
+            </span>
           </span>
           {recipe.prepTime != null && (
             <span>
