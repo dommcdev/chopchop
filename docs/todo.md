@@ -5,7 +5,6 @@
   - Add delete/rename button to categories
   - Add recipe editor skeleton for suspenses
   - `use cache` tsx rather than ts?
-  - TOS/Privacy Policy pages
   - Redo landing page (more stuff)
 
 

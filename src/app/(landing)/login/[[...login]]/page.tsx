@@ -28,11 +28,11 @@ export default function Page() {
           </div>
           <FieldDescription className="px-6 text-center">
             By clicking continue, you agree to our{" "}
-            <Link href="/terms" className="underline">
+            <Link href="/terms-of-service" className="underline">
               Terms of Service
             </Link>{" "}
             and{" "}
-            <Link href="/privacy" className="underline">
+            <Link href="/privacy-policy" className="underline">
               Privacy Policy
             </Link>
             .
