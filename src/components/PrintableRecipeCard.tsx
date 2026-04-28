@@ -78,18 +78,15 @@ export function PrintableRecipeCard({
               return (
                 <li
                   key={ingredient.id}
-                  className="flex items-start gap-3 break-inside-avoid text-sm"
+                  className="break-inside-avoid text-sm leading-relaxed"
                 >
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 bg-black" />
-                  <span className="leading-relaxed">
-                    {scaledAmount != null && (
-                      <span className="font-bold">
-                        {scaledAmount}
-                        {ingredient.unit ? ` ${ingredient.unit}` : ""}{" "}
-                      </span>
-                    )}
-                    <span className="text-black/80">{ingredient.name}</span>
-                  </span>
+                  {scaledAmount != null && (
+                    <span className="font-bold">
+                      {scaledAmount}
+                      {ingredient.unit ? ` ${ingredient.unit}` : ""}{" "}
+                    </span>
+                  )}
+                  <span className="text-black/80">{ingredient.name}</span>
                 </li>
               );
             })}
@@ -101,21 +98,16 @@ export function PrintableRecipeCard({
           <h2 className="mb-4 text-lg font-semibold tracking-tight">
             Instructions
           </h2>
-          <ol className="space-y-5">
-            {recipe.instructions.map((step, index) => (
+          <ul className="space-y-4">
+            {recipe.instructions.map((step) => (
               <li
                 key={step.id}
-                className="flex gap-4 break-inside-avoid text-sm"
+                className="break-inside-avoid text-sm leading-relaxed text-black/90"
               >
-                <span className="mt-0.5 shrink-0 font-semibold tabular-nums text-black/50">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <span className="leading-relaxed text-black/90">
-                  {step.text}
-                </span>
+                {step.text}
               </li>
             ))}
-          </ol>
+          </ul>
         </div>
       </div>
 
