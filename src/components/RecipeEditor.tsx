@@ -264,44 +264,61 @@ export function RecipeEditor({
                   <Controller
                     name="categoryId"
                     control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel htmlFor={field.name}>Category</FieldLabel>
-                        <Select
-                          value={
-                            field.value === "" ? null : String(field.value)
-                          }
-                          onValueChange={(val) =>
-                            field.onChange(
-                              !val || val === EMPTY_CATEGORY_VALUE ? "" : val,
-                            )
-                          }
-                          disabled={!categories}
-                        >
-                          <SelectTrigger aria-invalid={fieldState.invalid}>
-                            <SelectValue placeholder="Select…" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              <SelectItem value={EMPTY_CATEGORY_VALUE}>
-                                Select…
-                              </SelectItem>
-                              {(categories ?? []).map((cat) => (
-                                <SelectItem key={cat.id} value={String(cat.id)}>
-                                  {cat.name}
-                                </SelectItem>
-                              ))}
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                        <FieldDescription>
-                          Select a category to place this recipe in.
-                        </FieldDescription>
-                        {fieldState.invalid && (
-                          <FieldError errors={[fieldState.error]} />
-                        )}
-                      </Field>
-                    )}
+                    render={({ field, fieldState }) =>
+                      (() => {
+                        const selectedCategoryName = categories.find(
+                          (cat) => String(cat.id) === String(field.value),
+                        )?.name;
+
+                        return (
+                          <Field data-invalid={fieldState.invalid}>
+                            <FieldLabel htmlFor={field.name}>
+                              Category
+                            </FieldLabel>
+                            <Select
+                              value={
+                                field.value === "" ? null : String(field.value)
+                              }
+                              onValueChange={(val) =>
+                                field.onChange(
+                                  !val || val === EMPTY_CATEGORY_VALUE
+                                    ? ""
+                                    : val,
+                                )
+                              }
+                              disabled={!categories}
+                            >
+                              <SelectTrigger aria-invalid={fieldState.invalid}>
+                                <SelectValue placeholder="Select…">
+                                  {selectedCategoryName}
+                                </SelectValue>
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectGroup>
+                                  <SelectItem value={EMPTY_CATEGORY_VALUE}>
+                                    Select…
+                                  </SelectItem>
+                                  {(categories ?? []).map((cat) => (
+                                    <SelectItem
+                                      key={cat.id}
+                                      value={String(cat.id)}
+                                    >
+                                      {cat.name}
+                                    </SelectItem>
+                                  ))}
+                                </SelectGroup>
+                              </SelectContent>
+                            </Select>
+                            <FieldDescription>
+                              Select a category to place this recipe in.
+                            </FieldDescription>
+                            {fieldState.invalid && (
+                              <FieldError errors={[fieldState.error]} />
+                            )}
+                          </Field>
+                        );
+                      })()
+                    }
                   />
                 </div>
               </FieldGroup>

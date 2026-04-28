@@ -1,7 +1,6 @@
 ## Project Tasks
 
 ### Todo
-  - Right now categories in editor display id rather than name (in field)
   - Fix image lazy-to-eager rendering on dashboard recipe cards
   - Add delete/rename button to categories
   - Add recipe editor skeleton for suspenses
