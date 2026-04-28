@@ -27,8 +27,8 @@ export default function PrivacyPage() {
             <span className="font-semibold text-foreground">
               Account Information:
             </span>{" "}
-            We utilize third-party authentication (Clerk) to manage sign-ins.
-            We may store your name and email address as provided by your chosen
+            We utilize third-party authentication (Clerk) to manage sign-ins. We
+            may store your name and email address as provided by your chosen
             auth provider.
           </p>
           <p>
@@ -64,11 +64,11 @@ export default function PrivacyPage() {
           4. Data Retention &amp; Security
         </h2>
         <p className="text-muted-foreground">
-          As this is a student project, data security is implemented to the
-          best of our ability but is not guaranteed. Users should not store
-          sensitive personal information or proprietary data on this platform.
-          This project and its data may be deleted at the conclusion of the
-          academic term.
+          As this is a student project, data security is implemented to the best
+          of our ability but is not guaranteed. Users should not store sensitive
+          personal information or proprietary data on this platform. This
+          project and its data may be deleted at the conclusion of the academic
+          term.
         </p>
       </section>
 

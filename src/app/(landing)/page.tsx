@@ -9,7 +9,7 @@ import {
 
 export default function HomePage() {
   const foodImageSrc =
-    "https://i3ae2rmmav.ufs.sh/f/jtfWTQ42KQLJp4vyx8e14MkAviEcgdIYupqoh2XDK6yTmbaw";
+    "https://i3ae2rmmav.ufs.sh/f/jtfWTQ42KQLJtoPplgKLe0MEF7P4fKIaVj3Yrcl9nCpOLNqo";
 
   return (
     <main className="min-h-[calc(100svh-4rem)] bg-background text-foreground flex flex-col pb-12 selection:bg-primary selection:text-primary-foreground font-sans">

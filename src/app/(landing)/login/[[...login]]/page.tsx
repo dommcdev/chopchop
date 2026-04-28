@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FieldDescription } from "@/components/ui/field";
 
 const authImageSrc =
-  "https://i3ae2rmmav.ufs.sh/f/jtfWTQ42KQLJp6R8xme14MkAviEcgdIYupqoh2XDK6yTmbaw";
+  "https://i3ae2rmmav.ufs.sh/f/jtfWTQ42KQLJS5OWcy2LcawQM80GOvKklW4bnzEAIFBe2Jh7";
 
 export default function Page() {
   return (

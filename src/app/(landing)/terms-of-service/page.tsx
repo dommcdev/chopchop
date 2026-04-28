@@ -14,8 +14,8 @@ export default function TermsOfServicePage() {
           1. Acceptance of Terms
         </h2>
         <p className="text-muted-foreground">
-          By accessing ChopChop, you agree to these terms. This application is
-          a non-commercial academic project and is provided for demonstration
+          By accessing ChopChop, you agree to these terms. This application is a
+          non-commercial academic project and is provided for demonstration
           purposes only.
         </p>
       </section>
@@ -48,9 +48,10 @@ export default function TermsOfServicePage() {
           4. Disclaimer of Warranty
         </h2>
         <p className="text-muted-foreground">
-          ChopChop is provided &quot;AS IS.&quot; We make no guarantees regarding the
-          uptime, reliability, or accuracy of the data provided by the app or
-          the Gemini AI integration. Use of the application is at your own risk.
+          ChopChop is provided &quot;AS IS.&quot; We make no guarantees
+          regarding the uptime, reliability, or accuracy of the data provided by
+          the app or the Gemini AI integration. Use of the application is at
+          your own risk.
         </p>
       </section>
 

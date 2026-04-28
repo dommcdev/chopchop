@@ -15,7 +15,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
+export default function RecipeCard({
+  recipe,
+  imageLoading = "lazy",
+}: {
+  recipe: RecipeWithCategory;
+  imageLoading?: "eager" | "lazy";
+}) {
   const totalMin = totalCookMinutes(recipe);
 
   return (
@@ -31,6 +37,7 @@ export default function RecipeCard({ recipe }: { recipe: RecipeWithCategory }) {
                 src={recipe.imageUrl}
                 alt={recipe.name}
                 fill
+                loading={imageLoading}
                 sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
               />

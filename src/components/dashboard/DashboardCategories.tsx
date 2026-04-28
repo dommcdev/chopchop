@@ -48,10 +48,10 @@ export default async function DashboardCategories() {
           </Suspense>
         </CarouselContent>
         <div className="absolute top-1/2 left-0 z-10 -translate-y-1/2">
-          <CarouselPrevious className="relative top-0 left-0 translate-x-0 translate-y-0 hover:translate-x-0 hover:bg-primary/90" />
+          <CarouselPrevious className="relative top-0 left-0 translate-x-0 translate-y-0 hover:translate-x-0" />
         </div>
         <div className="absolute top-1/2 right-0 z-10 -translate-y-1/2">
-          <CarouselNext className="relative top-0 right-0 translate-x-0 translate-y-0 hover:translate-x-0 hover:bg-primary/90" />
+          <CarouselNext className="relative top-0 right-0 translate-x-0 translate-y-0 hover:translate-x-0" />
         </div>
       </Carousel>
     </div>
