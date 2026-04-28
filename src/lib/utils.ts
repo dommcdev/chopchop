@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { Recipe, Ingredient, PrintableScaledIngredient } from "@/types";
+import { Recipe } from "@/types";
 
 const PUBLIC_ID_ALPHABET =
   "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -31,17 +31,6 @@ export function generatePublicId(size = 10): string {
   ).join("");
 }
 
-/*
- * Formats numbers cleanly for display
- */
-export function formatNumber(value: number) {
-  if (Number.isInteger(value)) return value.toString();
-  return value
-    .toFixed(2)
-    .replace(/\.00$/, "")
-    .replace(/(\.\d)0$/, "$1");
-}
-
 // Calculate total cook time from prepTime + cookTime
 export function totalCookMinutes(
   recipe: Pick<Recipe, "prepTime" | "cookTime">,
@@ -49,6 +38,7 @@ export function totalCookMinutes(
   return (recipe.prepTime ?? 0) + (recipe.cookTime ?? 0);
 }
 
+// Convert minutes to hr + min
 export function formatMinutes(minutes: number): string {
   const hours = Math.floor(minutes / 60);
   const remainingMinutes = minutes % 60;
@@ -60,29 +50,20 @@ export function formatMinutes(minutes: number): string {
 
 /*
  * Calculates how much to multiply ingredients by.
- * Defaults to 1 if servings are missing or invalid.
+ * Defaults to 1 if servings are missing.
  */
 export function calculateScaleFactor(
   target: number,
   base: number | null | undefined,
 ): number {
-  if (!base || base <= 0) return 1;
+  if (base == null) return 1;
   return target / base;
 }
 
-/**
- * Transforms a list of raw ingredients into a scaled version
- * ready for the printable card.
- */
-export function getScaledIngredients(
-  ingredients: Ingredient[],
+export function getScaledAmount(
+  amount: number | null | undefined,
   scaleFactor: number,
-): PrintableScaledIngredient[] {
-  return ingredients.map((ingredient) => ({
-    id: ingredient.id,
-    name: ingredient.name,
-    unit: ingredient.unit,
-    scaledAmount:
-      ingredient.quantity === null ? null : ingredient.quantity * scaleFactor,
-  }));
+): number | null {
+  if (amount == null) return null;
+  return Math.round(amount * scaleFactor * 10) / 10;
 }

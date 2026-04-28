@@ -43,4 +43,5 @@
 - Ability to create categories from edit page
 - Add 'copy recipe to account' button
 - Add uncategoried category
+- Auto-convert units with scaling (+ detect nums in instructions to warn user)
 

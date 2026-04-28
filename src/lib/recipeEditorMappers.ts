@@ -4,7 +4,7 @@ import {
   RecipeEditorInitialValues,
   hookformSchema,
 } from "@/lib/hookformSchema";
-import { RecipeBlob } from "@/types";
+import { RecipeDetails } from "@/types";
 
 export function geminiToRecipeEditorInitialValues(
   data: GeminiRecipeSchema,
@@ -15,8 +15,8 @@ export function geminiToRecipeEditorInitialValues(
   });
 }
 
-export function recipeBlobToRecipeEditorInitialValues(
-  data: RecipeBlob,
+export function recipeDetailsToRecipeEditorInitialValues(
+  data: RecipeDetails,
 ): RecipeEditorInitialValues {
   return hookformSchema.parse({
     name: data.name,

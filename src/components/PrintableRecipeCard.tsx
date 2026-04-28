@@ -1,19 +1,22 @@
-import { formatNumber } from "@/lib/utils";
-import { PrintableRecipe, PrintableScaledIngredient } from "@/types";
+import { calculateScaleFactor, getScaledAmount } from "@/lib/utils";
+import { PrintableRecipe } from "@/types";
 import { QRCodeSVG } from "qrcode.react";
 
 interface PrintableRecipeCardProps {
   recipe: PrintableRecipe;
-  targetServings: number | null;
-  scaledIngredients: PrintableScaledIngredient[];
+  targetServings: number;
 }
 
 export function PrintableRecipeCard({
   recipe,
   targetServings,
-  scaledIngredients,
 }: PrintableRecipeCardProps) {
   const shareUrl = `https://lechopchop.vercel.app/s/${recipe.publicId}`;
+  const baseServings = recipe.servings ?? 1;
+  const scaleFactor = calculateScaleFactor(targetServings, baseServings);
+  const servingsLabel =
+    targetServings === baseServings ? "Servings" : "Servings (scaled)";
+
   return (
     <section className="bg-white p-4 text-black sm:p-8">
       {/* HEADER */}
@@ -35,14 +38,14 @@ export function PrintableRecipeCard({
             </span>
           )}
           <span>
-            Servings: <span className="text-black">{targetServings}</span>
+            {servingsLabel}: <span className="text-black">{targetServings}</span>
           </span>
-          {recipe.prepTime != null && recipe.prepTime > 0 && (
+          {recipe.prepTime != null && (
             <span>
               Prep: <span className="text-black">{recipe.prepTime} min</span>
             </span>
           )}
-          {recipe.cookTime != null && recipe.cookTime > 0 && (
+          {recipe.cookTime != null && (
             <span>
               Cook: <span className="text-black">{recipe.cookTime} min</span>
             </span>
@@ -57,23 +60,30 @@ export function PrintableRecipeCard({
             Ingredients
           </h2>
           <ul className="space-y-2">
-            {scaledIngredients.map((ingredient) => (
-              <li
-                key={ingredient.id}
-                className="flex items-start gap-3 break-inside-avoid text-sm"
-              >
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 bg-black" />
-                <span className="leading-relaxed">
-                  {ingredient.scaledAmount != null && (
-                    <span className="font-bold">
-                      {formatNumber(ingredient.scaledAmount)}{" "}
-                      {ingredient.unit}{" "}
-                    </span>
-                  )}
-                  <span className="text-black/80">{ingredient.name}</span>
-                </span>
-              </li>
-            ))}
+            {recipe.ingredients.map((ingredient) => {
+              const scaledAmount = getScaledAmount(
+                ingredient.quantity,
+                scaleFactor,
+              );
+
+              return (
+                <li
+                  key={ingredient.id}
+                  className="flex items-start gap-3 break-inside-avoid text-sm"
+                >
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 bg-black" />
+                  <span className="leading-relaxed">
+                    {scaledAmount != null && (
+                      <span className="font-bold">
+                        {scaledAmount}
+                        {ingredient.unit ? ` ${ingredient.unit}` : ""}{" "}
+                      </span>
+                    )}
+                    <span className="text-black/80">{ingredient.name}</span>
+                  </span>
+                </li>
+              );
+            })}
           </ul>
         </div>
 

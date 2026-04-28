@@ -5,26 +5,22 @@ export type RecipeWithCategory = Awaited<
   ReturnType<typeof fetchRecipesBlock>
 >[number];
 
-export type RecipeBlob = NonNullable<
-  Awaited<ReturnType<typeof fetchRecipeDetailsBySlug>>
+export type RecipeDetailsResult = Awaited<
+  ReturnType<typeof fetchRecipeDetailsBySlug>
 >;
+
+export type RecipeDetails = NonNullable<RecipeDetailsResult>;
 
 export type PrintableRecipe = Pick<
   Recipe,
   "name" | "servings" | "description" | "prepTime" | "cookTime" | "publicId"
 > & {
+  ingredients: Array<Pick<Ingredient, "id" | "name" | "quantity" | "unit">>;
   instructions: Array<{
     id: number;
     text: string;
   }>;
   category: Pick<Category, "name"> | null;
-};
-
-export type PrintableScaledIngredient = Pick<
-  Ingredient,
-  "id" | "name" | "unit"
-> & {
-  scaledAmount: number | null;
 };
 
 export type RecipeSearchItem = Pick<
