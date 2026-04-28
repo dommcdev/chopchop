@@ -33,11 +33,12 @@ export function RecipeCardMenu({ recipeSlug }: RecipeCardMenuProps) {
         render={
           <Button
             type="button"
-            variant="outline"
-            size="icon-sm"
-            className="border-border/80 bg-card/90 text-foreground shadow-sm backdrop-blur-sm hover:bg-card"
+            variant="ghost"
+            size="icon"
+            className="text-muted-foreground hover:text-foreground"
             aria-label="Recipe actions"
             title="Recipe actions"
+            onClick={(e) => e.preventDefault()}
           />
         }
       >

@@ -3,7 +3,6 @@ import Link from "next/link";
 import { FileImageIcon } from "@phosphor-icons/react/dist/ssr";
 import { CirclesThreePlusIcon } from "@phosphor-icons/react/dist/ssr";
 import { RecipeWithCategory } from "@/types";
-import { totalCookMinutes } from "@/lib/utils";
 import { RecipeCardMenu } from "@/components/dashboard/RecipeCardMenu";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -22,8 +21,6 @@ export default function RecipeCard({
   recipe: RecipeWithCategory;
   imageLoading?: "eager" | "lazy";
 }) {
-  const totalMin = totalCookMinutes(recipe);
-
   return (
     <div className="relative h-full">
       <Link
@@ -39,7 +36,7 @@ export default function RecipeCard({
                 fill
                 loading={imageLoading}
                 sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                className="object-cover transition-transform duration-300"
               />
             ) : (
               <div className="flex h-full items-center justify-center text-muted-foreground">
@@ -58,12 +55,8 @@ export default function RecipeCard({
               ) : null}
             </div>
 
-            <CardAction>
-              {totalMin > 0 ? (
-                <span className="translate-y-1 inline-flex items-center rounded-none bg-secondary py-0.5 pl-2 pr-1.5 text-[10px] font-bold uppercase tracking-wider text-secondary-foreground">
-                  {totalMin} min
-                </span>
-              ) : null}
+            <CardAction className="-mr-1.5">
+              <RecipeCardMenu recipeSlug={recipe.slug} />
             </CardAction>
           </CardHeader>
 
@@ -74,10 +67,6 @@ export default function RecipeCard({
           </CardContent>
         </Card>
       </Link>
-
-      <div className="absolute right-2 top-2 z-10">
-        <RecipeCardMenu recipeSlug={recipe.slug} />
-      </div>
     </div>
   );
 }
@@ -92,9 +81,6 @@ export function RecipeCardSkeleton() {
       <CardHeader>
         <Skeleton className="h-6 w-2/3 rounded-none" />
         <Skeleton className="mt-1 h-4 w-1/3 rounded-none" />
-        <CardAction>
-          <Skeleton className="h-5 w-12 rounded-none" />
-        </CardAction>
       </CardHeader>
 
       <CardContent className="flex-1 space-y-2">
