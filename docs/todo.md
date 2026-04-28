@@ -2,7 +2,6 @@
 
 ### Todo
   - Add delete/rename button to categories
-  - Redo landing page (more stuff)
   - RHF memo error
 
 - Low Priority

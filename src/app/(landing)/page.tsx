@@ -1,153 +1,121 @@
-import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRightIcon,
   CameraIcon,
-  CheckCircleIcon,
-  ClockCountdownIcon,
   ScalesIcon,
   ShareNetworkIcon,
-  SparkleIcon,
 } from "@phosphor-icons/react/dist/ssr";
 
-const foodImageSrc =
-  "https://i3ae2rmmav.ufs.sh/f/jtfWTQ42KQLJtoPplgKLe0MEF7P4fKIaVj3Yrcl9nCpOLNqo";
-
-const featureCards = [
+const features = [
   {
-    title: "Scan recipes once",
+    title: "Scan & digitize",
     description:
-      "Import cookbook pages, printed recipes, or PDFs and turn them into editable recipe data instead of another folder of screenshots.",
+      "Point your camera at a cookbook page, handwritten card, or printed recipe. OCR extracts every ingredient and step into structured, editable data.",
     icon: CameraIcon,
   },
   {
-    title: "Adjust servings quickly",
+    title: "Scale portions",
     description:
-      "Scale ingredient quantities up or down before you cook so weeknight dinners and holiday batches use the same source recipe.",
+      "Adjust serving sizes with a single input. Quantities recalculate automatically\u2009—\u2009no mental math, no conversion mistakes.",
     icon: ScalesIcon,
   },
   {
-    title: "Share without exporting",
+    title: "Share instantly",
     description:
-      "Send a clean read-only link when someone asks for a recipe instead of pasting ingredients into a text thread.",
+      "Generate a clean read-only link for any recipe. No reformatting, no screenshots, no copy-paste threads.",
     icon: ShareNetworkIcon,
   },
 ];
 
-const workflowSteps = [
+const steps = [
   {
-    eyebrow: "1. Capture",
-    title: "Bring recipes in from wherever they already live",
+    number: "01",
+    title: "Capture",
     description:
-      "Use photos for handwritten cards and cookbook pages, or upload a PDF when you already have a digital copy.",
+      "Photograph a cookbook page, handwritten card, or upload a PDF you already have. ChopChop reads it and extracts the recipe.",
   },
   {
-    eyebrow: "2. Clean up",
-    title: "Fix the small OCR mistakes once",
+    number: "02",
+    title: "Refine",
     description:
-      "Edit ingredient names, quantities, and instructions so the saved version is the one you actually want to cook from next time.",
+      "Fix any OCR quirks\u2009—\u2009a misspelled ingredient, a missing quantity. Save the clean version once and never redo it.",
   },
   {
-    eyebrow: "3. Cook and reuse",
-    title: "Resize portions, print, or send a link",
+    number: "03",
+    title: "Use",
     description:
-      "The recipe becomes something you can work with: easier to read on your phone, easier to print, and easier to pass along.",
+      "Scale servings up or down, print a clean copy, or share a read-only link. The recipe is yours to work with.",
   },
 ];
 
-const practicalReasons = [
-  "Useful when you cook from a mix of screenshots, paper cards, PDFs, and books.",
-  "Useful when the same recipe needs different serving sizes week to week.",
-  "Useful when family recipes should stay easy to share without getting reformatted every time.",
+const stats = [
+  { value: "< 30s", label: "to digitize a recipe" },
+  { value: "1\u2011tap", label: "serving adjustment" },
+  { value: "\u221E", label: "shareable links" },
 ];
 
 export default function HomePage() {
   return (
     <main className="bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
-      <section className="mx-auto flex min-h-[calc(100svh-4rem)] w-full max-w-screen-3xl items-center px-4 py-10 sm:px-6 sm:py-14 lg:px-9 lg:py-16">
-        <div className="relative grid w-full items-end gap-8 overflow-hidden border border-border/70 bg-muted/10 px-5 py-6 sm:px-7 sm:py-8 lg:min-h-[calc(100svh-8rem)] lg:grid-cols-[minmax(0,1.15fr)_minmax(18rem,0.85fr)] lg:px-10 lg:py-10 xl:px-14 xl:py-12">
-          <div className="absolute inset-y-0 right-0 w-full lg:w-[52%]">
-            <Image
-              src={foodImageSrc}
-              alt="Prepared ingredients arranged for cooking"
-              fill
-              priority
-              className="object-cover object-center"
-              sizes="(min-width: 1280px) 44rem, (min-width: 1024px) 52vw, 100vw"
-            />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,var(--background)_14%,color-mix(in_oklab,var(--background)_72%,transparent)_42%,transparent_72%)] dark:bg-[linear-gradient(90deg,var(--background)_10%,color-mix(in_oklab,var(--background)_60%,transparent)_40%,transparent_72%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,color-mix(in_oklab,var(--background)_18%,transparent),transparent_34%)]" />
-          </div>
+      {/* ── Hero ─────────────────────────────────────────── */}
+      <section className="relative mx-auto min-h-[calc(100svh-4rem)] w-full max-w-screen-3xl overflow-hidden px-4 sm:px-6 lg:px-9">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.035] dark:opacity-[0.07]"
+          style={{
+            backgroundImage:
+              "radial-gradient(var(--foreground) 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+          }}
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
 
-          <div className="relative z-10 flex max-w-4xl flex-col justify-end gap-8 lg:gap-12 lg:self-stretch lg:py-4">
-            <p className="text-[0.7rem] font-semibold tracking-[0.28em] text-muted-foreground uppercase">
-              Digital cookbook for recipes worth keeping
+        <div className="pointer-events-none absolute -top-40 right-0 h-[600px] w-[600px] bg-primary/[0.03] blur-[120px] dark:bg-primary/[0.06]" />
+
+        <div className="relative flex min-h-[calc(100svh-4rem)] flex-col justify-center pb-28 lg:pb-32">
+          <div className="max-w-4xl">
+            <p className="font-mono text-[0.7rem] tracking-[0.25em] text-primary">
+              {"// digital cookbook"}
             </p>
 
-            <div className="space-y-6">
-              <h1 className="max-w-4xl text-5xl font-semibold tracking-[-0.06em] text-balance sm:text-6xl md:text-7xl lg:text-[clamp(4.75rem,8vw,8rem)] lg:leading-[0.92]">
-                Keep the recipe.
-                <br />
-                Lose the clutter.
-              </h1>
+            <h1 className="mt-7 text-5xl font-semibold tracking-[-0.045em] text-balance sm:text-6xl md:text-7xl lg:text-[5.5rem] lg:leading-[1.05]">
+              Your recipes, <span className="text-primary">digitized.</span>
+            </h1>
 
-              <p className="max-w-xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8 lg:max-w-lg">
-                Convert recipes from photos and PDFs into a format that is
-                easier to edit, scale, cook from, and share.
-              </p>
-            </div>
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg sm:leading-relaxed">
+              Convert recipes from photos, PDFs, and handwritten cards into a
+              format you can edit, scale, cook from, and share.
+            </p>
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Link
                 href="/dashboard"
-                className="inline-flex items-center justify-center gap-2 rounded-none bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+                className="group inline-flex items-center justify-center gap-2.5 bg-primary px-7 py-3.5 text-sm font-bold tracking-wide text-primary-foreground uppercase transition-all hover:bg-primary/90"
               >
-                Open dashboard
-                <ArrowRightIcon weight="bold" className="size-4" />
+                Get started
+                <ArrowRightIcon
+                  weight="bold"
+                  className="size-4 transition-transform group-hover:translate-x-0.5"
+                />
               </Link>
               <Link
                 href="/login"
-                className="inline-flex items-center justify-center rounded-none border border-border bg-background/70 px-6 py-3 text-sm font-semibold backdrop-blur-sm transition-colors hover:bg-background"
+                className="inline-flex items-center justify-center border border-border bg-background px-7 py-3.5 text-sm font-bold tracking-wide uppercase transition-colors hover:bg-muted"
               >
-                Sign in to save recipes
+                Sign in
               </Link>
             </div>
           </div>
-
-          <div className="relative z-10 flex flex-col gap-6 justify-self-start lg:max-w-[18rem] lg:justify-self-end lg:self-end">
-            <p className="max-w-xs text-sm leading-6 text-muted-foreground lg:text-right">
-              For cookbook pages, screenshots, old printouts, and the recipes
-              that keep getting lost in between.
-            </p>
-            <div className="h-px w-full bg-border/70" />
-            <div className="grid gap-3 text-sm text-foreground lg:text-right">
-              <p>Conversion that produces editable recipes.</p>
-              <p>Serving-size adjustments without recalculating by hand.</p>
-              <p>Read-only links for sharing a clean final version.</p>
-            </div>
-          </div>
         </div>
-      </section>
 
-      <section className="border-y border-border/70 bg-muted/20">
-        <div className="mx-auto grid w-full max-w-screen-3xl gap-6 px-4 py-10 sm:px-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:px-9 lg:py-14">
-          <div className="max-w-xl space-y-3">
-            <p className="text-sm font-semibold tracking-[0.2em] text-muted-foreground uppercase">
-              Why it exists
-            </p>
-            <h2 className="text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
-              A better home for recipes that start out messy.
-            </h2>
-          </div>
-          <div className="grid gap-3">
-            {practicalReasons.map((reason) => (
-              <div
-                key={reason}
-                className="flex items-start gap-3 border border-border bg-background px-4 py-4"
-              >
-                <CheckCircleIcon className="mt-0.5 size-5 text-primary" weight="fill" />
-                <p className="text-sm leading-6 text-muted-foreground sm:text-base">
-                  {reason}
+        <div className="absolute right-0 bottom-0 left-0 border-t border-border/60">
+          <div className="grid grid-cols-3 divide-x divide-border/60">
+            {stats.map((stat) => (
+              <div key={stat.label} className="px-4 py-5 sm:px-6 lg:px-9">
+                <p className="font-mono text-lg font-semibold tracking-tight sm:text-xl">
+                  {stat.value}
+                </p>
+                <p className="mt-0.5 text-xs text-muted-foreground sm:text-sm">
+                  {stat.label}
                 </p>
               </div>
             ))}
@@ -155,99 +123,124 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-screen-3xl px-4 py-12 sm:px-6 lg:px-9 lg:py-16">
-        <div className="max-w-2xl space-y-3">
-          <p className="text-sm font-semibold tracking-[0.2em] text-muted-foreground uppercase">
-            Core features
-          </p>
-          <h2 className="text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
-            The parts that make it useful.
-          </h2>
-        </div>
-
-        <div className="mt-8 grid gap-5 lg:grid-cols-3">
-          {featureCards.map(({ title, description, icon: Icon }) => (
-            <article
-              key={title}
-              className="flex h-full flex-col gap-5 border border-border bg-card p-6 sm:p-7"
-            >
-              <div className="flex size-11 items-center justify-center rounded-full bg-primary/10 text-primary">
-                <Icon weight="bold" className="size-5" />
-              </div>
-              <div className="space-y-3">
-                <h3 className="text-xl font-semibold tracking-tight">{title}</h3>
-                <p className="text-sm leading-6 text-muted-foreground sm:text-base">
-                  {description}
-                </p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="mx-auto w-full max-w-screen-3xl px-4 pb-12 sm:px-6 lg:px-9 lg:pb-16">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
-          <div className="border border-border bg-card p-6 sm:p-8">
-            <div className="max-w-lg space-y-4">
-              <p className="text-sm font-semibold tracking-[0.2em] text-muted-foreground uppercase">
-                How it works
+      {/* ── Features ─────────────────────────────────────── */}
+      <section className="border-t border-border/60">
+        <div className="mx-auto w-full max-w-screen-3xl px-4 py-16 sm:px-6 lg:px-9 lg:py-24">
+          <div className="mb-12 flex flex-col gap-6 lg:mb-16 lg:flex-row lg:items-end lg:justify-between">
+            <div className="space-y-3">
+              <p className="font-mono text-[0.7rem] tracking-[0.25em] text-primary">
+                {"// features"}
               </p>
-              <h2 className="text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
-                Built around the steps you already take.
+              <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+                Built for how recipes
+                <br className="hidden sm:block" /> actually exist.
               </h2>
-              <p className="text-sm leading-6 text-muted-foreground sm:text-base">
-                Most recipes do not start life in a clean app. They begin as a
-                page, a file, a text message, or a photo. ChopChop is meant to
-                shorten the path from that messy source to something reusable.
-              </p>
             </div>
+            <p className="max-w-md text-sm leading-relaxed text-muted-foreground lg:text-right">
+              Most recipes don&apos;t start in an app. They start as a page, a
+              screenshot, or a text from your mom. ChopChop handles that.
+            </p>
           </div>
 
-          <div className="grid gap-px border border-border bg-border/60">
-            {workflowSteps.map((step) => (
-              <article key={step.eyebrow} className="bg-background p-6 sm:p-7">
-                <p className="text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase">
-                  {step.eyebrow}
-                </p>
-                <h3 className="mt-3 text-lg font-semibold tracking-tight sm:text-xl">
-                  {step.title}
-                </h3>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
-                  {step.description}
-                </p>
+          <div className="grid gap-px border border-border bg-border/50 lg:grid-cols-3">
+            {features.map(({ title, description, icon: Icon }) => (
+              <article
+                key={title}
+                className="flex flex-col gap-6 bg-background p-7 transition-colors hover:bg-muted/20 sm:p-9"
+              >
+                <div className="flex size-11 items-center justify-center border border-primary/20 bg-primary/5 text-primary">
+                  <Icon weight="duotone" className="size-5" />
+                </div>
+                <div className="space-y-2.5">
+                  <h3 className="text-lg font-semibold tracking-tight">
+                    {title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {description}
+                  </p>
+                </div>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="border-t border-border/70 bg-card/40">
-        <div className="mx-auto flex w-full max-w-screen-3xl flex-col gap-6 px-4 py-12 sm:px-6 lg:flex-row lg:items-end lg:justify-between lg:px-9 lg:py-16">
-          <div className="max-w-2xl space-y-3">
-            <p className="inline-flex items-center gap-2 text-sm font-semibold tracking-[0.2em] text-muted-foreground uppercase">
-              <SparkleIcon className="size-4" weight="fill" />
-              Ready when you are
+      {/* ── How it works ─────────────────────────────────── */}
+      <section className="border-t border-border/60 bg-card/40">
+        <div className="mx-auto w-full max-w-screen-3xl px-4 py-16 sm:px-6 lg:px-9 lg:py-24">
+          <div className="mb-12 space-y-3 lg:mb-16">
+            <p className="font-mono text-[0.7rem] tracking-[0.25em] text-primary">
+              {"// workflow"}
             </p>
-            <h2 className="text-2xl font-semibold tracking-tight text-balance sm:text-3xl lg:text-4xl">
-              Start building a recipe collection that is easier to cook from.
+            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+              Three steps. That&apos;s it.
             </h2>
-            <p className="text-sm leading-6 text-muted-foreground sm:text-base">
-              Upload the recipes you already have, clean them up once, and stop
-              hunting through screenshots the next time you want to make dinner.
-            </p>
           </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/dashboard"
-              className="inline-flex items-center justify-center gap-2 rounded-none bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
-            >
-              Go to dashboard
-              <ArrowRightIcon weight="bold" className="size-4" />
-            </Link>
-            <div className="inline-flex items-center gap-2 text-sm text-muted-foreground">
-              <ClockCountdownIcon className="size-4 text-primary" weight="bold" />
-              No setup ceremony. Just start importing recipes.
+          <div className="grid gap-10 lg:grid-cols-3 lg:gap-0">
+            {steps.map((step, i) => (
+              <div
+                key={step.number}
+                className="relative lg:px-9 lg:first:pl-0 lg:last:pr-0"
+              >
+                {i < steps.length - 1 && (
+                  <div className="absolute top-0 right-0 hidden h-full w-px bg-border/60 lg:block" />
+                )}
+                <span className="font-mono text-6xl font-bold text-primary/10 select-none">
+                  {step.number}
+                </span>
+                <h3 className="mt-4 text-xl font-semibold tracking-tight">
+                  {step.title}
+                </h3>
+                <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground">
+                  {step.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ──────────────────────────────────────────── */}
+      <section className="border-t border-border/60">
+        <div className="mx-auto w-full max-w-screen-3xl px-4 py-16 sm:px-6 lg:px-9 lg:py-24">
+          <div className="relative overflow-hidden border border-border bg-card/30 p-8 sm:p-12 lg:p-16">
+            <div
+              className="pointer-events-none absolute inset-0 opacity-[0.025] dark:opacity-[0.05]"
+              style={{
+                backgroundImage:
+                  "radial-gradient(var(--foreground) 1px, transparent 1px)",
+                backgroundSize: "24px 24px",
+              }}
+            />
+
+            <div className="relative mx-auto max-w-2xl text-center">
+              <p className="font-mono text-[0.7rem] tracking-[0.25em] text-primary">
+                {"// get started"}
+              </p>
+              <h2 className="mt-5 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl lg:tracking-[-0.03em]">
+                Stop losing recipes to
+                <br className="hidden sm:block" /> screenshots and clutter.
+              </h2>
+              <p className="mx-auto mt-5 max-w-lg text-sm leading-relaxed text-muted-foreground sm:text-base sm:leading-relaxed">
+                Upload the recipes you already have, clean them up once, and
+                build a collection you can actually cook from.
+              </p>
+              <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <Link
+                  href="/dashboard"
+                  className="group inline-flex items-center justify-center gap-2.5 bg-primary px-8 py-3.5 text-sm font-bold tracking-wide text-primary-foreground uppercase transition-all hover:bg-primary/90"
+                >
+                  Open dashboard
+                  <ArrowRightIcon
+                    weight="bold"
+                    className="size-4 transition-transform group-hover:translate-x-0.5"
+                  />
+                </Link>
+                <span className="font-mono text-xs tracking-wide text-muted-foreground">
+                  No setup required.
+                </span>
+              </div>
             </div>
           </div>
         </div>
