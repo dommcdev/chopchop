@@ -59,53 +59,53 @@ export function CategoryCardMenu({
           }
         }}
       >
-      <DropdownMenuTrigger
-        render={
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            className="text-muted-foreground hover:text-foreground"
-            aria-label="Category actions"
-            title="Category actions"
-            onClick={(e) => e.preventDefault()}
-          />
-        }
-      >
-        <DotsThreeVerticalIcon weight="bold" />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="w-36">
-        <DropdownMenuGroup>
-          <DropdownMenuItem
-            onClick={() => {
-              setShouldOpenRename(true);
-              setMenuOpen(false);
-            }}
-          >
-            <PencilSimpleIcon weight="bold" />
-            Rename
-          </DropdownMenuItem>
-          <CategoryDeleteDialog
-            triggerNativeButton={false}
-            isDeleting={isDeleting}
-            onConfirm={async () => {
-              const deleted = await runDelete();
+        <DropdownMenuTrigger
+          render={
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="text-muted-foreground hover:text-foreground"
+              aria-label="Category actions"
+              title="Category actions"
+              onClick={(e) => e.preventDefault()}
+            />
+          }
+        >
+          <DotsThreeVerticalIcon weight="bold" />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start" className="w-36">
+          <DropdownMenuGroup>
+            <DropdownMenuItem
+              onClick={() => {
+                setShouldOpenRename(true);
+                setMenuOpen(false);
+              }}
+            >
+              <PencilSimpleIcon weight="bold" />
+              Rename
+            </DropdownMenuItem>
+            <CategoryDeleteDialog
+              triggerNativeButton={false}
+              isDeleting={isDeleting}
+              onConfirm={async () => {
+                const deleted = await runDelete();
 
-              if (deleted) {
-                router.refresh();
+                if (deleted) {
+                  router.refresh();
+                }
+
+                return deleted;
+              }}
+              trigger={
+                <DropdownMenuItem variant="destructive" closeOnClick={false}>
+                  <TrashIcon weight="bold" />
+                  Delete
+                </DropdownMenuItem>
               }
-
-              return deleted;
-            }}
-            trigger={
-              <DropdownMenuItem variant="destructive" closeOnClick={false}>
-                <TrashIcon weight="bold" />
-                Delete
-              </DropdownMenuItem>
-            }
-          />
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
+            />
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
       </DropdownMenu>
     </>
   );

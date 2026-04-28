@@ -25,6 +25,44 @@ function getCategoriesTag(userId: string) {
   return `categories-${userId}`;
 }
 
+function getRecipeBlocksTag(userId: string) {
+  return `user:${userId}:recipes:blocks`;
+}
+
+function getRecipeSearchTag(userId: string) {
+  return `user:${userId}:recipes:search`;
+}
+
+function getRecipeCountTag(userId: string) {
+  return `user:${userId}:recipes:count`;
+}
+
+function getRecipeSlugTag(userId: string, slug: string) {
+  return `user:${userId}:recipes:slug:${slug}`;
+}
+
+function getPublicRecipeTag(publicId: string) {
+  return `public:recipe:${publicId}`;
+}
+
+function invalidateCategoryTags(userId: string) {
+  updateTag(getCategoriesTag(userId));
+}
+
+function invalidateRecipeTagsForCategory(
+  userId: string,
+  affectedRecipes: Array<{ slug: string; publicId: string }>,
+) {
+  updateTag(getRecipeBlocksTag(userId));
+  updateTag(getRecipeSearchTag(userId));
+  updateTag(getRecipeCountTag(userId));
+
+  for (const recipe of affectedRecipes) {
+    updateTag(getRecipeSlugTag(userId, recipe.slug));
+    updateTag(getPublicRecipeTag(recipe.publicId));
+  }
+}
+
 async function generateUniqueCategorySlug(
   userId: string,
   name: string,
@@ -74,7 +112,7 @@ export async function createCategory(
       userId,
     });
 
-    updateTag(getCategoriesTag(userId));
+    invalidateCategoryTags(userId);
 
     return { success: true, slug };
   } catch (error) {
@@ -114,6 +152,17 @@ export async function renameCategory(
       return { success: false, error: "Category not found." };
     }
 
+    const affectedRecipes = await db.query.recipes.findMany({
+      columns: {
+        slug: true,
+        publicId: true,
+      },
+      where: and(
+        eq(recipes.userId, userId),
+        eq(recipes.categoryId, existing.id),
+      ),
+    });
+
     const newSlug = await generateUniqueCategorySlug(userId, name);
 
     await db
@@ -123,7 +172,8 @@ export async function renameCategory(
         and(eq(categories.userId, userId), eq(categories.slug, categorySlug)),
       );
 
-    updateTag(getCategoriesTag(userId));
+    invalidateCategoryTags(userId);
+    invalidateRecipeTagsForCategory(userId, affectedRecipes);
 
     return { success: true, slug: newSlug };
   } catch (error) {
@@ -156,6 +206,17 @@ export async function deleteCategory(
       return { success: false, error: "Category not found." };
     }
 
+    const affectedRecipes = await db.query.recipes.findMany({
+      columns: {
+        slug: true,
+        publicId: true,
+      },
+      where: and(
+        eq(recipes.userId, userId),
+        eq(recipes.categoryId, existing.id),
+      ),
+    });
+
     await db
       .update(recipes)
       .set({ categoryId: null })
@@ -167,7 +228,8 @@ export async function deleteCategory(
         and(eq(categories.userId, userId), eq(categories.slug, categorySlug)),
       );
 
-    updateTag(getCategoriesTag(userId));
+    invalidateCategoryTags(userId);
+    invalidateRecipeTagsForCategory(userId, affectedRecipes);
 
     return { success: true };
   } catch (error) {
