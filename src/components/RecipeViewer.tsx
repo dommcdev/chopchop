@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { FileImageIcon } from "@phosphor-icons/react/dist/ssr";
+import { FileImageIcon, InfoIcon } from "@phosphor-icons/react/dist/ssr";
 import { PrintableRecipeCard } from "./PrintableRecipeCard";
 import { RecipeToolbar } from "./RecipeToolbar";
 import { RecipeInstructions } from "./RecipeInstructions";
@@ -21,6 +21,12 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { calculateScaleFactor, formatMinutes } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { RecipeDetails } from "@/types";
@@ -101,12 +107,15 @@ export function RecipeViewer({
 
             <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
               <div className="flex flex-wrap items-center gap-2 text-sm font-medium text-muted-foreground">
-                <span>Servings:</span>
+                <span className="inline-flex items-start gap-0.5">
+                  <span>Servings: </span>
+                </span>
                 {hasServings ? (
-                  <InputGroup className="w-32 bg-background">
+                  <InputGroup className="h-7 w-24 bg-background">
                     <InputGroupAddon align="inline-start">
                       <InputGroupButton
                         aria-label="Decrease servings"
+                        size="icon-xs"
                         onClick={() => stepTargetServings(-1)}
                       >
                         -
@@ -124,11 +133,12 @@ export function RecipeViewer({
                         }
                       }}
                       onBlur={normalizeTargetServings}
-                      className="text-center text-sm font-medium text-foreground"
+                      className="px-1 text-center text-sm font-medium text-foreground"
                     />
                     <InputGroupAddon align="inline-end">
                       <InputGroupButton
                         aria-label="Increase servings"
+                        size="icon-xs"
                         onClick={() => stepTargetServings(1)}
                       >
                         +
@@ -136,21 +146,27 @@ export function RecipeViewer({
                     </InputGroupAddon>
                   </InputGroup>
                 ) : (
-                  <span className="text-foreground">n/a</span>
+                  <Tooltip>
+                    <TooltipTrigger
+                      aria-label="Add servings value to change recipe scale"
+                      className="inline-flex cursor-help items-center justify-center border-0 bg-transparent p-0 text-foreground transition-opacity hover:opacity-80"
+                    >
+                      n/a
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      Add servings value to change recipe scale
+                    </TooltipContent>
+                  </Tooltip>
                 )}
                 {isScaled && (
-                  <>
-                    <span className="inline-flex items-center rounded-none border border-border bg-muted px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-foreground">
-                      Modified
-                    </span>
-                    <Button
-                      variant="ghost"
-                      size="xs"
-                      onClick={resetTargetServings}
-                    >
-                      Reset
-                    </Button>
-                  </>
+                  <Button
+                    variant="outline"
+                    size="xs"
+                    className="text-foreground"
+                    onClick={resetTargetServings}
+                  >
+                    Reset
+                  </Button>
                 )}
               </div>
               {recipe.prepTime != null && (
