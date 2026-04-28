@@ -26,10 +26,10 @@ export default function RecipeCard({
       <Link
         href={`/dashboard/r/${recipe.slug}`}
         aria-label={`Open recipe ${recipe.name}`}
-        className="absolute inset-0 z-0 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        className="absolute inset-0 z-10 rounded-none outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       />
 
-      <div className="relative z-10 aspect-video w-full overflow-hidden bg-muted">
+      <div className="relative aspect-video w-full overflow-hidden bg-muted">
         {recipe.imageUrl ? (
           <Image
             src={recipe.imageUrl}
@@ -46,7 +46,7 @@ export default function RecipeCard({
         )}
       </div>
 
-      <CardHeader className="relative z-10">
+      <CardHeader>
         <div className="flex min-w-0 flex-col gap-1">
           <CardTitle className="line-clamp-1 text-xl">{recipe.name}</CardTitle>
           {recipe.category ? (
@@ -59,7 +59,7 @@ export default function RecipeCard({
         </CardAction>
       </CardHeader>
 
-      <CardContent className="relative z-10 flex-1">
+      <CardContent className="flex-1">
         <p className="line-clamp-2 text-sm text-muted-foreground">
           {recipe.description || "No description provided yet."}
         </p>
