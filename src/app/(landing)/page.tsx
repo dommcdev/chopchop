@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRightIcon,
@@ -72,39 +73,51 @@ export default function HomePage() {
         <div className="pointer-events-none absolute -top-40 right-0 h-[600px] w-[600px] bg-primary/[0.03] blur-[120px] dark:bg-primary/[0.06]" />
 
         <div className="relative flex min-h-[calc(100svh-4rem)] flex-col justify-center pb-28 lg:pb-32">
-          <div className="max-w-4xl">
-            <p className="font-mono text-[0.7rem] tracking-[0.25em] text-primary">
-              {"// digital cookbook"}
-            </p>
+          <div className="lg:flex lg:items-stretch lg:justify-center lg:gap-12 xl:gap-16">
+            <div className="max-w-4xl lg:max-w-xl xl:max-w-2xl">
+              <p className="font-mono text-[0.7rem] tracking-[0.25em] text-primary">
+                {"// digital cookbook"}
+              </p>
 
-            <h1 className="mt-7 text-5xl font-semibold tracking-[-0.045em] text-balance sm:text-6xl md:text-7xl lg:text-[5.5rem] lg:leading-[1.05]">
-              Your recipes, <span className="text-primary">digitized.</span>
-            </h1>
+              <h1 className="mt-7 text-5xl font-semibold tracking-[-0.045em] text-balance sm:text-6xl md:text-7xl lg:text-5xl xl:text-6xl">
+                Your recipes,{" "}
+                <span className="text-primary">digitized.</span>
+              </h1>
 
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg sm:leading-relaxed">
-              Convert recipes from photos, PDFs, and handwritten cards into a
-              format you can edit, scale, cook from, and share.
-            </p>
+              <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg sm:leading-relaxed">
+                Convert recipes from photos, PDFs, and handwritten cards into a
+                format you can edit, scale, cook from, and share.
+              </p>
 
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Link
-                href="/dashboard"
-                prefetch={false}
-                className="group inline-flex items-center justify-center gap-2.5 bg-primary px-7 py-3.5 text-sm font-bold tracking-wide text-primary-foreground uppercase transition-all hover:bg-primary/90"
-              >
-                Get started
-                <ArrowRightIcon
-                  weight="bold"
-                  className="size-4 transition-transform group-hover:translate-x-0.5"
-                />
-              </Link>
-              <Link
-                href="/login"
-                prefetch={false}
-                className="inline-flex items-center justify-center border border-border bg-background px-7 py-3.5 text-sm font-bold tracking-wide uppercase transition-colors hover:bg-muted"
-              >
-                Sign in
-              </Link>
+              <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <Link
+                  href="/dashboard"
+                  prefetch={false}
+                  className="group inline-flex items-center justify-center gap-2.5 bg-primary px-7 py-3.5 text-sm font-bold tracking-wide text-primary-foreground uppercase transition-all hover:bg-primary/90"
+                >
+                  Get started
+                  <ArrowRightIcon
+                    weight="bold"
+                    className="size-4 transition-transform group-hover:translate-x-0.5"
+                  />
+                </Link>
+                <Link
+                  href="/login"
+                  prefetch={false}
+                  className="inline-flex items-center justify-center border border-border bg-background px-7 py-3.5 text-sm font-bold tracking-wide uppercase transition-colors hover:bg-muted"
+                >
+                  Sign in
+                </Link>
+              </div>
+            </div>
+
+            <div className="relative hidden overflow-hidden lg:block lg:w-64 xl:w-80 2xl:w-96">
+              <Image
+                src="https://i3ae2rmmav.ufs.sh/f/jtfWTQ42KQLJEVzzeoFam4zc0gRQ5o9F6SIwatbqusWNlkDK"
+                alt="Recipe being digitized"
+                fill
+                className="object-cover"
+              />
             </div>
           </div>
         </div>
