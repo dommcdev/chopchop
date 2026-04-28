@@ -8,7 +8,6 @@
   - `use cache` tsx rather than ts?
   - TOS/Privacy Policy pages
   - Redo landing page (more stuff)
-  - Tweak 3-dot-dropdown button + scaler modified/reset ui
 
 
 - Low Priority
@@ -16,13 +15,10 @@
   - Upload recipe dialog
   - Pdf printing - finalize layout/styling
   - Display more data in each search result (category, trunc desc, etc)
+  - Bulk recipe json exporter/importer
 
 ### Future features (?)
-- Bulk recipe json exporter/importer
-- Bulk recipe ingest/queuing
-- Rate limiting, private links
 - Advanced search page
-- Preferences
 - Help page (+ tooltips)
 - Add nutritional info, difficulty, rating, og source
 - Add sorting/groups to recipes page
@@ -39,4 +35,6 @@
 - Add 'copy recipe to account' button
 - Add uncategoried category
 - Auto-convert units with scaling (+ detect nums in instructions to warn user)
+- Rate limiting
+- Recipes private-by-default
 

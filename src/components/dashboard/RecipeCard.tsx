@@ -100,7 +100,7 @@ export function RecipeCardSkeleton() {
 
 export function RecipeCardCreate() {
   return (
-    <Card className="flex h-full flex-col overflow-hidden rounded-none pt-0 transition-all duration-300 ease-in-out hover:bg-primary/3 hover:shadow-sm">
+    <Card className="flex h-full flex-col overflow-hidden rounded-none pt-0 transition-all duration-300 ease-in-out hover:bg-muted/40 hover:shadow-sm dark:hover:bg-muted/60 dark:hover:ring-foreground/20 dark:hover:shadow-black/30 will-change-transform">
       <div className="relative flex aspect-video w-full items-center justify-center overflow-hidden bg-muted/70">
         <CirclesThreePlusIcon
           className="size-10 text-primary"

@@ -34,7 +34,7 @@ export function CategoryCardSkeleton() {
 
 export function CategoryCardCreate() {
   return (
-    <Card className="text-primary shadow-sm transition-[background-color,color,box-shadow,transform] duration-300 hover:bg-primary/3">
+    <Card isHoverable className="shadow-sm text-primary hover:text-primary">
       <CardContent className="flex h-28 flex-col items-center justify-center gap-2 p-6 text-center">
         <StackPlusIcon className="size-8 text-primary" aria-hidden="true" />
         <span className="text-base font-semibold leading-tight">
