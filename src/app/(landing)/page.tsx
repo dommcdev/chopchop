@@ -51,7 +51,7 @@ const steps = [
 const stats = [
   { value: "< 30s", label: "to digitize a recipe" },
   { value: "1\u2011tap", label: "serving adjustment" },
-  { value: "\u221E", label: "shareable links" },
+  { value: "Unlimited", label: "shareable links" },
 ];
 
 export default function HomePage() {

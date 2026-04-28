@@ -12,7 +12,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Suspense } from "react";
-import { CreateCategoryDialog } from "./CreateCategoryDialog";
+import { CreateCategoryDialog } from "./CategoryDialog";
 
 export default async function DashboardCategories() {
   return (

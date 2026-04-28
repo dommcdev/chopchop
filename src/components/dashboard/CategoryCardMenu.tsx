@@ -9,7 +9,7 @@ import {
 } from "@phosphor-icons/react";
 
 import { CategoryDeleteDialog } from "@/components/CategoryDeleteDialog";
-import { RenameCategoryDialog } from "@/components/dashboard/CreateCategoryDialog";
+import { RenameCategoryDialog } from "@/components/dashboard/CategoryDialog";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -42,6 +42,7 @@ export function CategoryCardMenu({
         open={isRenameOpen}
         onOpenChange={setIsRenameOpen}
         trigger={<span />}
+        triggerNativeButton={false}
       />
       <DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
         <DropdownMenuTrigger
