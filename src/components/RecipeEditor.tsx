@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { TrashIcon } from "@phosphor-icons/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import FilePickerUploader from "@/components/FilePickerUploader";
 import {
   EMPTY_RECIPE_EDITOR_VALUES,
@@ -95,9 +95,10 @@ export function RecipeEditor({
     form.reset(initialValues);
   }, [form, initialValues]);
 
-  const imageUrl = form.watch("imageUrl");
-  const imageKey = form.watch("imageKey");
-  const recipeName = form.watch("name");
+  const [imageUrl, imageKey, recipeName] = useWatch({
+    control: form.control,
+    name: ["imageUrl", "imageKey", "name"],
+  });
 
   const ingredientsArray = useFieldArray({
     control: form.control,

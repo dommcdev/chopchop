@@ -18,8 +18,13 @@ export default async function DashboardCategories() {
   return (
     <div className="m-4 flex flex-col gap-2 md:m-6">
       <div className="flex flex-row justify-between items-center">
-        <h2 className="text-xl font-semibold tracking-tight">Browse Categories</h2>
-          <Link href="/dashboard/c" className="text-muted-foreground underline underline-offset-2 transition-colors hover:text-foreground">
+        <h2 className="text-xl font-semibold tracking-tight">
+          Browse Categories
+        </h2>
+        <Link
+          href="/dashboard/c"
+          className="text-muted-foreground underline underline-offset-2 transition-colors hover:text-foreground"
+        >
           View all categories
         </Link>
       </div>
