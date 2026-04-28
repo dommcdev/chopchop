@@ -80,8 +80,7 @@ export default function HomePage() {
               </p>
 
               <h1 className="mt-7 text-5xl font-semibold tracking-[-0.045em] text-balance sm:text-6xl md:text-7xl lg:text-5xl xl:text-6xl">
-                Your recipes,{" "}
-                <span className="text-primary">digitized.</span>
+                Your recipes, <span className="text-primary">digitized.</span>
               </h1>
 
               <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg sm:leading-relaxed">
@@ -113,9 +112,10 @@ export default function HomePage() {
 
             <div className="relative hidden overflow-hidden lg:block lg:w-64 xl:w-80 2xl:w-96">
               <Image
-                src="https://i3ae2rmmav.ufs.sh/f/jtfWTQ42KQLJEVzzeoFam4zc0gRQ5o9F6SIwatbqusWNlkDK"
-                alt="Recipe being digitized"
+                src="https://i3ae2rmmav.ufs.sh/f/jtfWTQ42KQLJtoPplgKLe0MEF7P4fKIaVj3Yrcl9nCpOLNqo"
+                alt="Chef chopping vegetables"
                 fill
+                loading="eager"
                 className="object-cover"
               />
             </div>

@@ -59,7 +59,7 @@ export const geminiRecipeSchema = z.object({
     .array(
       z.object({
         name: stringOrNull(
-          "Ingredient name with special instructions if present (e.g. 'Butter, softened')",
+          "Ingredient name (capitalized) with special instructions if present (e.g. 'Butter, softened')",
         ),
         quantity: numOrNull(
           0,

@@ -5,8 +5,6 @@
 - Display more data in each search result (category, trunc desc, etc)
 - Upload recipe dialog
 - Handle deleting images from uploadthing (both on recipe delete + editor swap image)
-- Tweak schema to capitalize ingredients
-- Add image downloads to recipe export
 
 
 ### Future features
@@ -16,8 +14,8 @@
 - Add sorting/groups to recipes page
 - Infinite scroll with virtualization
 - Change instruction order via dragable elements
-- Welcome flow (default categories + example recipes)
-- Bulk recipe injest and/or import form json
+- Welcome flow (default categories/recipes, ui hints)
+- Bulk recipe injest and/or import from json
 
 ### Behavior tweaks
 - Tighten up schemas (min/max lengths, add category name schema, server double-validation, etc)
