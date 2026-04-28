@@ -9,7 +9,7 @@ import { and, eq } from "drizzle-orm";
 import { updateTag } from "next/cache";
 
 import { db } from "@/db";
-import { categories } from "@/db/schema";
+import { categories, recipes } from "@/db/schema";
 import { generateSlug } from "@/lib/utils";
 import { checkAuth } from "./shared";
 
@@ -155,6 +155,11 @@ export async function deleteCategory(
     if (!existing) {
       return { success: false, error: "Category not found." };
     }
+
+    await db
+      .update(recipes)
+      .set({ categoryId: null })
+      .where(eq(recipes.categoryId, existing.id));
 
     await db
       .delete(categories)

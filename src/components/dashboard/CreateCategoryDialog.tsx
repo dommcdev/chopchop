@@ -33,6 +33,8 @@ type RenameCategoryDialogProps = {
   trigger: ReactElement;
   categorySlug: string;
   currentName: string;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
 
 export function CreateCategoryDialog({ trigger }: CreateCategoryDialogProps) {
@@ -60,6 +62,8 @@ export function RenameCategoryDialog({
   trigger,
   categorySlug,
   currentName,
+  open,
+  onOpenChange,
 }: RenameCategoryDialogProps) {
   return (
     <CategoryNameDialog
@@ -72,6 +76,8 @@ export function RenameCategoryDialog({
       submitLabel="Rename"
       submittingLabel="Renaming..."
       submitIcon={<PencilSimpleIcon data-icon="inline-start" weight="bold" />}
+      open={open}
+      onOpenChange={onOpenChange}
       onSubmit={async (name) => {
         const result = await renameCategory(categorySlug, name);
         if (!result.success) throw new Error(result.error);
@@ -91,6 +97,8 @@ type CategoryNameDialogProps = {
   submitLabel: string;
   submittingLabel: string;
   submitIcon: ReactElement;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
   onSubmit: (name: string) => Promise<{ slug: string; toastMessage: string }>;
   navigateOnSuccess?: (slug: string) => string;
 };
@@ -105,21 +113,28 @@ function CategoryNameDialog({
   submitLabel,
   submittingLabel,
   submitIcon,
+  open: controlledOpen,
+  onOpenChange: controlledOnOpenChange,
   onSubmit,
   navigateOnSuccess,
 }: CategoryNameDialogProps) {
   const router = useRouter();
-  const [open, setOpen] = useState(false);
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
   const [name, setName] = useState(initialName);
   const [error, setError] = useState<string | null>(null);
   const [isPending, setIsPending] = useState(false);
+  const open = controlledOpen ?? uncontrolledOpen;
 
   const handleOpenChange = (nextOpen: boolean) => {
     if (!nextOpen && isPending) {
       return;
     }
 
-    setOpen(nextOpen);
+    controlledOnOpenChange?.(nextOpen);
+
+    if (controlledOpen === undefined) {
+      setUncontrolledOpen(nextOpen);
+    }
 
     if (!nextOpen) {
       setName(initialName);
@@ -140,7 +155,7 @@ function CategoryNameDialog({
     try {
       const { slug, toastMessage } = await onSubmit(name);
 
-      setOpen(false);
+      handleOpenChange(false);
       setName(initialName);
       toast.success(toastMessage);
 
@@ -195,7 +210,7 @@ function CategoryNameDialog({
             <Button
               type="button"
               variant="outline"
-              onClick={() => setOpen(false)}
+              onClick={() => handleOpenChange(false)}
               disabled={isPending}
             >
               Cancel

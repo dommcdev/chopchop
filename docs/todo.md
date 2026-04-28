@@ -1,7 +1,7 @@
 ## Project Tasks
 
 ### Todo
-  - Add delete/rename button to categories
+  - Review category rename/delete (need to refresh/invalidate cache)
 
 - Low Priority
   - Search dialog - support category & incredient filters (ui bubbles + shortcut hints)
