@@ -65,32 +65,39 @@ export default function HomePage() {
   return (
     <main className="bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
       <section className="mx-auto flex min-h-[calc(100svh-4rem)] w-full max-w-screen-3xl items-center px-4 py-10 sm:px-6 sm:py-14 lg:px-9 lg:py-16">
-        <div className="grid w-full gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(22rem,0.9fr)] lg:gap-12 xl:gap-16">
-          <div className="flex flex-col justify-center gap-8 lg:py-8">
-            <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-              <span className="rounded-full border border-border bg-muted/40 px-3 py-1">
-                Digital cookbook
-              </span>
-              <span className="rounded-full border border-border bg-muted/40 px-3 py-1">
-                OCR import
-              </span>
-              <span className="rounded-full border border-border bg-muted/40 px-3 py-1">
-                Free to use
-              </span>
-            </div>
+        <div className="relative grid w-full items-end gap-8 overflow-hidden border border-border/70 bg-muted/10 px-5 py-6 sm:px-7 sm:py-8 lg:min-h-[calc(100svh-8rem)] lg:grid-cols-[minmax(0,1.15fr)_minmax(18rem,0.85fr)] lg:px-10 lg:py-10 xl:px-14 xl:py-12">
+          <div className="absolute inset-y-0 right-0 w-full lg:w-[52%]">
+            <Image
+              src={foodImageSrc}
+              alt="Prepared ingredients arranged for cooking"
+              fill
+              priority
+              className="object-cover object-center"
+              sizes="(min-width: 1280px) 44rem, (min-width: 1024px) 52vw, 100vw"
+            />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,var(--background)_14%,color-mix(in_oklab,var(--background)_72%,transparent)_42%,transparent_72%)] dark:bg-[linear-gradient(90deg,var(--background)_10%,color-mix(in_oklab,var(--background)_60%,transparent)_40%,transparent_72%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,color-mix(in_oklab,var(--background)_18%,transparent),transparent_34%)]" />
+          </div>
 
-            <div className="max-w-3xl space-y-5">
-              <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl xl:text-7xl">
-                Turn scattered recipes into a cookbook you can actually use.
+          <div className="relative z-10 flex max-w-4xl flex-col justify-end gap-8 lg:gap-12 lg:self-stretch lg:py-4">
+            <p className="text-[0.7rem] font-semibold tracking-[0.28em] text-muted-foreground uppercase">
+              Digital cookbook for recipes worth keeping
+            </p>
+
+            <div className="space-y-6">
+              <h1 className="max-w-4xl text-5xl font-semibold tracking-[-0.06em] text-balance sm:text-6xl md:text-7xl lg:text-[clamp(4.75rem,8vw,8rem)] lg:leading-[0.92]">
+                Keep the recipe.
+                <br />
+                Lose the clutter.
               </h1>
-              <p className="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
-                ChopChop helps you pull recipes out of photos, cookbook pages,
-                and PDFs, then save them in a format that is easier to edit,
-                scale, print, and share.
+
+              <p className="max-w-xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8 lg:max-w-lg">
+                Convert recipes from photos and PDFs into a format that is
+                easier to edit, scale, cook from, and share.
               </p>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
               <Link
                 href="/dashboard"
                 className="inline-flex items-center justify-center gap-2 rounded-none bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
@@ -100,88 +107,23 @@ export default function HomePage() {
               </Link>
               <Link
                 href="/login"
-                className="inline-flex items-center justify-center rounded-none border border-border px-6 py-3 text-sm font-semibold transition-colors hover:bg-muted"
+                className="inline-flex items-center justify-center rounded-none border border-border bg-background/70 px-6 py-3 text-sm font-semibold backdrop-blur-sm transition-colors hover:bg-background"
               >
                 Sign in to save recipes
               </Link>
             </div>
-
-            <div className="grid gap-4 border-y border-border/70 py-6 sm:grid-cols-3">
-              <div className="space-y-1">
-                <p className="text-sm font-medium text-foreground">
-                  Built for real recipe clutter
-                </p>
-                <p className="text-sm leading-6 text-muted-foreground">
-                  Cookbook pages, PDFs, screenshots, and old note cards.
-                </p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-sm font-medium text-foreground">
-                  Keeps recipes editable
-                </p>
-                <p className="text-sm leading-6 text-muted-foreground">
-                  Fix wording, update amounts, and keep one clean version.
-                </p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-sm font-medium text-foreground">
-                  Ready on phone or desktop
-                </p>
-                <p className="text-sm leading-6 text-muted-foreground">
-                  Designed to be readable at the counter or on a wide screen.
-                </p>
-              </div>
-            </div>
           </div>
 
-          <div className="flex min-h-[26rem] flex-col overflow-hidden border border-border bg-card lg:min-h-[42rem]">
-            <div className="relative min-h-[18rem] flex-1">
-              <Image
-                src={foodImageSrc}
-                alt="Prepared ingredients arranged for cooking"
-                fill
-                priority
-                className="object-cover object-center"
-                sizes="(min-width: 1280px) 36rem, (min-width: 1024px) 42vw, 100vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-background/15 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
-                <div className="max-w-md space-y-3 border border-white/15 bg-background/80 p-4 backdrop-blur-sm">
-                  <p className="text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase">
-                    Typical workflow
-                  </p>
-                  <p className="text-lg font-medium leading-7 text-foreground">
-                    Import a recipe, correct the details once, then keep coming
-                    back to the clean version.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="grid gap-px border-t border-border bg-border/60 sm:grid-cols-3">
-              <div className="bg-card p-5">
-                <p className="text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase">
-                  Import
-                </p>
-                <p className="mt-2 text-sm leading-6 text-foreground">
-                  Photos and PDFs become editable recipes.
-                </p>
-              </div>
-              <div className="bg-card p-5">
-                <p className="text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase">
-                  Scale
-                </p>
-                <p className="mt-2 text-sm leading-6 text-foreground">
-                  Ingredient amounts update with the serving size.
-                </p>
-              </div>
-              <div className="bg-card p-5">
-                <p className="text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase">
-                  Share
-                </p>
-                <p className="mt-2 text-sm leading-6 text-foreground">
-                  Send a simple link instead of reformatting recipes by hand.
-                </p>
-              </div>
+          <div className="relative z-10 flex flex-col gap-6 justify-self-start lg:max-w-[18rem] lg:justify-self-end lg:self-end">
+            <p className="max-w-xs text-sm leading-6 text-muted-foreground lg:text-right">
+              For cookbook pages, screenshots, old printouts, and the recipes
+              that keep getting lost in between.
+            </p>
+            <div className="h-px w-full bg-border/70" />
+            <div className="grid gap-3 text-sm text-foreground lg:text-right">
+              <p>Conversion that produces editable recipes.</p>
+              <p>Serving-size adjustments without recalculating by hand.</p>
+              <p>Read-only links for sharing a clean final version.</p>
             </div>
           </div>
         </div>
@@ -219,7 +161,7 @@ export default function HomePage() {
             Core features
           </p>
           <h2 className="text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
-            Useful features, not landing-page filler.
+            The parts that make it useful.
           </h2>
         </div>
 
