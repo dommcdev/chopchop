@@ -1,7 +1,5 @@
 import Link from "next/link";
-import CustomUserButton from "@/components/CustomUserButton";
 import { Logo } from "@/components/Logo";
-import { Show } from "@clerk/nextjs";
 import { ThemeToggleButton } from "@/components/ThemeToggleButton";
 
 export function Navbar() {
