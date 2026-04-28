@@ -26,9 +26,9 @@ test("renders links to Terms of Service and Privacy Policy", () => {
 
   const termsLink = screen.getByRole("link", { name: /terms of service/i });
   expect(termsLink).toBeInTheDocument();
-  expect(termsLink).toHaveAttribute("href", "/tos");
+  expect(termsLink).toHaveAttribute("href", "/terms-of-service");
 
   const privacyLink = screen.getByRole("link", { name: /privacy policy/i });
   expect(privacyLink).toBeInTheDocument();
-  expect(privacyLink).toHaveAttribute("href", "/privacy");
+  expect(privacyLink).toHaveAttribute("href", "/privacy-policy");
 });
