@@ -51,9 +51,6 @@ export default function RootLayout({
       )}
     >
       <body>
-        <Suspense>
-          <UploadThingSSR />
-        </Suspense>
         <ThemeProvider>
           <ClerkProvider appearance={{ theme: shadcn }}>
             <TooltipProvider>
