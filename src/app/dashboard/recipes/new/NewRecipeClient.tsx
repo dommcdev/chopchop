@@ -4,7 +4,7 @@ import { use } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-import { RecipeEditor } from "@/components/RecipeEditor";
+import { RecipeEditor, RecipeEditorSkeleton } from "@/components/RecipeEditor";
 import { createRecipe } from "@/data/recipesActions";
 import { FinalRecipeSchema } from "@/lib/finalRecipeSchema";
 import { EMPTY_RECIPE_EDITOR_VALUES } from "@/lib/hookformSchema";
@@ -47,7 +47,7 @@ export function NewRecipeClient({ categoriesPromise }: NewRecipeClientProps) {
     router.back();
   };
 
-  if (isAnalyzing) return <p>Analyzing Recipe, please wait...</p>;
+  if (isAnalyzing) return <RecipeEditorSkeleton />;
 
   const initialValues = draft ?? EMPTY_RECIPE_EDITOR_VALUES;
 

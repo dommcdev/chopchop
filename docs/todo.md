@@ -2,11 +2,8 @@
 
 ### Todo
   - Add delete/rename button to categories
-  - Add recipe editor skeleton for suspenses
-  - `use cache` tsx rather than ts?
   - Redo landing page (more stuff)
-  - Display categories in alphabetical order
-  - Handle deleting images from uploadthing
+  - RHF memo error
 
 - Low Priority
   - Search dialog - support category & incredient filters (ui bubbles + shortcut hints)
@@ -14,6 +11,7 @@
   - Pdf printing - finalize layout/styling
   - Display more data in each search result (category, trunc desc, etc)
   - Bulk recipe json exporter/importer
+  - Handle deleting images from uploadthing (both on recipe delete + editor swap image)
 
 
 
@@ -36,4 +34,5 @@
 - Auto-convert units with scaling (+ detect nums in instructions to warn user)
 - Rate limiting
 - Recipes private-by-default
+- Cache components rather than data (??)
 

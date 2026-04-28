@@ -10,7 +10,7 @@
 import "server-only";
 import { db } from "@/db";
 import { categories } from "@/db/schema";
-import { and, eq } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { checkAuth } from "./shared";
 import { cacheTag } from "next/cache";
 
@@ -30,7 +30,8 @@ async function queryCategories(userId: string) {
       slug: categories.slug,
     })
     .from(categories)
-    .where(eq(categories.userId, userId));
+    .where(eq(categories.userId, userId))
+    .orderBy(sql`lower(${categories.name})`);
 }
 
 async function queryCategoryNameFromSlug(userId: string, slug: string) {

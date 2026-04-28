@@ -1,5 +1,6 @@
 import { BackLink } from "@/components/dashboard/BackLink";
 import { EditRecipeClient } from "@/components/EditRecipeClient";
+import { RecipeEditorSkeleton } from "@/components/RecipeEditor";
 import { fetchCategories } from "@/data/categories";
 import { fetchRecipeDetailsBySlug } from "@/data/recipes";
 import { Suspense } from "react";
@@ -19,7 +20,7 @@ export default async function RecipeEditorPage({
         <div className="mb-5">
           <BackLink href="/dashboard">Back to Dashboard</BackLink>
         </div>
-        <Suspense fallback={<p>Loading recipe data...</p>}>
+        <Suspense fallback={<RecipeEditorSkeleton />}>
           <EditRecipeClient
             recipePromise={recipePromise}
             categoriesPromise={categoriesPromise}

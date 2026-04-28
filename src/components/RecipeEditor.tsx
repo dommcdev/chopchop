@@ -44,6 +44,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Field,
   FieldDescription,
@@ -611,5 +612,83 @@ export function RecipeEditor({
         </CardFooter>
       </Card>
     </form>
+  );
+}
+
+export function RecipeEditorSkeleton() {
+  return (
+    <Card className="shadow-sm">
+      <CardHeader className="py-4">
+        <Skeleton className="h-5 w-28" />
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-full max-w-xl" />
+          <Skeleton className="h-4 w-3/4 max-w-lg" />
+        </div>
+      </CardHeader>
+
+      <CardContent className="grid gap-6">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+          <div className="min-w-0">
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-9 w-full" />
+              </div>
+
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-24 w-full" />
+              </div>
+
+              <div className="grid [grid-template-columns:repeat(auto-fit,minmax(9rem,1fr))] gap-4">
+                {[...Array(4)].map((_, index) => (
+                  <div key={index} className="space-y-2">
+                    <Skeleton className="h-4 w-16" />
+                    <Skeleton className="h-9 w-full" />
+                    <Skeleton className="h-4 w-full" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="min-w-0 space-y-3">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-4 w-72 max-w-full" />
+            <div className="space-y-2">
+              {[...Array(6)].map((_, index) => (
+                <Skeleton key={index} className="h-10 w-full" />
+              ))}
+            </div>
+            <Skeleton className="h-9 w-32" />
+          </div>
+
+          <div className="min-w-0 space-y-3 lg:col-span-2">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-4 w-40" />
+            <div className="space-y-2">
+              {[...Array(4)].map((_, index) => (
+                <Skeleton key={index} className="h-14 w-full" />
+              ))}
+            </div>
+            <Skeleton className="h-9 w-28" />
+          </div>
+
+          <div className="min-w-0 space-y-2 lg:col-span-2">
+            <Skeleton className="h-4 w-28" />
+            <Skeleton className="h-4 w-52" />
+            <Skeleton className="h-64 w-full" />
+          </div>
+        </div>
+      </CardContent>
+
+      <CardFooter className="flex items-center justify-between gap-2 py-4">
+        <Skeleton className="h-10 w-20" />
+        <div className="flex gap-4">
+          <Skeleton className="h-10 w-24" />
+          <Skeleton className="h-10 w-28" />
+        </div>
+      </CardFooter>
+    </Card>
   );
 }
