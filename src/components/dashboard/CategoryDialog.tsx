@@ -30,7 +30,7 @@ type CreateCategoryDialogProps = {
 };
 
 type RenameCategoryDialogProps = {
-  trigger: ReactElement;
+  trigger?: ReactElement;
   triggerNativeButton?: boolean;
   categorySlug: string;
   currentName: string;
@@ -91,7 +91,7 @@ export function RenameCategoryDialog({
 }
 
 type CategoryNameDialogProps = {
-  trigger: ReactElement;
+  trigger?: ReactElement;
   triggerNativeButton?: boolean;
   title: string;
   description: string;
@@ -183,7 +183,9 @@ function CategoryNameDialog({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger render={trigger} nativeButton={triggerNativeButton} />
+      {trigger ? (
+        <DialogTrigger render={trigger} nativeButton={triggerNativeButton} />
+      ) : null}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
