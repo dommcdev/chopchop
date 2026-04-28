@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { FileImageIcon, InfoIcon } from "@phosphor-icons/react/dist/ssr";
+import {
+  ArrowCounterClockwiseIcon,
+  FileImageIcon,
+} from "@phosphor-icons/react/dist/ssr";
 import { PrintableRecipeCard } from "./PrintableRecipeCard";
 import { RecipeToolbar } from "./RecipeToolbar";
 import { RecipeInstructions } from "./RecipeInstructions";
@@ -24,7 +27,6 @@ import {
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { calculateScaleFactor, formatMinutes } from "@/lib/utils";
@@ -111,40 +113,60 @@ export function RecipeViewer({
                   <span>Servings: </span>
                 </span>
                 {hasServings ? (
-                  <InputGroup className="h-7 w-24 bg-background">
-                    <InputGroupAddon align="inline-start">
-                      <InputGroupButton
-                        aria-label="Decrease servings"
-                        size="icon-xs"
-                        onClick={() => stepTargetServings(-1)}
-                      >
-                        -
-                      </InputGroupButton>
-                    </InputGroupAddon>
-                    <InputGroupInput
-                      aria-label="Target servings"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      value={targetServingsInput}
-                      onChange={(event) => {
-                        const nextValue = event.target.value;
-                        if (/^\d*$/.test(nextValue)) {
-                          setTargetServingsInput(nextValue);
-                        }
-                      }}
-                      onBlur={normalizeTargetServings}
-                      className="px-1 text-center text-sm font-medium text-foreground"
-                    />
-                    <InputGroupAddon align="inline-end">
-                      <InputGroupButton
-                        aria-label="Increase servings"
-                        size="icon-xs"
-                        onClick={() => stepTargetServings(1)}
-                      >
-                        +
-                      </InputGroupButton>
-                    </InputGroupAddon>
-                  </InputGroup>
+                  <>
+                    <InputGroup className="h-7 w-24 bg-background">
+                      <InputGroupAddon align="inline-start">
+                        <InputGroupButton
+                          aria-label="Decrease servings"
+                          size="icon-xs"
+                          onClick={() => stepTargetServings(-1)}
+                        >
+                          -
+                        </InputGroupButton>
+                      </InputGroupAddon>
+                      <InputGroupInput
+                        aria-label="Target servings"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        value={targetServingsInput}
+                        onChange={(event) => {
+                          const nextValue = event.target.value;
+                          if (/^\d*$/.test(nextValue)) {
+                            setTargetServingsInput(nextValue);
+                          }
+                        }}
+                        onBlur={normalizeTargetServings}
+                        className="px-1 text-center text-sm font-medium text-foreground"
+                      />
+                      <InputGroupAddon align="inline-end">
+                        <InputGroupButton
+                          aria-label="Increase servings"
+                          size="icon-xs"
+                          onClick={() => stepTargetServings(1)}
+                        >
+                          +
+                        </InputGroupButton>
+                      </InputGroupAddon>
+                    </InputGroup>
+                    {isScaled && (
+                      <Tooltip delay={2000}>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon-sm"
+                            aria-label="Reset servings"
+                            className="text-foreground"
+                            onClick={resetTargetServings}
+                          >
+                            <ArrowCounterClockwiseIcon className="size-3.5" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          Reset servings & ingredient amounts to default values
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
+                  </>
                 ) : (
                   <Tooltip>
                     <TooltipTrigger
@@ -157,16 +179,6 @@ export function RecipeViewer({
                       Add servings value to change recipe scale
                     </TooltipContent>
                   </Tooltip>
-                )}
-                {isScaled && (
-                  <Button
-                    variant="outline"
-                    size="xs"
-                    className="text-foreground"
-                    onClick={resetTargetServings}
-                  >
-                    Reset
-                  </Button>
                 )}
               </div>
               {recipe.prepTime != null && (
