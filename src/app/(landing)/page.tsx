@@ -76,7 +76,7 @@ export default function HomePage() {
           <div className="lg:flex lg:items-stretch lg:justify-center lg:gap-12 xl:gap-16">
             <div className="max-w-4xl lg:max-w-xl xl:max-w-2xl">
               <p className="font-mono text-[0.7rem] tracking-[0.25em] text-primary">
-                {"// digital cookbook"}
+                {"// chopchop"}
               </p>
 
               <h1 className="mt-7 text-5xl font-semibold tracking-[-0.045em] text-balance sm:text-6xl md:text-7xl lg:text-5xl xl:text-6xl">
