@@ -5,7 +5,6 @@
   - Fix image lazy-to-eager rendering on dashboard recipe cards
   - Add delete/rename button to categories
   - Add recipe editor skeleton for suspenses
-  - Better new recipe button styling/positioning
   - `use cache` tsx rather than ts?
   - TOS/Privacy Policy pages
   - Redo landing page (more stuff)
@@ -16,7 +15,6 @@
   - Search dialog - support category & incredient filters (ui bubbles + shortcut hints)
   - Upload recipe dialog
   - Pdf printing - finalize layout/styling
-  - Tooltips (shadcn tooltip)
   - Display more data in each search result (category, trunc desc, etc)
 
 ### Future features (?)
@@ -25,7 +23,7 @@
 - Rate limiting, private links
 - Advanced search page
 - Preferences
-- Help page
+- Help page (+ tooltips)
 - Add nutritional info, difficulty, rating, og source
 - Add sorting/groups to recipes page
 - Infinite scroll with virtualization
