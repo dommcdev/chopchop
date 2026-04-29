@@ -74,12 +74,12 @@ export default function HomePage() {
 
         <div className="relative flex min-h-[calc(100svh-4rem)] flex-col justify-center pb-28 lg:pb-32">
           <div className="lg:flex lg:items-stretch lg:justify-center lg:gap-12 xl:gap-16">
-            <div className="max-w-4xl lg:max-w-xl xl:max-w-2xl">
+            <div className="max-w-4xl lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl">
               <p className="font-mono text-[0.7rem] tracking-[0.25em] text-primary">
                 {"// chopchop"}
               </p>
 
-              <h1 className="mt-7 text-5xl font-semibold tracking-[-0.045em] text-balance sm:text-6xl md:text-7xl lg:text-5xl xl:text-6xl">
+              <h1 className="mt-7 text-5xl font-semibold tracking-[-0.045em] text-balance sm:text-6xl md:text-7xl lg:text-5xl xl:text-6xl 2xl:text-7xl">
                 Your recipes, <span className="text-primary">digitized.</span>
               </h1>
 
