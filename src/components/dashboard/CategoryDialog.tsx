@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, type FormEvent, type ReactElement } from "react";
-import { useRouter } from "next/navigation";
 import { PencilSimpleIcon, StackPlusIcon } from "@phosphor-icons/react";
 import { toast } from "sonner";
 
@@ -24,9 +23,11 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { createCategory, renameCategory } from "@/data/categoriesActions";
+import type { CategoryBrief } from "@/types";
 
 type CreateCategoryDialogProps = {
   trigger: ReactElement;
+  onCreated?: (category: CategoryBrief) => void | Promise<void>;
 };
 
 type RenameCategoryDialogProps = {
@@ -36,9 +37,13 @@ type RenameCategoryDialogProps = {
   currentName: string;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  onRenamed?: (category: { slug: string }) => void | Promise<void>;
 };
 
-export function CreateCategoryDialog({ trigger }: CreateCategoryDialogProps) {
+export function CreateCategoryDialog({
+  trigger,
+  onCreated,
+}: CreateCategoryDialogProps) {
   return (
     <CategoryNameDialog
       trigger={trigger}
@@ -52,9 +57,12 @@ export function CreateCategoryDialog({ trigger }: CreateCategoryDialogProps) {
       onSubmit={async (name) => {
         const result = await createCategory(name);
         if (!result.success) throw new Error(result.error);
-        return { slug: result.slug, toastMessage: "Category created." };
+        return {
+          data: result.category,
+          toastMessage: "Category created.",
+        };
       }}
-      navigateOnSuccess={(slug) => `/dashboard/categories/${slug}`}
+      onSuccess={onCreated}
     />
   );
 }
@@ -66,6 +74,7 @@ export function RenameCategoryDialog({
   currentName,
   open,
   onOpenChange,
+  onRenamed,
 }: RenameCategoryDialogProps) {
   return (
     <CategoryNameDialog
@@ -84,13 +93,17 @@ export function RenameCategoryDialog({
       onSubmit={async (name) => {
         const result = await renameCategory(categorySlug, name);
         if (!result.success) throw new Error(result.error);
-        return { slug: result.slug, toastMessage: "Category renamed." };
+        return {
+          data: { slug: result.slug },
+          toastMessage: "Category renamed.",
+        };
       }}
+      onSuccess={onRenamed}
     />
   );
 }
 
-type CategoryNameDialogProps = {
+type CategoryNameDialogProps<TSuccess> = {
   trigger?: ReactElement;
   triggerNativeButton?: boolean;
   title: string;
@@ -103,11 +116,14 @@ type CategoryNameDialogProps = {
   submitIcon: ReactElement;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-  onSubmit: (name: string) => Promise<{ slug: string; toastMessage: string }>;
-  navigateOnSuccess?: (slug: string) => string;
+  onSubmit: (name: string) => Promise<{
+    data: TSuccess;
+    toastMessage: string;
+  }>;
+  onSuccess?: (data: TSuccess) => void | Promise<void>;
 };
 
-function CategoryNameDialog({
+function CategoryNameDialog<TSuccess>({
   trigger,
   triggerNativeButton,
   title,
@@ -121,9 +137,8 @@ function CategoryNameDialog({
   open: controlledOpen,
   onOpenChange: controlledOnOpenChange,
   onSubmit,
-  navigateOnSuccess,
-}: CategoryNameDialogProps) {
-  const router = useRouter();
+  onSuccess,
+}: CategoryNameDialogProps<TSuccess>) {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
   const [name, setName] = useState(initialName);
   const [error, setError] = useState<string | null>(null);
@@ -148,6 +163,7 @@ function CategoryNameDialog({
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.stopPropagation();
     event.preventDefault();
 
     if (isPending) {
@@ -158,17 +174,12 @@ function CategoryNameDialog({
     setError(null);
 
     try {
-      const { slug, toastMessage } = await onSubmit(name);
+      const { data, toastMessage } = await onSubmit(name);
 
       handleOpenChange(false);
       setName(initialName);
       toast.success(toastMessage);
-
-      if (navigateOnSuccess) {
-        router.push(navigateOnSuccess(slug));
-      }
-
-      router.refresh();
+      await onSuccess?.(data);
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "An unknown error occurred";

@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { TrashIcon } from "@phosphor-icons/react";
+import { PlusIcon, TrashIcon } from "@phosphor-icons/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
+import { CreateCategoryDialog } from "@/components/dashboard/CategoryDialog";
 import FilePickerUploader from "@/components/FilePickerUploader";
 import {
   EMPTY_RECIPE_EDITOR_VALUES,
@@ -81,6 +82,7 @@ export function RecipeEditor({
 }: RecipeEditorProps) {
   const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
   const [isImageUploading, setIsImageUploading] = useState(false);
+  const [categoryOptions, setCategoryOptions] = useState(categories);
 
   const form = useForm<EditorFormState, unknown, FinalRecipeSchema>({
     // What to use to validate data during editing and on submit
@@ -94,6 +96,10 @@ export function RecipeEditor({
   useEffect(() => {
     form.reset(initialValues);
   }, [form, initialValues]);
+
+  useEffect(() => {
+    setCategoryOptions(categories);
+  }, [categories]);
 
   const [imageUrl, imageKey, recipeName] = useWatch({
     control: form.control,
@@ -117,6 +123,25 @@ export function RecipeEditor({
   function clearRecipeForm() {
     form.reset(EMPTY_RECIPE_EDITOR_VALUES);
     setIsClearDialogOpen(false);
+  }
+
+  function handleCategoryCreated(category: CategoryBrief) {
+    setCategoryOptions((current) => {
+      if (current.some((option) => option.id === category.id)) {
+        return current;
+      }
+
+      return [...current, category].sort((first, second) =>
+        first.name.localeCompare(second.name, undefined, {
+          sensitivity: "base",
+        }),
+      );
+    });
+    form.setValue("categoryId", String(category.id), {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
   }
 
   return (
@@ -268,7 +293,7 @@ export function RecipeEditor({
                     control={form.control}
                     render={({ field, fieldState }) =>
                       (() => {
-                        const selectedCategoryName = categories.find(
+                        const selectedCategoryName = categoryOptions.find(
                           (cat) => String(cat.id) === String(field.value),
                         )?.name;
 
@@ -277,40 +302,60 @@ export function RecipeEditor({
                             <FieldLabel htmlFor={field.name}>
                               Category
                             </FieldLabel>
-                            <Select
-                              value={
-                                field.value === "" ? null : String(field.value)
-                              }
-                              onValueChange={(val) =>
-                                field.onChange(
-                                  !val || val === EMPTY_CATEGORY_VALUE
-                                    ? ""
-                                    : val,
-                                )
-                              }
-                              disabled={!categories}
-                            >
-                              <SelectTrigger aria-invalid={fieldState.invalid}>
-                                <SelectValue placeholder="Select…">
-                                  {selectedCategoryName}
-                                </SelectValue>
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectGroup>
-                                  <SelectItem value={EMPTY_CATEGORY_VALUE}>
-                                    Select…
-                                  </SelectItem>
-                                  {(categories ?? []).map((cat) => (
-                                    <SelectItem
-                                      key={cat.id}
-                                      value={String(cat.id)}
-                                    >
-                                      {cat.name}
+                            <div className="flex items-center gap-2">
+                              <Select
+                                value={
+                                  field.value === ""
+                                    ? null
+                                    : String(field.value)
+                                }
+                                onValueChange={(val) =>
+                                  field.onChange(
+                                    !val || val === EMPTY_CATEGORY_VALUE
+                                      ? ""
+                                      : val,
+                                  )
+                                }
+                              >
+                                <SelectTrigger
+                                  className="min-w-0 flex-1"
+                                  aria-invalid={fieldState.invalid}
+                                >
+                                  <SelectValue placeholder="Select…">
+                                    {selectedCategoryName}
+                                  </SelectValue>
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectGroup>
+                                    <SelectItem value={EMPTY_CATEGORY_VALUE}>
+                                      Select…
                                     </SelectItem>
-                                  ))}
-                                </SelectGroup>
-                              </SelectContent>
-                            </Select>
+                                    {(categoryOptions ?? []).map((cat) => (
+                                      <SelectItem
+                                        key={cat.id}
+                                        value={String(cat.id)}
+                                      >
+                                        {cat.name}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectGroup>
+                                </SelectContent>
+                              </Select>
+                              <CreateCategoryDialog
+                                onCreated={handleCategoryCreated}
+                                trigger={
+                                  <Button
+                                    type="button"
+                                    variant="outline"
+                                    size="icon"
+                                    aria-label="Create category"
+                                    title="Create category"
+                                  >
+                                    <PlusIcon weight="bold" />
+                                  </Button>
+                                }
+                              />
+                            </div>
                             <FieldDescription>
                               Select a category to place this recipe in.
                             </FieldDescription>

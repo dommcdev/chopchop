@@ -11,13 +11,14 @@ import { updateTag } from "next/cache";
 import { db } from "@/db";
 import { categories, recipes } from "@/db/schema";
 import { generateSlug } from "@/lib/utils";
+import type { CategoryBrief } from "@/types";
 import { checkAuth } from "./shared";
 
 type MutationResult<T = void> = T extends void
   ? { success: true } | { success: false; error: string }
   : ({ success: true } & T) | { success: false; error: string };
 
-type CreateCategoryResult = MutationResult<{ slug: string }>;
+type CreateCategoryResult = MutationResult<{ category: CategoryBrief }>;
 type RenameCategoryResult = MutationResult<{ slug: string }>;
 type DeleteCategoryResult = MutationResult;
 
@@ -106,15 +107,22 @@ export async function createCategory(
   try {
     const slug = await generateUniqueCategorySlug(userId, name);
 
-    await db.insert(categories).values({
-      name,
-      slug,
-      userId,
-    });
+    const [category] = await db
+      .insert(categories)
+      .values({
+        name,
+        slug,
+        userId,
+      })
+      .returning({
+        id: categories.id,
+        name: categories.name,
+        slug: categories.slug,
+      });
 
     invalidateCategoryTags(userId);
 
-    return { success: true, slug };
+    return { success: true, category };
   } catch (error) {
     console.error("Failed to create category:", error);
     return { success: false, error: "Failed to create category." };

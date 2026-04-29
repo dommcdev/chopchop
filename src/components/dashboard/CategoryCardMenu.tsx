@@ -8,7 +8,7 @@ import {
   TrashIcon,
 } from "@phosphor-icons/react";
 
-import { CategoryDeleteDialog } from "@/components/CategoryDeleteDialog";
+import { CategoryDeleteAlert } from "@/components/CategoryDeleteAlert";
 import { RenameCategoryDialog } from "@/components/dashboard/CategoryDialog";
 import { Button } from "@/components/ui/button";
 import {
@@ -42,6 +42,7 @@ export function CategoryCardMenu({
         currentName={categoryName}
         open={isRenameOpen}
         onOpenChange={setIsRenameOpen}
+        onRenamed={() => router.refresh()}
       />
       <DropdownMenu
         open={menuOpen}
@@ -85,7 +86,7 @@ export function CategoryCardMenu({
               <PencilSimpleIcon weight="bold" />
               Rename
             </DropdownMenuItem>
-            <CategoryDeleteDialog
+            <CategoryDeleteAlert
               triggerNativeButton={false}
               isDeleting={isDeleting}
               onConfirm={async () => {

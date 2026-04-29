@@ -8,7 +8,7 @@ import {
   TrashIcon,
 } from "@phosphor-icons/react";
 
-import { RecipeDeleteDialog } from "@/components/RecipeDeleteDialog";
+import { RecipeDeleteAlert } from "@/components/RecipeDeleteAlert";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -52,7 +52,7 @@ export function RecipeCardMenu({ recipeSlug }: RecipeCardMenuProps) {
             <PencilSimpleIcon weight="bold" />
             Edit
           </DropdownMenuItem>
-          <RecipeDeleteDialog
+          <RecipeDeleteAlert
             triggerNativeButton={false}
             isDeleting={isDeleting}
             onConfirm={async () => {

@@ -15,19 +15,19 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-type CategoryDeleteDialogProps = {
+type RecipeDeleteAlertProps = {
   trigger: ReactElement;
   triggerNativeButton?: boolean;
   isDeleting: boolean;
   onConfirm: () => Promise<boolean>;
 };
 
-export function CategoryDeleteDialog({
+export function RecipeDeleteAlert({
   trigger,
   triggerNativeButton = true,
   isDeleting,
   onConfirm,
-}: CategoryDeleteDialogProps) {
+}: RecipeDeleteAlertProps) {
   const [open, setOpen] = useState(false);
 
   const handleConfirm = async () => {
@@ -46,10 +46,10 @@ export function CategoryDeleteDialog({
           <AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
             <TrashIcon weight="bold" />
           </AlertDialogMedia>
-          <AlertDialogTitle>Delete category?</AlertDialogTitle>
+          <AlertDialogTitle>Delete recipe?</AlertDialogTitle>
           <AlertDialogDescription>
-            This will permanently delete this category. Recipes in this category
-            will become uncategorized.
+            This will permanently delete this recipe and remove it from your
+            dashboard.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

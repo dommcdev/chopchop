@@ -12,7 +12,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Suspense } from "react";
-import { CreateCategoryDialog } from "./CategoryDialog";
+import { DashboardCreateCategoryDialog } from "./DashboardCreateCategoryDialog";
 
 export default async function DashboardCategories() {
   return (
@@ -32,7 +32,7 @@ export default async function DashboardCategories() {
       <Carousel className="w-full px-12">
         <CarouselContent>
           <CarouselItem className="basis-54">
-            <CreateCategoryDialog
+            <DashboardCreateCategoryDialog
               trigger={
                 <button type="button" className="w-full p-1 text-left">
                   <CategoryCardCreate />

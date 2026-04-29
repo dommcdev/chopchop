@@ -12,7 +12,7 @@ import {
 } from "@phosphor-icons/react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
-import { RecipeDeleteDialog } from "@/components/RecipeDeleteDialog";
+import { RecipeDeleteAlert } from "@/components/RecipeDeleteAlert";
 import { useRecipeDelete } from "@/hooks/useRecipeDelete";
 import { cn } from "@/lib/utils";
 
@@ -83,7 +83,7 @@ export function RecipeToolbar({
             >
               <PencilSimpleIcon className="h-4 w-4" weight="bold" />
             </Link>
-            <RecipeDeleteDialog
+            <RecipeDeleteAlert
               isDeleting={isDeleting}
               onConfirm={async () => {
                 const deleted = await runDelete();
