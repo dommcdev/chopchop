@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PlusIcon, TrashIcon } from "@phosphor-icons/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
@@ -69,6 +69,7 @@ const EMPTY_CATEGORY_VALUE = "__none__";
 
 interface RecipeEditorProps {
   initialValues: RecipeEditorInitialValues;
+  resetKey?: string;
   categories: CategoryBrief[];
   handleSave: (data: FinalRecipeSchema) => void | Promise<void>;
   handleCancel: () => void;
@@ -76,6 +77,7 @@ interface RecipeEditorProps {
 
 export function RecipeEditor({
   initialValues,
+  resetKey,
   categories,
   handleSave,
   handleCancel,
@@ -83,6 +85,8 @@ export function RecipeEditor({
   const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
   const [isImageUploading, setIsImageUploading] = useState(false);
   const [categoryOptions, setCategoryOptions] = useState(categories);
+  const lastResetKeyRef = useRef<string | undefined>(undefined);
+  const effectiveResetKey = resetKey ?? JSON.stringify(initialValues);
 
   const form = useForm<EditorFormState, unknown, FinalRecipeSchema>({
     // What to use to validate data during editing and on submit
@@ -94,8 +98,13 @@ export function RecipeEditor({
   });
 
   useEffect(() => {
+    if (lastResetKeyRef.current === effectiveResetKey) {
+      return;
+    }
+
+    lastResetKeyRef.current = effectiveResetKey;
     form.reset(initialValues);
-  }, [form, initialValues]);
+  }, [effectiveResetKey, form, initialValues]);
 
   useEffect(() => {
     setCategoryOptions(categories);
@@ -347,7 +356,7 @@ export function RecipeEditor({
                                   <Button
                                     type="button"
                                     variant="outline"
-                                    size="icon"
+                                    size="icon-sm"
                                     aria-label="Create category"
                                     title="Create category"
                                   >

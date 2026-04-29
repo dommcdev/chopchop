@@ -53,6 +53,7 @@ export function EditRecipeClient({
   return (
     <RecipeEditor
       initialValues={initialValues}
+      resetKey={`${initialData.slug}:${initialData.updatedAt}`}
       categories={categories}
       handleSave={handleSave}
       handleCancel={handleCancel}
