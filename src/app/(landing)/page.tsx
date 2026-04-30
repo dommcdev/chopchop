@@ -50,7 +50,7 @@ const steps = [
 ];
 
 const stats = [
-  { value: "< 30s", label: "to digitize a recipe" },
+  { value: "< 30s", label: "to import a recipe" },
   { value: "1\u2011tap", label: "serving adjustment" },
   { value: "Unlimited", label: "shareable links" },
 ];
@@ -91,7 +91,6 @@ export default function HomePage() {
               <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <Link
                   href="/dashboard"
-                  prefetch={false}
                   className="group inline-flex items-center justify-center gap-2.5 bg-primary px-7 py-3.5 text-sm font-bold tracking-wide text-primary-foreground uppercase transition-all hover:bg-primary/90"
                 >
                   Get started
@@ -99,13 +98,6 @@ export default function HomePage() {
                     weight="bold"
                     className="size-4 transition-transform group-hover:translate-x-0.5"
                   />
-                </Link>
-                <Link
-                  href="/login"
-                  prefetch={false}
-                  className="inline-flex items-center justify-center border border-border bg-background px-7 py-3.5 text-sm font-bold tracking-wide uppercase transition-colors hover:bg-muted"
-                >
-                  Sign in
                 </Link>
               </div>
             </div>
@@ -240,7 +232,6 @@ export default function HomePage() {
               <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <Link
                   href="/dashboard"
-                  prefetch={false}
                   className="group inline-flex items-center justify-center gap-2.5 bg-primary px-8 py-3.5 text-sm font-bold tracking-wide text-primary-foreground uppercase transition-all hover:bg-primary/90"
                 >
                   Open dashboard

@@ -5,6 +5,7 @@
 - Display more data in each search result (category, trunc desc, etc)
 - Upload recipe dialog
 - Handle deleting images from uploadthing (both on recipe delete + editor swap image)
+- Increase import recipe filesize limit
 
 
 ### Future features
@@ -27,4 +28,5 @@
 - Rate limiting
 - Recipes private-by-default
 - Cache components rather than data (??)
+- Includes images in data export
 
