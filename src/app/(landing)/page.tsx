@@ -108,6 +108,7 @@ export default function HomePage() {
                 alt="Chef chopping vegetables"
                 fill
                 loading="eager"
+                fetchPriority="high"
                 className="object-cover"
               />
             </div>
