@@ -107,6 +107,7 @@ export default function HomePage() {
                 src="https://i3ae2rmmav.ufs.sh/f/jtfWTQ42KQLJtoPplgKLe0MEF7P4fKIaVj3Yrcl9nCpOLNqo"
                 alt="Chef chopping vegetables"
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 loading="eager"
                 fetchPriority="high"
                 className="object-cover"
