@@ -11,11 +11,6 @@
       "sourceType": "github",
       "computedHash": "cbaf8d4cdff65a03c49e2b7358be37d0b0a69893688d2099df77cc9c0a6e773d"
     },
-    "clerk-custom-ui": {
-      "source": "clerk/skills",
-      "sourceType": "github",
-      "computedHash": "9b968af359a75292dc8987f7b12cca0e97c1b66f6d674dab1c6a269b93887a4d"
-    },
     "clerk-nextjs-patterns": {
       "source": "clerk/skills",
       "sourceType": "github",
