@@ -6,6 +6,7 @@
 - Upload recipe dialog
 - Handle deleting images from uploadthing (both on recipe delete + editor swap image)
 - Increase import recipe filesize limit
+- Allow uploading multiple recipe images
 
 
 ### Future features
