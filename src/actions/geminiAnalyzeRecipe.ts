@@ -71,7 +71,7 @@ export async function geminiAnalyzeRecipe(
 
       const { output, response, finishReason, usage, providerMetadata } =
         await generateText({
-          model: google("gemini-3.1-flash-lite-preview"),
+          model: google("gemini-3.1-flash-lite"),
           //model: google("gemini-3-flash-preview"),
           output: Output.object({
             schema: geminiRecipeSchema,
