@@ -13,7 +13,7 @@
 ### Future features
 - Advanced search page
 - Help page (+ tooltips)
-- Add nutritional info, difficulty, rating, og source
+- Add nutritional info, difficulty, rating, og source, notes
 - Add sorting/groups to recipes page
 - Infinite scroll with virtualization
 - Change instruction order via dragable elements
