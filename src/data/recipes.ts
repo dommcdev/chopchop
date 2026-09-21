@@ -143,6 +143,42 @@ async function queryRecipeDetailsById(publicId: string) {
   });
 }
 
+async function queryRecipeCount(userId: string) {
+  "use cache";
+  cacheTag(getRecipeCountTag(userId));
+
+  const result = await db
+    .select({ value: count() })
+    .from(recipes)
+    .where(eq(recipes.userId, userId));
+
+  return result[0].value;
+}
+
+async function queryRecipeCountByCategory(userId: string, slug: string) {
+  "use cache";
+  cacheTag(getRecipeBlocksTag(userId));
+  cacheTag(getRecipeCountTag(userId));
+
+  const category = await db.query.categories.findFirst({
+    columns: { id: true },
+    where: and(eq(categories.userId, userId), eq(categories.slug, slug)),
+  });
+
+  if (!category) {
+    return 0;
+  }
+
+  const result = await db
+    .select({ value: count() })
+    .from(recipes)
+    .where(
+      and(eq(recipes.userId, userId), eq(recipes.categoryId, category.id)),
+    );
+
+  return result[0].value;
+}
+
 async function queryNumOfPages(userId: string, pageSize: number) {
   "use cache";
   cacheTag(getRecipeCountTag(userId));
@@ -183,6 +219,16 @@ async function queryNumOfPagesByCategory(
 
   const totalCount = result[0].value;
   return Math.ceil(totalCount / pageSize);
+}
+
+export async function fetchRecipeCount() {
+  const userId = await checkAuth();
+  return queryRecipeCount(userId);
+}
+
+export async function fetchRecipeCountByCategory(slug: string) {
+  const userId = await checkAuth();
+  return queryRecipeCountByCategory(userId, slug);
 }
 
 export async function getNumOfPages(pageSize: number) {

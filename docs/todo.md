@@ -3,11 +3,10 @@
 ### Todo
 - Search dialog - support category & incredient filters (ui bubbles + shortcut hints)
 - Display more data in each search result (category, trunc desc, etc)
-- Upload recipe dialog
 - Handle deleting images from uploadthing (both on recipe delete + editor swap image)
 - Increase import recipe filesize limit
 - Allow uploading multiple recipe images
-- Change upload recipe button to add recipe button, add auto-fill recipe button to editor
+- Move recipe image conversion/uploading fully into editor
 
 
 ### Future features

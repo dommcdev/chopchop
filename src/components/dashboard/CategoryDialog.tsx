@@ -36,6 +36,7 @@ type RenameCategoryDialogProps = {
   currentName: string;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  navigateOnSuccess?: (slug: string) => string;
 };
 
 export function CreateCategoryDialog({ trigger }: CreateCategoryDialogProps) {
@@ -54,7 +55,7 @@ export function CreateCategoryDialog({ trigger }: CreateCategoryDialogProps) {
         if (!result.success) throw new Error(result.error);
         return { slug: result.slug, toastMessage: "Category created." };
       }}
-      navigateOnSuccess={(slug) => `/dashboard/categories/${slug}`}
+      navigateOnSuccess={(slug) => `/dashboard?c=${encodeURIComponent(slug)}`}
     />
   );
 }
@@ -66,11 +67,13 @@ export function RenameCategoryDialog({
   currentName,
   open,
   onOpenChange,
+  navigateOnSuccess,
 }: RenameCategoryDialogProps) {
   return (
     <CategoryNameDialog
       trigger={trigger}
       triggerNativeButton={triggerNativeButton}
+      navigateOnSuccess={navigateOnSuccess}
       title="Rename category"
       description="Give this category a new name."
       placeholder="e.g. Desserts"

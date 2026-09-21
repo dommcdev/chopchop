@@ -1,14 +1,8 @@
 "use client";
 
-import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { UploadSimpleIcon } from "@phosphor-icons/react";
-import { geminiAnalyzeRecipe } from "@/actions/geminiAnalyzeRecipe";
-import { fileUploadSchema } from "@/lib/geminiRecipeSchema";
-import { geminiToRecipeEditorInitialValues } from "@/lib/recipeEditorMappers";
-import { useRecipeUploadStore } from "@/store/useRecipeUploadStore";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useRecipeUpload } from "@/hooks/useRecipeUpload";
 import { cn } from "@/lib/utils";
 
 type UploadRecipeButtonProps = {
@@ -23,83 +17,7 @@ export function UploadRecipeButton({
   className,
   alwaysShowLabel = false,
 }: UploadRecipeButtonProps = {}) {
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  // Grab actions from my store
-  const setDraft = useRecipeUploadStore((state) => state.setDraft);
-  const isAnalyzing = useRecipeUploadStore((state) => state.isAnalyzing);
-  const setAnalyzing = useRecipeUploadStore((state) => state.setAnalyzing);
-  const router = useRouter();
-
-  // triggered when the button is clicked
-  const handleButtonClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  // triggered when the user selects a file
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { files } = e.target; //`files` is now the FileList object
-
-    // If no files (user closed picker)
-    if (!files?.length) return;
-
-    try {
-      // Too many files
-      if (files.length > 1) {
-        throw new Error("Please upload only one recipe at a time.");
-      }
-
-      // Wrong type of file
-      const file = files[0];
-      const validation = fileUploadSchema.safeParse(file);
-      if (!validation.success) {
-        // Throw the specific error message from Zod
-        throw new Error(validation.error.issues[0].message);
-      }
-
-      // Happy path
-      // Any errors thrown before this point will be handled in the catch block.
-      // Any ones thrown after this point will be handled by toast.promise().error
-      const uploadPromise = async () => {
-        setAnalyzing(true); //global 'Gemini is processing' state
-        const formData = new FormData();
-        formData.append("recipeFile", file);
-
-        // Call API with file
-        const result = await geminiAnalyzeRecipe(formData);
-
-        // Handle result objects from server
-        if (!result.success) {
-          throw new Error(result.error);
-        }
-
-        // Put data from server in our store
-        setDraft(geminiToRecipeEditorInitialValues(result.data));
-        router.push(`/dashboard/r/new`);
-        return result.data;
-      };
-
-      // Trigger the loading toast
-      toast.promise(uploadPromise(), {
-        loading: "Parsing recipe...",
-        success: (data) => `Success! Parsed "${data.name}"`,
-        error: (err) => err.message,
-        finally: () => {
-          setAnalyzing(false);
-        },
-        position: "bottom-right",
-      });
-    } catch (error) {
-      const message =
-        error instanceof Error ? error.message : "An unknown error occurred";
-      toast.error(message);
-      console.error(message);
-    } finally {
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
-    }
-  };
+  const { openFilePicker, isAnalyzing, fileInputProps } = useRecipeUpload();
 
   return (
     <>
@@ -109,7 +27,7 @@ export function UploadRecipeButton({
           "px-3 sm:px-4 w-fit items-center gap-2 rounded-none shadow-sm",
           className,
         )}
-        onClick={handleButtonClick}
+        onClick={openFilePicker}
         disabled={isAnalyzing}
         aria-label="Upload Recipe"
       >
@@ -125,13 +43,7 @@ export function UploadRecipeButton({
         </span>
       </Button>
 
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleFileChange}
-        accept="image/*,application/pdf"
-        className="hidden"
-      />
+      <input {...fileInputProps} />
     </>
   );
 }

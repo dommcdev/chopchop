@@ -2,7 +2,7 @@ import Link from "next/link";
 import CustomUserButton from "@/components/CustomUserButton";
 import SearchMounter from "@/components/dashboard/SearchMounter";
 import { Logo } from "@/components/Logo";
-import { UploadRecipeButton } from "@/components/dashboard/UploadRecipeButton";
+import { NewRecipeDialog } from "@/components/dashboard/NewRecipeDialog";
 
 export function DashNavbar() {
   return (
@@ -12,9 +12,10 @@ export function DashNavbar() {
         <Link href="/" className="flex items-center gap-3 group">
           <Logo />
         </Link>
-        <div className="flex items-center gap-4 sm:gap-6">
+        {/* Buttons are icon-only below `md`, so the gap grows with the labels. */}
+        <div className="flex items-center gap-3 md:gap-5">
           <SearchMounter />
-          <UploadRecipeButton />
+          <NewRecipeDialog />
           <CustomUserButton />
         </div>
       </nav>
