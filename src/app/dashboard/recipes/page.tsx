@@ -22,7 +22,7 @@ export default async function RecipesPage({
   const totalPagesPromise = getNumOfPages(RECIPES_PAGE_SIZE);
 
   return (
-    <main className="mx-auto max-w-screen-3xl p-4 sm:p-6 lg:p-8">
+    <main className="mx-auto max-w-6xl p-4 sm:p-6 lg:p-8">
       <div className="mb-4 border-b border-border/60 pb-5 sm:pb-6">
         <BackLink href="/dashboard" className="mb-3">
           Back to Dashboard
@@ -42,9 +42,7 @@ export default async function RecipesPage({
           </ResponsiveGrid>
         }
       >
-        <ResponsiveGrid>
-          <RecipesList recipesPromise={recipesPromise} />
-        </ResponsiveGrid>
+        <RecipesList recipesPromise={recipesPromise} />
       </Suspense>
 
       <div className="mt-8 md:mt-10">

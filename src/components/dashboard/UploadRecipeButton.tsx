@@ -9,8 +9,20 @@ import { geminiToRecipeEditorInitialValues } from "@/lib/recipeEditorMappers";
 import { useRecipeUploadStore } from "@/store/useRecipeUploadStore";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
-export function UploadRecipeButton() {
+type UploadRecipeButtonProps = {
+  variant?: React.ComponentProps<typeof Button>["variant"];
+  className?: string;
+  /** Show the text label at every width, not just from `md` up. */
+  alwaysShowLabel?: boolean;
+};
+
+export function UploadRecipeButton({
+  variant = "outline",
+  className,
+  alwaysShowLabel = false,
+}: UploadRecipeButtonProps = {}) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Grab actions from my store
@@ -92,15 +104,23 @@ export function UploadRecipeButton() {
   return (
     <>
       <Button
-        variant="outline"
-        className="px-3 sm:px-4 w-fit items-center gap-2 rounded-none shadow-sm"
+        variant={variant}
+        className={cn(
+          "px-3 sm:px-4 w-fit items-center gap-2 rounded-none shadow-sm",
+          className,
+        )}
         onClick={handleButtonClick}
         disabled={isAnalyzing}
         aria-label="Upload Recipe"
       >
         <UploadSimpleIcon className={"h-4 w-4 shrink-0"} weight="bold" />
 
-        <span className="hidden md:inline-block text-sm font-medium">
+        <span
+          className={cn(
+            "text-sm font-medium",
+            alwaysShowLabel ? "inline-block" : "hidden md:inline-block",
+          )}
+        >
           Upload Recipe
         </span>
       </Button>

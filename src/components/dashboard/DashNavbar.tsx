@@ -7,7 +7,8 @@ import { UploadRecipeButton } from "@/components/dashboard/UploadRecipeButton";
 export function DashNavbar() {
   return (
     <header className="sticky top-0 z-50 w-full bg-background border-b border-border/60 print:hidden">
-      <nav className="mx-auto flex max-w-screen-3xl items-center justify-between px-3 py-3 md:px-9">
+      {/* Transparent side borders keep the logo at the same x as the framed landing Navbar. */}
+      <nav className="mx-auto flex max-w-6xl items-center justify-between border-transparent px-4 py-3 sm:border-x sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3 group">
           <Logo />
         </Link>

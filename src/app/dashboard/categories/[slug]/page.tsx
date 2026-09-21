@@ -10,6 +10,7 @@ import { RECIPES_PAGE_SIZE } from "@/lib/constants";
 import ResponsiveGrid from "@/components/dashboard/ResponsiveGrid";
 import { RecipeCardSkeleton } from "@/components/dashboard/RecipeCard";
 import RecipesList from "@/components/dashboard/RecipesList";
+import { RecipesEmptyState } from "@/components/dashboard/RecipesEmptyState";
 import { notFound } from "next/navigation";
 
 export default function RecipesByCategoryPage({
@@ -20,7 +21,7 @@ export default function RecipesByCategoryPage({
   searchParams: Promise<{ page?: string }>;
 }) {
   return (
-    <main className="mx-auto max-w-screen-3xl p-4 sm:p-6 lg:p-8">
+    <main className="mx-auto max-w-6xl p-4 sm:p-6 lg:p-8">
       <div className="mb-4 border-b border-border/60 pb-5 sm:pb-6">
         <BackLink href="/dashboard" className="mb-3">
           Back to Dashboard
@@ -88,9 +89,15 @@ async function RecipesSection({
 
   return (
     <>
-      <ResponsiveGrid>
-        <RecipesList recipesPromise={recipesPromise} />
-      </ResponsiveGrid>
+      <RecipesList
+        recipesPromise={recipesPromise}
+        emptyState={
+          <RecipesEmptyState
+            title="Nothing in this category yet"
+            description="Upload a recipe or start one from scratch, then file it here from the editor."
+          />
+        }
+      />
 
       <div className="mt-8 md:mt-10">
         <PaginationBar

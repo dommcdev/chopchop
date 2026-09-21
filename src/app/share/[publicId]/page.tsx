@@ -47,7 +47,7 @@ async function SharedRecipeViewerContent({
   }
 
   return (
-    <div className="mx-auto max-w-4xl p-4 sm:p-6 lg:max-w-5xl lg:p-8">
+    <div className="mx-auto max-w-6xl p-4 sm:p-6 lg:p-8">
       <RecipeViewer recipe={recipe} canEdit={false} />
     </div>
   );

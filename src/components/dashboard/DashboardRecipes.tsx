@@ -1,54 +1,48 @@
 import { Suspense } from "react";
 import { fetchRecipesBlock } from "@/data/recipes";
 import Link from "next/link";
+import { PlusIcon } from "@phosphor-icons/react/dist/ssr";
 import { RECIPES_PAGE_SIZE } from "@/lib/constants";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import ResponsiveGrid from "./ResponsiveGrid";
-import { RecipeCardCreate, RecipeCardSkeleton } from "./RecipeCard";
+import { RecipeCardSkeleton } from "./RecipeCard";
 import RecipesList from "./RecipesList";
+import { SectionHeader } from "./SectionHeader";
 
 export default async function DashboardRecipes() {
   const recipesPromise = fetchRecipesBlock(RECIPES_PAGE_SIZE, 0);
   return (
-    <>
-      <section className="m-4 flex flex-col gap-2 md:m-6">
-        <div className="flex flex-row justify-between items-center">
-          <h2 className="text-xl font-semibold tracking-tight">
-            Recent Recipes
-          </h2>
+    <section className="my-4 flex flex-col gap-2 md:my-6">
+      <SectionHeader
+        title="Recent Recipes"
+        viewAllHref="/dashboard/r"
+        viewAllLabel="View all"
+        action={
           <Link
-            href="/dashboard/r"
-            className="text-muted-foreground underline underline-offset-2 transition-colors hover:text-foreground"
+            href="/dashboard/r/new"
+            className={cn(
+              buttonVariants({ variant: "outline" }),
+              "gap-1.5 px-3 text-sm font-medium shadow-sm",
+            )}
           >
-            View all recipes
+            <PlusIcon weight="bold" className="size-4" aria-hidden="true" />
+            New recipe
           </Link>
-        </div>
+        }
+      />
 
-        <Suspense
-          fallback={
-            <ResponsiveGrid>
-              <Link
-                href="/dashboard/r/new"
-                className="block h-full outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
-                <RecipeCardCreate />
-              </Link>
-              {Array.from({ length: RECIPES_PAGE_SIZE }).map((_, index) => (
-                <RecipeCardSkeleton key={index} />
-              ))}
-            </ResponsiveGrid>
-          }
-        >
+      <Suspense
+        fallback={
           <ResponsiveGrid>
-            <Link
-              href="/dashboard/r/new"
-              className="block h-full outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            >
-              <RecipeCardCreate />
-            </Link>
-            <RecipesList recipesPromise={recipesPromise} />
+            {Array.from({ length: RECIPES_PAGE_SIZE }).map((_, index) => (
+              <RecipeCardSkeleton key={index} />
+            ))}
           </ResponsiveGrid>
-        </Suspense>
-      </section>
-    </>
+        }
+      >
+        <RecipesList recipesPromise={recipesPromise} />
+      </Suspense>
+    </section>
   );
 }

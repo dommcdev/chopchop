@@ -15,7 +15,7 @@ export function SiteFooter() {
         "border-t border-border/60 py-3 text-[11px] text-muted-foreground print:hidden",
       )}
     >
-      <div className="mx-auto flex max-w-screen-3xl flex-nowrap items-center justify-center gap-3 px-3 text-center whitespace-nowrap md:px-9">
+      <div className="mx-auto flex max-w-6xl flex-nowrap items-center justify-center gap-3 px-3 text-center whitespace-nowrap md:px-9">
         <p>&copy; {year} The ChopChop Team.</p>
         <nav className="flex flex-nowrap items-center gap-1.5 whitespace-nowrap">
           <Link
