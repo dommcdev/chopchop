@@ -11,7 +11,7 @@ export function PrintableRecipeCard({
   recipe,
   targetServings,
 }: PrintableRecipeCardProps) {
-  const shareUrl = `https://lechopchop.vercel.app/s/${recipe.publicId}`;
+  const shareUrl = `https://chopchop.dommcdev.net/s/${recipe.publicId}`;
   const baseServings = recipe.servings;
   const hasServings = baseServings != null;
   const scaleFactor =
