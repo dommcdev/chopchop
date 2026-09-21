@@ -14,8 +14,7 @@ import { generatePublicId, generateSlug } from "@/lib/utils";
 import { checkAuth } from "./shared";
 
 type SaveRecipeResult =
-  | { success: true; slug: string }
-  | { success: false; error: string };
+  { success: true; slug: string } | { success: false; error: string };
 
 function getRecipeBlocksTag(userId: string) {
   return `user:${userId}:recipes:blocks`;

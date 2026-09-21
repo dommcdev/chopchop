@@ -17,6 +17,7 @@ const CustomUserButton = () => {
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- Wait until mounted to avoid theme hydration mismatches.
     setMounted(true);
   }, []);
 
