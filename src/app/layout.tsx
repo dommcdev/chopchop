@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "ChopChop",
-    title: "ChopChop — Your cookbook, digitized.",
+    title: "ChopChop: Your cookbook, digitized.",
     description:
       "Turn photos, printouts, and handwritten cards into recipes you can scale, sort, and share.",
   },
