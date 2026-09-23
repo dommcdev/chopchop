@@ -17,8 +17,20 @@ const fontMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://chopchop.dommcdev.net"),
   title: "ChopChop",
-  description: "The Digital Cookbook",
+  description:
+    "Turn photos, printouts, and handwritten cards into recipes you can scale, sort, and share.",
+  openGraph: {
+    type: "website",
+    siteName: "ChopChop",
+    title: "ChopChop — Your cookbook, digitized.",
+    description:
+      "Turn photos, printouts, and handwritten cards into recipes you can scale, sort, and share.",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({
